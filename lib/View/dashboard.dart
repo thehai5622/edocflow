@@ -5,7 +5,6 @@ import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Service/device_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
@@ -28,51 +27,6 @@ class Dashboard extends StatelessWidget {
         backgroundColor: AppColor.subMain,
         resizeToAvoidBottomInset: false,
         extendBody: true,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: GestureDetector(
-          onLongPress: () {
-            showModalBottomSheet<void>(
-              context: context,
-              builder: (BuildContext context) {
-                return Container(
-                  padding: const EdgeInsets.only(bottom: 30, top: 10),
-                  width: double.infinity,
-                  color: AppColor.main,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      bottomSheetItem(
-                        icon: "assets/icons/ultils-bill.svg",
-                        title: "Thêm hóa đơn",
-                      ),
-                      bottomSheetItem(
-                        icon: "assets/icons/ultils-periodic.svg",
-                        title: "Thêm giao dịch định kì",
-                      ),
-                      bottomSheetItem(
-                        icon: "assets/icons/ultils-add.svg",
-                        title: "Thêm giao dịch trong tương lai",
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ).then((value) {});
-          },
-          child: FloatingActionButton(
-            backgroundColor: AppColor.fourthMain,
-            elevation: 0,
-            shape: const CircleBorder(),
-            onPressed: () {
-              // Go to add new transaction
-            },
-            child: const Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-          ),
-        ),
         body: Obx(() {
           switch (controller.currentIndex.value) {
             case 0:
@@ -171,8 +125,6 @@ class Dashboard extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(width: 35.w),
-
                   // Trang ngân sách
                   Expanded(
                     child: GestureDetector(
@@ -247,52 +199,6 @@ class Dashboard extends StatelessWidget {
                   ),
                 ]),
           ),
-        ),
-      ),
-    );
-  }
-
-  GestureDetector bottomSheetItem({
-    required String icon,
-    required String title,
-    void Function()? onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: BoxDecoration(
-          color: AppColor.main,
-          border: Border(
-            bottom: BorderSide(
-              color: AppColor.subMain,
-              width: 1,
-            ),
-          ),
-        ),
-        child: Row(
-          children: [
-            SvgPicture.asset(
-              icon,
-              height: 25,
-              width: 25,
-              colorFilter: ColorFilter.mode(
-                AppColor.grey,
-                BlendMode.srcIn,
-              ),
-            ),
-            const SizedBox(width: 25),
-            Expanded(
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: DeviceHelper.getFontSize(14),
-                  color: AppColor.text1,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );
