@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -41,6 +44,10 @@ class Utils {
     final formatter =
         NumberFormat.currency(locale: 'vi_VN', name: ' ', decimalDigits: 0);
     return formatter.format(amount);
+  }
+
+  static String generateMd5(String input) {
+    return md5.convert(utf8.encode(input)).toString();
   }
 
   static void showSnackBar(

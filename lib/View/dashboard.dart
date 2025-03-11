@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:edocflow/Controller/dashboard_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
-import 'package:edocflow/Service/device_helper.dart';
+import 'package:edocflow/Utils/device_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
