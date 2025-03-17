@@ -9,10 +9,11 @@ class Constant {
   static const String USERNAME = "username";
   static const String PASSWORD = "password";
   static const String ACCESS_TOKEN = "accessToken";
-  static const String UUID_USER = "userName";
-  static const String UUID_USER_ACC = "uuid";
-  static const String FULL_NAME = 'fullName';
-  static const String AVATAR_USER = "avatarUser";
+  static const String REFRESH_TOKEN = "refreshToken";
+  static const String NAME = 'name';
+  // static const String UUID_USER = "userName";
+  // static const String UUID_USER_ACC = "uuid";
+  // static const String AVATAR_USER = "avatarUser";
 
   static const String FCMTOKEN = "fcm_token";
 }

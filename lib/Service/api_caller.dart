@@ -11,6 +11,11 @@ import 'package:http/http.dart' as http;
 class APICaller {
   static APICaller? _apiCaller = APICaller();
   final String BASE_URL = dotenv.env['API_URL'] ?? '';
+  final Map<String, String> _requestHeaders = {
+    'Content-type': 'application/json',
+    'Accept': 'application/json',
+    'Authorization': GlobalValue.getInstance().getToken(),
+  };
 
   static APICaller getInstance() {
     _apiCaller ??= APICaller();
@@ -18,50 +23,40 @@ class APICaller {
   }
 
   Future<dynamic> get(String endpoint, {dynamic body}) async {
-    Map<String, String> requestHeaders = {
-      'Content-type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': GlobalValue.getInstance().getToken(),
-    };
     Uri uri = Uri.parse(BASE_URL + endpoint);
     final finalUri = uri.replace(queryParameters: body);
 
     final response = await http
-        .get(finalUri, headers: requestHeaders)
+        .get(finalUri, headers: _requestHeaders)
         .timeout(const Duration(seconds: 30), onTimeout: () {
       return http.Response(
           'Không kết nối được đến máy chủ, bạn vui lòng kiểm tra lại.', 408);
     });
-    bool code406 = response.statusCode == 406;
-    if (code406) {
-      Auth.backLogin(code406);
-      Utils.showSnackBar(title: 'Thông báo', message: 'Tài khoản này đang được đăng nhập ở nơi khác!');
-    }
-    if (response.statusCode != 200) {
-      // Utils.showSnackBar(
-      //     title: TextByNation.getStringByKey('notification'),
-      //     message: response.body);
-      return null;
-    }
-    if (jsonDecode(response.body)['error']['code'] != 0) {
-      Utils.showSnackBar(
-          title: 'Thông báo',
-          message: jsonDecode(response.body)['error']['message']);
-      return null;
-    }
+    // bool code406 = response.statusCode == 406;
+    // if (code406) {
+    //   Auth.backLogin(code406);
+    //   Utils.showSnackBar(title: 'Thông báo', message: 'Tài khoản này đang được đăng nhập ở nơi khác!');
+    // }
+    // if (response.statusCode != 200) {
+    //   // Utils.showSnackBar(
+    //   //     title: TextByNation.getStringByKey('notification'),
+    //   //     message: response.body);
+    //   return null;
+    // }
+    // if (jsonDecode(response.body)['error']['code'] != 0) {
+    //   Utils.showSnackBar(
+    //       title: 'Thông báo',
+    //       message: jsonDecode(response.body)['error']['message']);
+    //   return null;
+    // }
     return jsonDecode(response.body);
   }
 
   Future<dynamic> post(String endpoint, dynamic body) async {
-    Map<String, String> requestHeaders = {
-      'Content-type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': GlobalValue.getInstance().getToken(),
-    };
     final uri = Uri.parse(BASE_URL + endpoint);
 
     final response = await http
-        .post(uri, headers: requestHeaders, body: jsonEncode(body))
+        .post(uri, headers: _requestHeaders, body: jsonEncode(body))
         .timeout(
       const Duration(seconds: 30),
       onTimeout: () {
@@ -74,7 +69,6 @@ class APICaller {
       Auth.backLogin(code401);
       Utils.showSnackBar(title: 'Thông báo', message: 'Đã hết phiên đăng nhập');
     }
-    ;
     if (response.statusCode != 200) {
       // if (response.statusCode == 400) {
       Utils.showSnackBar(
@@ -98,10 +92,6 @@ class APICaller {
       required String type,
       required String keyCert,
       required String time}) async {
-    Map<String, String> requestHeaders = {
-      'Content-type': 'multipart/form-data',
-      'Authorization': GlobalValue.getInstance().getToken(),
-    };
     final uri = Uri.parse(BASE_URL + endpoint);
 
     final request = http.MultipartRequest('POST', uri);
@@ -110,7 +100,7 @@ class APICaller {
     request.fields['Type'] = type;
     request.fields['keyCert'] = keyCert;
     request.fields['time'] = time;
-    request.headers.addAll(requestHeaders);
+    request.headers.addAll(_requestHeaders);
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse).timeout(
@@ -125,7 +115,6 @@ class APICaller {
       Auth.backLogin(code401);
       Utils.showSnackBar(title: 'Thông báo', message: 'Đã hết phiên đăng nhập');
     }
-    ;
     if (response.statusCode != 200) {
       // Utils.showSnackBar(
       //     title: TextByNation.getStringByKey('notification'),
@@ -142,10 +131,6 @@ class APICaller {
   }
 
   Future<dynamic> postFiles(String endpoint, List<File> filePath) async {
-    Map<String, String> requestHeaders = {
-      'Content-type': 'multipart/form-data',
-      'Authorization': GlobalValue.getInstance().getToken(),
-    };
     final uri = Uri.parse(BASE_URL + endpoint);
 
     final request = http.MultipartRequest('POST', uri);
@@ -155,7 +140,7 @@ class APICaller {
       files.add(f);
     }
     request.files.addAll(files);
-    request.headers.addAll(requestHeaders);
+    request.headers.addAll(_requestHeaders);
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse).timeout(
@@ -186,15 +171,10 @@ class APICaller {
   }
 
   Future<dynamic> put(String endpoint, dynamic body) async {
-    Map<String, String> requestHeaders = {
-      'Content-type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': GlobalValue.getInstance().getToken(),
-    };
     final uri = Uri.parse(BASE_URL + endpoint);
 
     final response = await http
-        .put(uri, headers: requestHeaders, body: jsonEncode(body))
+        .put(uri, headers: _requestHeaders, body: jsonEncode(body))
         .timeout(
       const Duration(seconds: 30),
       onTimeout: () {
@@ -225,10 +205,6 @@ class APICaller {
 
   Future<dynamic> putFile(
       {required String endpoint, required File filePath}) async {
-    Map<String, String> requestHeaders = {
-      'Content-type': 'multipart/form-data',
-      'Authorization': GlobalValue.getInstance().getToken(),
-    };
     final uri = Uri.parse(BASE_URL + endpoint);
 
     final request = http.MultipartRequest('PUT', uri);
@@ -237,7 +213,7 @@ class APICaller {
     request.fields['Type'] = '1';
     request.fields['KeyCert'] = 'string';
     request.fields['Time'] = 'string';
-    request.headers.addAll(requestHeaders);
+    request.headers.addAll(_requestHeaders);
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse).timeout(
@@ -252,7 +228,6 @@ class APICaller {
       Auth.backLogin(code401);
       Utils.showSnackBar(title: 'Thông báo', message: 'Đã hết phiên đăng nhập');
     }
-    ;
     if (response.statusCode != 200) {
       // Utils.showSnackBar(
       //     title: TextByNation.getStringByKey('notification'),
@@ -269,15 +244,10 @@ class APICaller {
   }
 
   Future<dynamic> delete(String endpoint, {dynamic body}) async {
-    Map<String, String> requestHeaders = {
-      'Content-type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': GlobalValue.getInstance().getToken(),
-    };
     final uri = Uri.parse(BASE_URL + endpoint);
 
     final response = await http
-        .delete(uri, headers: requestHeaders, body: jsonEncode(body))
+        .delete(uri, headers: _requestHeaders, body: jsonEncode(body))
         .timeout(
       const Duration(seconds: 30),
       onTimeout: () {

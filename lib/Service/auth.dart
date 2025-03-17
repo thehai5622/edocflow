@@ -12,6 +12,7 @@ class Auth {
     }
 
     await Utils.saveStringWithKey(Constant.ACCESS_TOKEN, '');
+    await Utils.saveStringWithKey(Constant.REFRESH_TOKEN, '');
     await Utils.saveStringWithKey(Constant.USERNAME, '');
     await Utils.saveStringWithKey(Constant.PASSWORD, '');
     if (Get.currentRoute != Routes.login) {
@@ -28,8 +29,8 @@ class Auth {
     var param = {
       "username": userName ?? userNamePreferences,
       "password": Utils.generateMd5(password ?? passwordPreferences),
-      "ip": "",
-      "address": ""
+      // "ip": "",
+      // "address": ""
       // "fcmToken": await Utils.getStringValueWithKey(Constant.FCMTOKEN)
     };
     if (userName?.trim() == '' && userNamePreferences == '') {
@@ -43,17 +44,17 @@ class Auth {
       return;
     }
     try {
-      var data = await APICaller.getInstance().post('v1/Account/login', param);
+      var response = await APICaller.getInstance().post('v1/user/login', param);
 
-      if (data != null) {
-        GlobalValue.getInstance().setToken('Bearer ${data['data']['token']}');
-        Utils.saveStringWithKey(Constant.ACCESS_TOKEN, data['data']['token']);
+      if (response != null) {
+        GlobalValue.getInstance().setToken('Bearer ${response['data']['token']}');
+        Utils.saveStringWithKey(Constant.ACCESS_TOKEN, response['data']['token']);
+        // Utils.saveStringWithKey(
+        //     Constant.UUID_USER_ACC, data['data']['uuid'] ?? '');
         Utils.saveStringWithKey(
-            Constant.UUID_USER_ACC, data['data']['uuid'] ?? '');
+            Constant.USERNAME, response['data']['username'] ?? '');
         Utils.saveStringWithKey(
-            Constant.USERNAME, data['data']['username'] ?? '');
-        Utils.saveStringWithKey(
-            Constant.FULL_NAME, data['data']['name'] ?? '');
+            Constant.NAME, response['data']['name'] ?? '');
         Utils.saveStringWithKey(
             Constant.PASSWORD, password ?? passwordPreferences);
         Get.offAllNamed(Routes.dashboard);
