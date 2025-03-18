@@ -22,34 +22,28 @@ class APICaller {
     return _apiCaller!;
   }
 
+  handleResponse(http.Response response) {
+    final body = jsonDecode(response.body);
+    if (response.statusCode ~/ 100 == 2) {
+      return body;
+    } else {
+      Utils.showSnackBar(
+          title: "${response.statusCode}!", message: body['message']);
+      if (response.statusCode == 406) Auth.backLogin(true);
+      return null;
+    }
+  }
+
   Future<dynamic> get(String endpoint, {dynamic body}) async {
     Uri uri = Uri.parse(BASE_URL + endpoint);
-    final finalUri = uri.replace(queryParameters: body);
 
     final response = await http
-        .get(finalUri, headers: _requestHeaders)
+        .get(uri, headers: _requestHeaders)
         .timeout(const Duration(seconds: 30), onTimeout: () {
       return http.Response(
           'Không kết nối được đến máy chủ, bạn vui lòng kiểm tra lại.', 408);
     });
-    // bool code406 = response.statusCode == 406;
-    // if (code406) {
-    //   Auth.backLogin(code406);
-    //   Utils.showSnackBar(title: 'Thông báo', message: 'Tài khoản này đang được đăng nhập ở nơi khác!');
-    // }
-    // if (response.statusCode != 200) {
-    //   // Utils.showSnackBar(
-    //   //     title: TextByNation.getStringByKey('notification'),
-    //   //     message: response.body);
-    //   return null;
-    // }
-    // if (jsonDecode(response.body)['error']['code'] != 0) {
-    //   Utils.showSnackBar(
-    //       title: 'Thông báo',
-    //       message: jsonDecode(response.body)['error']['message']);
-    //   return null;
-    // }
-    return jsonDecode(response.body);
+    return handleResponse(response);
   }
 
   Future<dynamic> post(String endpoint, dynamic body) async {
@@ -64,26 +58,37 @@ class APICaller {
             'Không kết nối được đến máy chủ, bạn vui lòng kiểm tra lại.', 408);
       },
     );
-    bool code401 = response.statusCode == 401;
-    if (code401) {
-      Auth.backLogin(code401);
-      Utils.showSnackBar(title: 'Thông báo', message: 'Đã hết phiên đăng nhập');
-    }
-    if (response.statusCode != 200) {
-      // if (response.statusCode == 400) {
-      Utils.showSnackBar(
-          title: 'Thông báo',
-          message: jsonDecode(response.body)['error']['message']);
-      // }
-      return null;
-    }
-    if (jsonDecode(response.body)['error']['code'] != 0) {
-      Utils.showSnackBar(
-          title: 'Thông báo',
-          message: jsonDecode(response.body)['error']['message']);
-      return null;
-    }
-    return jsonDecode(response.body);
+    return handleResponse(response);
+  }
+
+  Future<dynamic> put(String endpoint, dynamic body) async {
+    final uri = Uri.parse(BASE_URL + endpoint);
+
+    final response = await http
+        .put(uri, headers: _requestHeaders, body: jsonEncode(body))
+        .timeout(
+      const Duration(seconds: 30),
+      onTimeout: () {
+        return http.Response(
+            'Không kết nối được đến máy chủ, bạn vui lòng kiểm tra lại.', 408);
+      },
+    );
+    return handleResponse(response);
+  }
+
+  Future<dynamic> delete(String endpoint, dynamic body) async {
+    final uri = Uri.parse(BASE_URL + endpoint);
+
+    final response = await http
+        .delete(uri, headers: _requestHeaders, body: jsonEncode(body))
+        .timeout(
+      const Duration(seconds: 30),
+      onTimeout: () {
+        return http.Response(
+            'Không kết nối được đến máy chủ, bạn vui lòng kiểm tra lại.', 408);
+      },
+    );
+    return handleResponse(response);
   }
 
   Future<dynamic> postFile(
@@ -170,39 +175,6 @@ class APICaller {
     return jsonDecode(response.body);
   }
 
-  Future<dynamic> put(String endpoint, dynamic body) async {
-    final uri = Uri.parse(BASE_URL + endpoint);
-
-    final response = await http
-        .put(uri, headers: _requestHeaders, body: jsonEncode(body))
-        .timeout(
-      const Duration(seconds: 30),
-      onTimeout: () {
-        return http.Response(
-            'Không kết nối được đến máy chủ, bạn vui lòng kiểm tra lại.', 408);
-      },
-    );
-    bool code401 = response.statusCode == 401;
-    if (code401) {
-      Auth.backLogin(code401);
-      Utils.showSnackBar(title: 'Thông báo', message: 'Đã hết phiên đăng nhập');
-    }
-    ;
-    if (response.statusCode != 200) {
-      // Utils.showSnackBar(
-      //     title: TextByNation.getStringByKey('notification'),
-      //     message: response.body);
-      return null;
-    }
-    if (jsonDecode(response.body)['error']['code'] != 0) {
-      Utils.showSnackBar(
-          title: 'Thông báo',
-          message: jsonDecode(response.body)['error']['message']);
-      return null;
-    }
-    return jsonDecode(response.body);
-  }
-
   Future<dynamic> putFile(
       {required String endpoint, required File filePath}) async {
     final uri = Uri.parse(BASE_URL + endpoint);
@@ -228,39 +200,6 @@ class APICaller {
       Auth.backLogin(code401);
       Utils.showSnackBar(title: 'Thông báo', message: 'Đã hết phiên đăng nhập');
     }
-    if (response.statusCode != 200) {
-      // Utils.showSnackBar(
-      //     title: TextByNation.getStringByKey('notification'),
-      //     message: response.body);
-      return null;
-    }
-    if (jsonDecode(response.body)['error']['code'] != 0) {
-      Utils.showSnackBar(
-          title: 'Thông báo',
-          message: jsonDecode(response.body)['error']['message']);
-      return null;
-    }
-    return jsonDecode(response.body);
-  }
-
-  Future<dynamic> delete(String endpoint, {dynamic body}) async {
-    final uri = Uri.parse(BASE_URL + endpoint);
-
-    final response = await http
-        .delete(uri, headers: _requestHeaders, body: jsonEncode(body))
-        .timeout(
-      const Duration(seconds: 30),
-      onTimeout: () {
-        return http.Response(
-            'Không kết nối được đến máy chủ, bạn vui lòng kiểm tra lại.', 408);
-      },
-    );
-    bool code401 = response.statusCode == 401;
-    if (code401) {
-      Auth.backLogin(code401);
-      Utils.showSnackBar(title: 'Thông báo', message: 'Đã hết phiên đăng nhập');
-    }
-    ;
     if (response.statusCode != 200) {
       // Utils.showSnackBar(
       //     title: TextByNation.getStringByKey('notification'),

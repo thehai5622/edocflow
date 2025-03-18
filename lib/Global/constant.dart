@@ -1,7 +1,6 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Constant {
-  // baseUrlImage
   static String BASE_URL_IMAGE = dotenv.env['API_URL'] ?? '';
 
   static const String NEXT_PUBLIC_KEY_PASS = "";
@@ -11,9 +10,6 @@ class Constant {
   static const String ACCESS_TOKEN = "accessToken";
   static const String REFRESH_TOKEN = "refreshToken";
   static const String NAME = 'name';
-  // static const String UUID_USER = "userName";
-  // static const String UUID_USER_ACC = "uuid";
-  // static const String AVATAR_USER = "avatarUser";
 
   static const String FCMTOKEN = "fcm_token";
 }

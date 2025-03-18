@@ -26,37 +26,28 @@ class Auth {
     String passwordPreferences =
         await Utils.getStringValueWithKey(Constant.PASSWORD);
 
-    var param = {
+    Map<String, String> param = {
       "username": userName ?? userNamePreferences,
-      "password": Utils.generateMd5(password ?? passwordPreferences),
-      // "ip": "",
-      // "address": ""
+      "password":
+          password != null ? Utils.generateMd5(password) : passwordPreferences,
       // "fcmToken": await Utils.getStringValueWithKey(Constant.FCMTOKEN)
     };
-    if (userName?.trim() == '' && userNamePreferences == '') {
-      Utils.showSnackBar(
-          title: 'Thông báo', message: 'Vui lòng nhập tên đăng nhâp!');
-      return;
-    }
-    if (password?.trim() == '' && passwordPreferences == '') {
-      Utils.showSnackBar(
-          title: 'Thông báo', message: 'Vui lòng nhập mật khẩu!');
-      return;
-    }
+
     try {
       var response = await APICaller.getInstance().post('v1/user/login', param);
 
       if (response != null) {
-        GlobalValue.getInstance().setToken('Bearer ${response['data']['token']}');
-        Utils.saveStringWithKey(Constant.ACCESS_TOKEN, response['data']['token']);
-        // Utils.saveStringWithKey(
-        //     Constant.UUID_USER_ACC, data['data']['uuid'] ?? '');
+        GlobalValue.getInstance()
+            .setToken('Bearer ${response['data']['access_token']}');
         Utils.saveStringWithKey(
-            Constant.USERNAME, response['data']['username'] ?? '');
+            Constant.ACCESS_TOKEN, response['data']['access_token']);
         Utils.saveStringWithKey(
-            Constant.NAME, response['data']['name'] ?? '');
+            Constant.REFRESH_TOKEN, response['data']['refresh_token']);
+        Utils.saveStringWithKey(Constant.NAME, response['data']['name'] ?? '');
         Utils.saveStringWithKey(
-            Constant.PASSWORD, password ?? passwordPreferences);
+            Constant.USERNAME, userName ?? userNamePreferences);
+        Utils.saveStringWithKey(
+            Constant.PASSWORD, param['password']!);
         Get.offAllNamed(Routes.dashboard);
       } else {
         backLogin(true);
