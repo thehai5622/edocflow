@@ -2,9 +2,8 @@ import 'dart:io';
 
 import 'package:edocflow/Controller/dashboard_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
-import 'package:edocflow/Global/constant.dart';
+import 'package:edocflow/Service/api_caller.dart';
 import 'package:edocflow/Utils/device_helper.dart';
-import 'package:edocflow/Utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -32,17 +31,13 @@ class Dashboard extends StatelessWidget {
         body: Obx(() {
           switch (controller.currentIndex.value) {
             case 0:
-              return Container(
-                child: Center(
-                  child: ElevatedButton(onPressed: () async {
-                    var username = await Utils.getStringValueWithKey(Constant.USERNAME);
-                    var password = await Utils.getStringValueWithKey(Constant.PASSWORD);
-                    print({
-                      "username": username,
-                      "password": password,
-                    });
-                  }, child: Text('hehe')),
-                ),
+              return Center(
+                child: ElevatedButton(onPressed: () async {
+                  var info = await APICaller.getInstance().get('v1/user/me');
+                  print({
+                    "info": info,
+                  });
+                }, child: const Text('hehe')),
               );
             case 1:
               return Container();
