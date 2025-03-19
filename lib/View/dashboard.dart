@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:edocflow/Controller/dashboard_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
+import 'package:edocflow/Global/constant.dart';
+import 'package:edocflow/Global/global_value.dart';
 import 'package:edocflow/Service/api_caller.dart';
 import 'package:edocflow/Utils/device_helper.dart';
+import 'package:edocflow/Utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -32,12 +35,27 @@ class Dashboard extends StatelessWidget {
           switch (controller.currentIndex.value) {
             case 0:
               return Center(
-                child: ElevatedButton(onPressed: () async {
-                  var info = await APICaller.getInstance().get('v1/user/me');
-                  print({
-                    "info": info,
-                  });
-                }, child: const Text('hehe')),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ElevatedButton(onPressed: () async {
+                      var info = await APICaller.getInstance().get('v1/user/me');
+                      print({
+                        "info": info,
+                      });
+                    }, child: const Text('hehe')),
+                    ElevatedButton(onPressed: () async {
+                      var gAT = GlobalValue.getInstance().getToken();
+                      var uAT = await Utils.getStringValueWithKey(Constant.ACCESS_TOKEN);
+                      var uRT = await Utils.getStringValueWithKey(Constant.REFRESH_TOKEN);
+                      print({
+                        "Global AT": gAT,
+                        "Utils AT": uAT,
+                        "Utils RT": uRT
+                      });
+                    }, child: const Text('hihi')),
+                  ],
+                ),
               );
             case 1:
               return Container();

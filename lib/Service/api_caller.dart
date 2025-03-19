@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:edocflow/Global/constant.dart';
 import 'package:edocflow/Global/global_value.dart';
 import 'package:edocflow/Service/auth.dart';
 import 'package:edocflow/Utils/utils.dart';
@@ -11,7 +12,7 @@ import 'package:http/http.dart' as http;
 class APICaller {
   static APICaller? _apiCaller = APICaller();
   final String BASE_URL = dotenv.env['API_URL'] ?? '';
-  Map<String, String> requestHeaders = {
+  static Map<String, String> requestHeaders = {
     'Content-type': 'application/json',
     'Accept': 'application/json'
   };
@@ -21,11 +22,27 @@ class APICaller {
     return _apiCaller!;
   }
 
-  handleResponse(http.Response response) {
+  handleResponse(http.Response response) async {
     final body = jsonDecode(response.body);
     if (response.statusCode ~/ 100 == 2) {
       return body;
     } else {
+      if (response.statusCode == 401) {
+        var refreshToken =
+            await Utils.getStringValueWithKey(Constant.REFRESH_TOKEN);
+        post('v1/user/refresh-token', {"token": refreshToken}).then((value) {
+          if (value != null) {
+            GlobalValue.getInstance().setToken('Bearer ${value['data']['access_token']}');
+            Utils.saveStringWithKey(
+                Constant.ACCESS_TOKEN, value['data']['access_token']);
+            Utils.saveStringWithKey(
+                Constant.REFRESH_TOKEN, value['data']['refresh_token']);
+            print(value);
+            // Đưa lại request lần cuối sau khi hết hạn để gọi lại api
+          }
+        });
+        return null;
+      }
       Utils.showSnackBar(
           title: "${response.statusCode}!", message: body['message']);
       if (response.statusCode == 406) Auth.backLogin(true);
