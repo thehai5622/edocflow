@@ -16,6 +16,11 @@ class APICaller {
     'Content-type': 'application/json',
     'Accept': 'application/json'
   };
+  static Duration timeout = const Duration(seconds: 30);
+  static FutureOr<http.Response> Function()? onTimeout = () {
+    return http.Response(
+        'Không kết nối được đến máy chủ, bạn vui lòng kiểm tra lại.', 408);
+  };
 
   static APICaller getInstance() {
     _apiCaller ??= APICaller();
@@ -32,7 +37,8 @@ class APICaller {
             await Utils.getStringValueWithKey(Constant.REFRESH_TOKEN);
         post('v1/user/refresh-token', {"token": refreshToken}).then((value) {
           if (value != null) {
-            GlobalValue.getInstance().setToken('Bearer ${value['data']['access_token']}');
+            GlobalValue.getInstance()
+                .setToken('Bearer ${value['data']['access_token']}');
             Utils.saveStringWithKey(
                 Constant.ACCESS_TOKEN, value['data']['access_token']);
             Utils.saveStringWithKey(
@@ -52,16 +58,50 @@ class APICaller {
 
   Future<dynamic> get(String endpoint, {dynamic body}) async {
     Uri uri = Uri.parse(BASE_URL + endpoint);
+    String token = GlobalValue.getInstance().getToken();
     var frequestHeaders = {
       ...requestHeaders,
-      'Authorization': GlobalValue.getInstance().getToken(),
+      'Authorization': token,
     };
-    final response = await http
+    var response = await http
         .get(uri, headers: frequestHeaders)
-        .timeout(const Duration(seconds: 30), onTimeout: () {
-      return http.Response(
-          'Không kết nối được đến máy chủ, bạn vui lòng kiểm tra lại.', 408);
-    });
+        .timeout(timeout, onTimeout: onTimeout);
+
+    if (response.statusCode ~/ 100 == 2) {
+      return jsonDecode(response.body);
+    }
+
+    if (response.statusCode == 401) {
+      var refreshToken =
+          await Utils.getStringValueWithKey(Constant.REFRESH_TOKEN);
+      Uri uriRF = Uri.parse('${BASE_URL}v1/user/refresh-token');
+
+      final data = await http
+          .post(uriRF,
+              headers: frequestHeaders,
+              body: jsonEncode({"token": refreshToken}))
+          .timeout(timeout, onTimeout: onTimeout);
+
+      if (data.statusCode ~/ 100 == 2) {
+        final dataRF = jsonDecode(data.body);
+        token = 'Bearer ${dataRF['data']['access_token']}';
+        frequestHeaders['Authorization'] = token;
+        GlobalValue.getInstance().setToken(token);
+        Utils.saveStringWithKey(
+            Constant.ACCESS_TOKEN, dataRF['data']['access_token']);
+        Utils.saveStringWithKey(
+            Constant.REFRESH_TOKEN, dataRF['data']['refresh_token']);
+      } else {
+        Auth.backLogin(true);
+        Utils.showSnackBar(
+            title: 'Thông báo', message: "Có lỗi xảy ra chưa xác định!");
+      }
+    }
+
+    response = await http
+        .get(uri, headers: frequestHeaders)
+        .timeout(timeout, onTimeout: onTimeout);
+
     return handleResponse(response);
   }
 

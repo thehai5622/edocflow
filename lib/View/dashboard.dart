@@ -4,7 +4,6 @@ import 'package:edocflow/Controller/dashboard_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Global/constant.dart';
 import 'package:edocflow/Global/global_value.dart';
-import 'package:edocflow/Service/api_caller.dart';
 import 'package:edocflow/Utils/device_helper.dart';
 import 'package:edocflow/Utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -38,22 +37,30 @@ class Dashboard extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    ElevatedButton(onPressed: () async {
-                      var info = await APICaller.getInstance().get('v1/user/me');
-                      print({
-                        "info": info,
-                      });
-                    }, child: const Text('hehe')),
-                    ElevatedButton(onPressed: () async {
-                      var gAT = GlobalValue.getInstance().getToken();
-                      var uAT = await Utils.getStringValueWithKey(Constant.ACCESS_TOKEN);
-                      var uRT = await Utils.getStringValueWithKey(Constant.REFRESH_TOKEN);
-                      print({
-                        "Global AT": gAT,
-                        "Utils AT": uAT,
-                        "Utils RT": uRT
-                      });
-                    }, child: const Text('hihi')),
+                    Column(
+                      children: [
+                        Obx(() => Text('${controller.nameTest}')),
+                        ElevatedButton(
+                            onPressed: () async {
+                              controller.getInfoTest();
+                            },
+                            child: const Text('hehe')),
+                      ],
+                    ),
+                    ElevatedButton(
+                        onPressed: () async {
+                          var gAT = GlobalValue.getInstance().getToken();
+                          var uAT = await Utils.getStringValueWithKey(
+                              Constant.ACCESS_TOKEN);
+                          var uRT = await Utils.getStringValueWithKey(
+                              Constant.REFRESH_TOKEN);
+                          print({
+                            "Global AT": gAT,
+                            "Utils AT": uAT,
+                            "Utils RT": uRT
+                          });
+                        },
+                        child: const Text('hihi')),
                   ],
                 ),
               );
