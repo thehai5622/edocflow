@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:edocflow/Component/custom_dialog.dart';
 import 'package:edocflow/Controller/Field/field_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Utils/device_helper.dart';
@@ -66,7 +67,7 @@ class Field extends StatelessWidget {
                       ),
                       itemCount: controller.collection.length,
                       itemBuilder: (context, index) {
-                        return _collectionItem(index);
+                        return _collectionItem(context: context, index: index);
                       },
                     ),
                   ),
@@ -147,7 +148,8 @@ class Field extends StatelessWidget {
     );
   }
 
-  GestureDetector _collectionItem(int index) {
+  GestureDetector _collectionItem(
+      {required BuildContext context, required int index}) {
     return GestureDetector(
       onTap: () {},
       child: Container(
@@ -190,7 +192,16 @@ class Field extends StatelessWidget {
               children: [
                 _actionItem(icon: Icons.edit, bgColor: AppColor.fourthMain),
                 const SizedBox(width: 6),
-                _actionItem(icon: Icons.delete, bgColor: AppColor.grey),
+                _actionItem(
+                    icon: Icons.delete,
+                    bgColor: AppColor.grey,
+                    onTap: () {
+                      CustomDialog.show(
+                          context: context,
+                          onPressed: () => controller.deleteItem(index),
+                          title: "Xóa lĩnh vực",
+                          content: "Lĩnh vực '${controller.collection[index].name}' sẽ bị xóa, bạn chắc chứ?");
+                    }),
               ],
             ).marginOnly(right: 12, bottom: 10)
           ],

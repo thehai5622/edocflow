@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 class FieldController extends GetxController {
   final ScrollController scrollController = ScrollController();
   RxBool isLoading = true.obs;
-  RxBool isWaitSubmit = true.obs;
   int page = 1;
   int limit = 12;
   RxInt totalCount = 0.obs;
@@ -40,6 +39,12 @@ class FieldController extends GetxController {
     searchController.value.dispose();
   }
 
+  refreshData() async {
+    page = 1;
+    searchController.value.clear();
+    await getData(isRefresh: true);
+  }
+
   Future getData({bool isRefresh = false, bool isClearData = true}) async {
     if (isRefresh) isLoading.value = true;
     if (isClearData) collection.clear();
@@ -64,9 +69,10 @@ class FieldController extends GetxController {
     }
   }
 
-  refreshData() async {
-    page = 1;
-    searchController.value.clear();
-    await getData(isRefresh: true);
+  deleteItem(int index) {
+    APICaller.getInstance().delete('v1/field/${collection[index].uuid}').then((response) {
+      Utils.showSnackBar(title: 'Thông báo', message: response['message']);
+      collection.removeAt(index);
+    });
   }
 }
