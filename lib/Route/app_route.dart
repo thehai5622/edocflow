@@ -7,6 +7,7 @@ abstract class Routes {
   static const home = _Paths.home;
   static const login = _Paths.login;
   static const field = _Paths.field;
+  static const createField = _Paths.createField;
 }
 
 abstract class _Paths {
@@ -16,4 +17,5 @@ abstract class _Paths {
   static const String home = '/home';
   static const String login = '/login';
   static const String field = '/field';
+  static const String createField = '/create-field';
 }

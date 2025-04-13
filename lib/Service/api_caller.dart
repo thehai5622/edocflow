@@ -88,43 +88,105 @@ class APICaller {
     return handleResponse(response);
   }
 
-  Future<dynamic> post(String endpoint, dynamic body) async {
-    final uri = Uri.parse(BASE_URL + endpoint);
+  Future<dynamic> post(String endpoint, {dynamic body}) async {
+    Uri uri = Uri.parse(BASE_URL + endpoint);
+    String token = GlobalValue.getInstance().getToken();
     var frequestHeaders = {
       ...requestHeaders,
-      'Authorization': GlobalValue.getInstance().getToken(),
+      'Authorization': token,
     };
-    final response = await http
+    var response = await http
         .post(uri, headers: frequestHeaders, body: jsonEncode(body))
-        .timeout(
-      const Duration(seconds: 30),
-      onTimeout: () {
-        return http.Response(
-            'Không kết nối được đến máy chủ, bạn vui lòng kiểm tra lại.', 408);
-      },
-    );
+        .timeout(timeout, onTimeout: onTimeout);
+
+    if (response.statusCode ~/ 100 == 2) {
+      return jsonDecode(response.body);
+    }
+
+    if (response.statusCode == 401) {
+      var refreshToken =
+          await Utils.getStringValueWithKey(Constant.REFRESH_TOKEN);
+      Uri uriRF = Uri.parse('${BASE_URL}v1/user/refresh-token');
+
+      final data = await http
+          .post(uriRF,
+              headers: frequestHeaders,
+              body: jsonEncode({"token": refreshToken}))
+          .timeout(timeout, onTimeout: onTimeout);
+
+      if (data.statusCode ~/ 100 == 2) {
+        final dataRF = jsonDecode(data.body);
+        token = 'Bearer ${dataRF['data']['access_token']}';
+        frequestHeaders['Authorization'] = token;
+        GlobalValue.getInstance().setToken(token);
+        Utils.saveStringWithKey(
+            Constant.ACCESS_TOKEN, dataRF['data']['access_token']);
+        Utils.saveStringWithKey(
+            Constant.REFRESH_TOKEN, dataRF['data']['refresh_token']);
+      } else {
+        Auth.backLogin(true);
+        Utils.showSnackBar(
+            title: 'Thông báo', message: "Có lỗi xảy ra chưa xác định!");
+      }
+    }
+
+    response = await http
+        .post(uri, headers: frequestHeaders, body: jsonEncode(body))
+        .timeout(timeout, onTimeout: onTimeout);
+
     return handleResponse(response);
   }
 
-  Future<dynamic> put(String endpoint, dynamic body) async {
-    final uri = Uri.parse(BASE_URL + endpoint);
+  Future<dynamic> put(String endpoint, {dynamic body}) async {
+    Uri uri = Uri.parse(BASE_URL + endpoint);
+    String token = GlobalValue.getInstance().getToken();
     var frequestHeaders = {
       ...requestHeaders,
-      'Authorization': GlobalValue.getInstance().getToken(),
+      'Authorization': token,
     };
-    final response = await http
+    var response = await http
         .put(uri, headers: frequestHeaders, body: jsonEncode(body))
-        .timeout(
-      const Duration(seconds: 30),
-      onTimeout: () {
-        return http.Response(
-            'Không kết nối được đến máy chủ, bạn vui lòng kiểm tra lại.', 408);
-      },
-    );
+        .timeout(timeout, onTimeout: onTimeout);
+
+    if (response.statusCode ~/ 100 == 2) {
+      return jsonDecode(response.body);
+    }
+
+    if (response.statusCode == 401) {
+      var refreshToken =
+          await Utils.getStringValueWithKey(Constant.REFRESH_TOKEN);
+      Uri uriRF = Uri.parse('${BASE_URL}v1/user/refresh-token');
+
+      final data = await http
+          .post(uriRF,
+              headers: frequestHeaders,
+              body: jsonEncode({"token": refreshToken}))
+          .timeout(timeout, onTimeout: onTimeout);
+
+      if (data.statusCode ~/ 100 == 2) {
+        final dataRF = jsonDecode(data.body);
+        token = 'Bearer ${dataRF['data']['access_token']}';
+        frequestHeaders['Authorization'] = token;
+        GlobalValue.getInstance().setToken(token);
+        Utils.saveStringWithKey(
+            Constant.ACCESS_TOKEN, dataRF['data']['access_token']);
+        Utils.saveStringWithKey(
+            Constant.REFRESH_TOKEN, dataRF['data']['refresh_token']);
+      } else {
+        Auth.backLogin(true);
+        Utils.showSnackBar(
+            title: 'Thông báo', message: "Có lỗi xảy ra chưa xác định!");
+      }
+    }
+
+    response = await http
+        .put(uri, headers: frequestHeaders, body: jsonEncode(body))
+        .timeout(timeout, onTimeout: onTimeout);
+
     return handleResponse(response);
   }
 
-  Future<dynamic> delete(String endpoint, {dynamic body}) async {
+  Future<dynamic> delete(String endpoint) async {
     Uri uri = Uri.parse(BASE_URL + endpoint);
     String token = GlobalValue.getInstance().getToken();
     var frequestHeaders = {

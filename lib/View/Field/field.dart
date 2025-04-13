@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:edocflow/Component/custom_dialog.dart';
 import 'package:edocflow/Controller/Field/field_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
+import 'package:edocflow/Route/app_page.dart';
 import 'package:edocflow/Utils/device_helper.dart';
 import 'package:edocflow/Utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,7 @@ class Field extends StatelessWidget {
         backgroundColor: AppColor.fourthMain,
         elevation: 0,
         shape: const CircleBorder(),
-        onPressed: () {},
+        onPressed: () => Get.toNamed(Routes.createField),
         child: const Icon(
           Icons.add,
           color: Colors.white,
@@ -89,14 +90,13 @@ class Field extends StatelessWidget {
 
   TextFormField _textFieldSearch() {
     RxBool isShowClearText = false.obs;
-
     return TextFormField(
       controller: controller.searchController.value,
       style: TextStyle(
-        fontSize: DeviceHelper.getFontSize(13),
+        fontSize: DeviceHelper.getFontSize(15),
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w500,
-        color: const Color(0xFF202939),
+        color: AppColor.text1,
       ),
       onChanged: (value) => {
         isShowClearText.value = value.isNotEmpty,
@@ -124,7 +124,7 @@ class Field extends StatelessWidget {
           fillColor: AppColor.subMain,
           hintStyle: TextStyle(
             color: AppColor.grey,
-            fontSize: DeviceHelper.getFontSize(13),
+            fontSize: DeviceHelper.getFontSize(15),
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w500,
           ),

@@ -72,6 +72,7 @@ class FieldController extends GetxController {
   deleteItem(int index) {
     APICaller.getInstance().delete('v1/field/${collection[index].uuid}').then((response) {
       Utils.showSnackBar(title: 'Thông báo', message: response['message']);
+      totalCount.value--;
       collection.removeAt(index);
     });
   }
