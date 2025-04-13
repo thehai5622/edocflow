@@ -19,7 +19,7 @@ class Field extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         backgroundColor: AppColor.main,
-        elevation: 0,
+        scrolledUnderElevation: 0.0,
         shadowColor: AppColor.text1,
         title: Text(
           "Lĩnh vực",
@@ -109,20 +109,20 @@ class Field extends StatelessWidget {
           prefixIcon: Icon(Icons.search, color: AppColor.text1, size: 20),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),
-            borderSide: const BorderSide(width: 1, color: Color(0xFFE1E5ED)),
+            borderSide: BorderSide(width: 1, color: AppColor.subMain),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),
-            borderSide: const BorderSide(width: 1, color: Color(0xFFE1E5ED)),
+            borderSide: BorderSide(width: 1, color: AppColor.subMain),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),
-            borderSide: const BorderSide(width: 1, color: Color(0xFFE1E5ED)),
+            borderSide: BorderSide(width: 1, color: AppColor.subMain),
           ),
           filled: true,
-          fillColor: const Color(0xFFFFFFFF),
+          fillColor: AppColor.subMain,
           hintStyle: TextStyle(
-            color: const Color(0xFF777E90),
+            color: AppColor.grey,
             fontSize: DeviceHelper.getFontSize(13),
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w500,
@@ -143,7 +143,7 @@ class Field extends StatelessWidget {
                     });
                   },
                   child: Icon(Icons.close, color: AppColor.text1, size: 20))
-              : Container())),
+              : const SizedBox(width: 0))),
     );
   }
 
