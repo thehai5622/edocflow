@@ -1,3 +1,4 @@
+import 'package:edocflow/View/Field/field.dart';
 import 'package:edocflow/View/Login/login.dart';
 import 'package:edocflow/View/dashboard.dart';
 import 'package:edocflow/View/splash.dart';
@@ -15,5 +16,6 @@ class AppPage {
     GetPage(name: Routes.splash, page: () => Splash()),
     // GetPage(name: Routes.home, page: () => Home()),
     GetPage(name: Routes.login, page: () => Login()),
+    GetPage(name: Routes.field, page: () => Field()),
   ];
 }

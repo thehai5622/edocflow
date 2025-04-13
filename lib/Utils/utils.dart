@@ -50,6 +50,20 @@ class Utils {
     return md5.convert(utf8.encode(input)).toString();
   }
 
+  static String formatDate(String? isoString) {
+    if (isoString == null || isoString.trim().isEmpty) {
+      return "Không xác định";
+    }
+
+    try {
+      DateTime dateTime =
+          DateTime.parse(isoString).toLocal();
+      return DateFormat('HH:mm - dd/MM/yyyy').format(dateTime);
+    } catch (e) {
+      return "Không xác định";
+    }
+  }
+
   static void showSnackBar(
       {required String title,
       required String message,

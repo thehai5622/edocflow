@@ -11,6 +11,7 @@ class AppColor {
 
   // Text theme
   static Color white = const Color(0xFFFFFFFF);
+  static Color red = const Color(0xFFFF0000);
   static Color grey = const Color(0xFF8496AC);
   static Color text1  = const Color(0xFF29303C);
   static Color textHint  = const Color(0xFF788A9B);

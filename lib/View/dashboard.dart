@@ -2,10 +2,8 @@ import 'dart:io';
 
 import 'package:edocflow/Controller/dashboard_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
-import 'package:edocflow/Global/constant.dart';
-import 'package:edocflow/Global/global_value.dart';
+import 'package:edocflow/Route/app_page.dart';
 import 'package:edocflow/Utils/device_helper.dart';
-import 'package:edocflow/Utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -49,16 +47,7 @@ class Dashboard extends StatelessWidget {
                     ),
                     ElevatedButton(
                         onPressed: () async {
-                          var gAT = GlobalValue.getInstance().getToken();
-                          var uAT = await Utils.getStringValueWithKey(
-                              Constant.ACCESS_TOKEN);
-                          var uRT = await Utils.getStringValueWithKey(
-                              Constant.REFRESH_TOKEN);
-                          print({
-                            "Global AT": gAT,
-                            "Utils AT": uAT,
-                            "Utils RT": uRT
-                          });
+                          Get.toNamed(Routes.field);
                         },
                         child: const Text('hihi')),
                   ],

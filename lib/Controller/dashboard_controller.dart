@@ -16,9 +16,8 @@ class DashboardController extends GetxController {
     currentIndex.value = index;
   }
 
-  getInfoTest() async {
-    final response =
-        await APICaller.getInstance().get('v1/user/me').then((value) {
+  void getInfoTest() {
+    APICaller.getInstance().get('v1/user/me').then((value) {
       if (value != null) {
         print(value);
         nameTest.value = value['data']['name'];
