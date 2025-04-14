@@ -1,6 +1,9 @@
 import 'package:edocflow/View/Field/create_field.dart';
 import 'package:edocflow/View/Field/edit_field.dart';
 import 'package:edocflow/View/Field/field.dart';
+import 'package:edocflow/View/IssuingAuthority/create_ia.dart';
+import 'package:edocflow/View/IssuingAuthority/edit_ia.dart';
+import 'package:edocflow/View/IssuingAuthority/issuingauthority.dart';
 import 'package:edocflow/View/Login/login.dart';
 import 'package:edocflow/View/TypeTemplateFile/create_ttf.dart';
 import 'package:edocflow/View/TypeTemplateFile/edit_ttf.dart';
@@ -27,5 +30,8 @@ class AppPage {
     GetPage(name: Routes.typeTemplateFile, page: () => TypeTemplateFile()),
     GetPage(name: Routes.createTtf, page: () => CreateTypeTemplateFile()),
     GetPage(name: Routes.editTtf, page: () => EditTypeTemplateFile()),
+    GetPage(name: Routes.issuingAuthority, page: () => IssuingAuthority()),
+    GetPage(name: Routes.createIa, page: () => CreateIssuingAuthority()),
+    GetPage(name: Routes.editIa, page: () => EditIssuingAuthority()),
   ];
 }

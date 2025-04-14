@@ -12,6 +12,9 @@ abstract class Routes {
   static const typeTemplateFile = _Paths.typeTemplateFile;
   static const createTtf = _Paths.createTtf;
   static const editTtf = _Paths.editTtf;
+  static const issuingAuthority = _Paths.issuingAuthority;
+  static const createIa = _Paths.createIa;
+  static const editIa = _Paths.editIa;
 }
 
 abstract class _Paths {
@@ -26,4 +29,7 @@ abstract class _Paths {
   static const String typeTemplateFile = '/typetemplatefile';
   static const String createTtf = '/create-ttf';
   static const String editTtf = '/edit-ttf';
+  static const String issuingAuthority = '/issuingauthority';
+  static const String createIa = '/create-ia';
+  static const String editIa = '/edit-ia';
 }

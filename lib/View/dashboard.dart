@@ -34,7 +34,7 @@ class Dashboard extends StatelessWidget {
               return Center(
                 child: ElevatedButton(
                     onPressed: () async {
-                      Get.toNamed(Routes.typeTemplateFile);
+                      Get.toNamed(Routes.issuingAuthority);
                     },
                     child: const Text('chuyển page')),
               );

@@ -57,7 +57,7 @@ class Utils {
 
     try {
       DateTime dateTime =
-          DateTime.parse(isoString).toLocal();
+          DateTime.parse(isoString);
       return DateFormat('HH:mm - dd/MM/yyyy').format(dateTime);
     } catch (e) {
       return "Không xác định";
