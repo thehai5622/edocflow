@@ -32,26 +32,11 @@ class Dashboard extends StatelessWidget {
           switch (controller.currentIndex.value) {
             case 0:
               return Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Column(
-                      children: [
-                        Obx(() => Text('${controller.nameTest}')),
-                        ElevatedButton(
-                            onPressed: () async {
-                              controller.getInfoTest();
-                            },
-                            child: const Text('hehe')),
-                      ],
-                    ),
-                    ElevatedButton(
-                        onPressed: () async {
-                          Get.toNamed(Routes.field);
-                        },
-                        child: const Text('hihi')),
-                  ],
-                ),
+                child: ElevatedButton(
+                    onPressed: () async {
+                      Get.toNamed(Routes.typeTemplateFile);
+                    },
+                    child: const Text('chuyển page')),
               );
             case 1:
               return Container();

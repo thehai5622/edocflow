@@ -9,6 +9,9 @@ abstract class Routes {
   static const field = _Paths.field;
   static const createField = _Paths.createField;
   static const editField = _Paths.editField;
+  static const typeTemplateFile = _Paths.typeTemplateFile;
+  static const createTtf = _Paths.createTtf;
+  static const editTtf = _Paths.editTtf;
 }
 
 abstract class _Paths {
@@ -20,4 +23,7 @@ abstract class _Paths {
   static const String field = '/field';
   static const String createField = '/create-field';
   static const String editField = '/edit-field';
+  static const String typeTemplateFile = '/typetemplatefile';
+  static const String createTtf = '/create-ttf';
+  static const String editTtf = '/edit-ttf';
 }

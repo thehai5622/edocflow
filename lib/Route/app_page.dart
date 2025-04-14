@@ -2,6 +2,9 @@ import 'package:edocflow/View/Field/create_field.dart';
 import 'package:edocflow/View/Field/edit_field.dart';
 import 'package:edocflow/View/Field/field.dart';
 import 'package:edocflow/View/Login/login.dart';
+import 'package:edocflow/View/TypeTemplateFile/create_ttf.dart';
+import 'package:edocflow/View/TypeTemplateFile/edit_ttf.dart';
+import 'package:edocflow/View/TypeTemplateFile/type_template_file.dart';
 import 'package:edocflow/View/dashboard.dart';
 import 'package:edocflow/View/splash.dart';
 import 'package:get/get.dart';
@@ -21,5 +24,8 @@ class AppPage {
     GetPage(name: Routes.field, page: () => Field()),
     GetPage(name: Routes.createField, page: () => CreateField()),
     GetPage(name: Routes.editField, page: () => EditField()),
+    GetPage(name: Routes.typeTemplateFile, page: () => TypeTemplateFile()),
+    GetPage(name: Routes.createTtf, page: () => CreateTypeTemplateFile()),
+    GetPage(name: Routes.editTtf, page: () => EditTypeTemplateFile()),
   ];
 }

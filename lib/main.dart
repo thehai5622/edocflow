@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           Locale('en', 'US'),
           Locale('vi', 'VN'),
         ],
-        title: 'Thrift Flow',
+        title: 'EDocFlow',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: AppColor.fourthMain),
           useMaterial3: true,
