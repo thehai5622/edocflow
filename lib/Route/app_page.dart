@@ -1,4 +1,5 @@
 import 'package:edocflow/View/Field/create_field.dart';
+import 'package:edocflow/View/Field/edit_field.dart';
 import 'package:edocflow/View/Field/field.dart';
 import 'package:edocflow/View/Login/login.dart';
 import 'package:edocflow/View/dashboard.dart';
@@ -19,5 +20,6 @@ class AppPage {
     GetPage(name: Routes.login, page: () => Login()),
     GetPage(name: Routes.field, page: () => Field()),
     GetPage(name: Routes.createField, page: () => CreateField()),
+    GetPage(name: Routes.editField, page: () => EditField()),
   ];
 }

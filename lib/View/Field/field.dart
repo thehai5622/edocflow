@@ -190,7 +190,12 @@ class Field extends StatelessWidget {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _actionItem(icon: Icons.edit, bgColor: AppColor.fourthMain),
+                _actionItem(
+                  icon: Icons.edit,
+                  bgColor: AppColor.fourthMain,
+                  onTap: () => Get.toNamed(Routes.editField,
+                      arguments: controller.collection[index]),
+                ),
                 const SizedBox(width: 6),
                 _actionItem(
                     icon: Icons.delete,
@@ -200,7 +205,8 @@ class Field extends StatelessWidget {
                           context: context,
                           onPressed: () => controller.deleteItem(index),
                           title: "Xóa lĩnh vực",
-                          content: "Lĩnh vực '${controller.collection[index].name}' sẽ bị xóa, bạn chắc chứ?");
+                          content:
+                              "Lĩnh vực '${controller.collection[index].name}' sẽ bị xóa, bạn chắc chứ?");
                     }),
               ],
             ).marginOnly(right: 12, bottom: 10)

@@ -8,6 +8,7 @@ abstract class Routes {
   static const login = _Paths.login;
   static const field = _Paths.field;
   static const createField = _Paths.createField;
+  static const editField = _Paths.editField;
 }
 
 abstract class _Paths {
@@ -18,4 +19,5 @@ abstract class _Paths {
   static const String login = '/login';
   static const String field = '/field';
   static const String createField = '/create-field';
+  static const String editField = '/edit-field';
 }
