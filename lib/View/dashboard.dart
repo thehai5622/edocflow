@@ -4,6 +4,7 @@ import 'package:edocflow/Controller/dashboard_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Route/app_page.dart';
 import 'package:edocflow/Utils/device_helper.dart';
+import 'package:edocflow/View/Individual/individual.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -43,7 +44,7 @@ class Dashboard extends StatelessWidget {
             case 2:
               return Container();
             case 3:
-              return Container();
+              return Individual();
             default:
               return Container();
           }
@@ -70,8 +71,8 @@ class Dashboard extends StatelessWidget {
                           children: [
                             SvgPicture.asset(
                               'assets/icons/home_hashtag.svg',
-                              height: 20,
-                              width: 20,
+                              height: 25,
+                              width: 25,
                               colorFilter: controller.currentIndex.value == 0
                                   ? ColorFilter.mode(
                                       AppColor.fourthMain, BlendMode.srcIn)
@@ -82,11 +83,11 @@ class Dashboard extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: controller.currentIndex.value == 0
                                   ? TextStyle(
-                                      fontSize: DeviceHelper.getFontSize(12),
+                                      fontSize: DeviceHelper.getFontSize(15),
                                       color: AppColor.fourthMain,
                                       fontWeight: FontWeight.w700)
                                   : TextStyle(
-                                      fontSize: DeviceHelper.getFontSize(12),
+                                      fontSize: DeviceHelper.getFontSize(15),
                                       color: AppColor.grey,
                                     ),
                             ),
@@ -106,8 +107,8 @@ class Dashboard extends StatelessWidget {
                           children: [
                             SvgPicture.asset(
                               'assets/icons/wallet.svg',
-                              height: 20,
-                              width: 20,
+                              height: 25,
+                              width: 25,
                               colorFilter: controller.currentIndex.value == 1
                                   ? ColorFilter.mode(
                                       AppColor.fourthMain, BlendMode.srcIn)
@@ -118,11 +119,11 @@ class Dashboard extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: controller.currentIndex.value == 1
                                   ? TextStyle(
-                                      fontSize: DeviceHelper.getFontSize(12),
+                                      fontSize: DeviceHelper.getFontSize(15),
                                       color: AppColor.fourthMain,
                                       fontWeight: FontWeight.w700)
                                   : TextStyle(
-                                      fontSize: DeviceHelper.getFontSize(12),
+                                      fontSize: DeviceHelper.getFontSize(15),
                                       color: AppColor.grey,
                                     ),
                             ),
@@ -143,8 +144,8 @@ class Dashboard extends StatelessWidget {
                           children: [
                             SvgPicture.asset(
                               'assets/icons/budget.svg',
-                              height: 20,
-                              width: 20,
+                              height: 25,
+                              width: 25,
                               colorFilter: controller.currentIndex.value == 2
                                   ? ColorFilter.mode(
                                       AppColor.fourthMain, BlendMode.srcIn)
@@ -155,11 +156,11 @@ class Dashboard extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: controller.currentIndex.value == 2
                                   ? TextStyle(
-                                      fontSize: DeviceHelper.getFontSize(12),
+                                      fontSize: DeviceHelper.getFontSize(15),
                                       color: AppColor.fourthMain,
                                       fontWeight: FontWeight.w700)
                                   : TextStyle(
-                                      fontSize: DeviceHelper.getFontSize(12),
+                                      fontSize: DeviceHelper.getFontSize(15),
                                       color: AppColor.grey,
                                     ),
                             ),
@@ -179,8 +180,8 @@ class Dashboard extends StatelessWidget {
                           children: [
                             SvgPicture.asset(
                               'assets/icons/user_octagon.svg',
-                              height: 20,
-                              width: 20,
+                              height: 25,
+                              width: 25,
                               colorFilter: controller.currentIndex.value == 3
                                   ? ColorFilter.mode(
                                       AppColor.fourthMain, BlendMode.srcIn)
@@ -191,11 +192,11 @@ class Dashboard extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: controller.currentIndex.value == 3
                                   ? TextStyle(
-                                      fontSize: DeviceHelper.getFontSize(12),
+                                      fontSize: DeviceHelper.getFontSize(15),
                                       color: AppColor.fourthMain,
                                       fontWeight: FontWeight.w700)
                                   : TextStyle(
-                                      fontSize: DeviceHelper.getFontSize(12),
+                                      fontSize: DeviceHelper.getFontSize(15),
                                       color: AppColor.grey,
                                     ),
                             ),
@@ -236,7 +237,7 @@ class Dashboard extends StatelessWidget {
               Text(
                 "Ứng dụng sẽ được đóng lại ?",
                 style: TextStyle(
-                  fontSize: DeviceHelper.getFontSize(14),
+                  fontSize: DeviceHelper.getFontSize(16),
                   color: AppColor.grey,
                   fontWeight: FontWeight.w400,
                 ),
@@ -252,7 +253,7 @@ class Dashboard extends StatelessWidget {
                     child: Text(
                       "Hủy bỏ",
                       style: TextStyle(
-                        fontSize: DeviceHelper.getFontSize(15),
+                        fontSize: DeviceHelper.getFontSize(17),
                         color: AppColor.fourthMain,
                         fontWeight: FontWeight.w700,
                       ),
@@ -279,7 +280,7 @@ class Dashboard extends StatelessWidget {
                     child: Text(
                       "Xác nhận",
                       style: TextStyle(
-                        fontSize: DeviceHelper.getFontSize(14),
+                        fontSize: DeviceHelper.getFontSize(16),
                         color: AppColor.white,
                         fontWeight: FontWeight.w700,
                       ),
