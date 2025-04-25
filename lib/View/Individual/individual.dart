@@ -57,7 +57,25 @@ class Individual extends StatelessWidget {
             child: Column(
               children: [
                 _itemRow(
-                    title: "Hồ sơ cá nhân", icon: "assets/icons/user-edit.svg"),
+                  title: "Hồ sơ cá nhân",
+                  icon: "assets/icons/user-edit.svg",
+                  onTap: () => Get.toNamed(Routes.profile),
+                ),
+                _itemRow(
+                  title: "Cơ quan ban hành",
+                  icon: "assets/icons/shield-security.svg",
+                  onTap: () => Get.toNamed(Routes.issuingAuthority),
+                ),
+                _itemRow(
+                  title: "Lĩnh vực",
+                  icon: "assets/icons/shield-security.svg",
+                  onTap: () => Get.toNamed(Routes.field),
+                ),
+                _itemRow(
+                  title: "Loại file mẫu",
+                  icon: "assets/icons/shield-security.svg",
+                  onTap: () => Get.toNamed(Routes.typeTemplateFile),
+                ),
                 _itemRow(
                   title: "Đổi mật khẩu",
                   icon: "assets/icons/shield-security.svg",
@@ -94,8 +112,8 @@ class Individual extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         decoration: BoxDecoration(
-            border:
-                Border(bottom: BorderSide(width: 2, color: AppColor.background))),
+            border: Border(
+                bottom: BorderSide(width: 2, color: AppColor.background))),
         child: Row(
           children: [
             Expanded(
@@ -104,8 +122,8 @@ class Individual extends StatelessWidget {
                   SvgPicture.asset(icon,
                       height: 20,
                       width: 20,
-                      colorFilter: ColorFilter.mode(
-                          AppColor.primary, BlendMode.srcIn)),
+                      colorFilter:
+                          ColorFilter.mode(AppColor.primary, BlendMode.srcIn)),
                   const SizedBox(width: 12),
                   Text(
                     title,

@@ -17,6 +17,7 @@ abstract class Routes {
   static const editIa = _Paths.editIa;
   static const individual = _Paths.individual;
   static const changePass = _Paths.changePass;
+  static const profile = _Paths.profile;
 }
 
 abstract class _Paths {
@@ -36,4 +37,5 @@ abstract class _Paths {
   static const String editIa = '/edit-ia';
   static const String individual = '/individual';
   static const String changePass = '/change-pass';
+  static const String profile= '/profile';
 }

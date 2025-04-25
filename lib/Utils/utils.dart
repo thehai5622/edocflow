@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:crypto/crypto.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -62,6 +65,42 @@ class Utils {
     } catch (e) {
       return "Không xác định";
     }
+  }
+
+  static getImagePicker(int source) async {
+    ImagePicker picker = ImagePicker();
+    File? file;
+    try {
+      await picker
+          .pickImage(
+        source: source == 1 ? ImageSource.camera : ImageSource.gallery,
+      )
+          .then((value) {
+        if (value != null) {
+          file = File(value.path);
+        }
+      });
+    } catch (e) {
+      return null;
+    }
+    return file;
+  }
+
+  static Future<File?> getFilePicker() async {
+    File? file;
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.any, // hoặc FileType.image, FileType.custom, ...
+        allowMultiple: false,
+      );
+
+      if (result != null && result.files.single.path != null) {
+        file = File(result.files.single.path!);
+      }
+    } catch (e) {
+      return null;
+    }
+    return file;
   }
 
   static void showSnackBar(
