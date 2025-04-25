@@ -36,15 +36,32 @@ class Individual extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: SizedBox(
               width: double.infinity,
-              child: Obx(
-                () => Text(
-                  controller.name.value,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: DeviceHelper.getFontSize(24),
-                      fontWeight: FontWeight.w600,
-                      color: AppColor.text1),
-                ),
+              child: Column(
+                children: [
+                  Obx(
+                    () => ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.network(
+                        controller.avatar.value,
+                        height: 70,
+                        width: 70,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Icon(Icons.person, size: 70),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Obx(
+                    () => Text(
+                      controller.name.value,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: DeviceHelper.getFontSize(24),
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.text1),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

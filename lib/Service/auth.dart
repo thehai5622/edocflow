@@ -47,6 +47,7 @@ class Auth {
         Utils.saveStringWithKey(
             Constant.REFRESH_TOKEN, response['data']['refresh_token']);
         Utils.saveStringWithKey(Constant.NAME, response['data']['name'] ?? '');
+        Utils.saveStringWithKey(Constant.AVATAR, response['data']['avatar'] ?? '');
         Utils.saveStringWithKey(
             Constant.USERNAME, userName ?? userNamePreferences);
         Utils.saveStringWithKey(Constant.PASSWORD, param['password']!);

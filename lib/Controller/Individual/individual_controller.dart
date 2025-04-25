@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 class IndividualController extends GetxController {
   RxString name = ''.obs;
+  RxString avatar = ''.obs;
 
   @override
   void onInit() {
