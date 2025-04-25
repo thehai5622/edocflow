@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:edocflow/Component/custom_bottomsheet.dart';
 import 'package:edocflow/Controller/dashboard_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Route/app_page.dart';
@@ -28,6 +29,7 @@ class Dashboard extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColor.subMain,
         resizeToAvoidBottomInset: false,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         extendBody: true,
         body: Obx(() {
           switch (controller.currentIndex.value) {
@@ -75,7 +77,7 @@ class Dashboard extends StatelessWidget {
                               width: 25,
                               colorFilter: controller.currentIndex.value == 0
                                   ? ColorFilter.mode(
-                                      AppColor.fourthMain, BlendMode.srcIn)
+                                      AppColor.primary, BlendMode.srcIn)
                                   : null,
                             ),
                             Text(
@@ -84,7 +86,7 @@ class Dashboard extends StatelessWidget {
                               style: controller.currentIndex.value == 0
                                   ? TextStyle(
                                       fontSize: DeviceHelper.getFontSize(15),
-                                      color: AppColor.fourthMain,
+                                      color: AppColor.primary,
                                       fontWeight: FontWeight.w700)
                                   : TextStyle(
                                       fontSize: DeviceHelper.getFontSize(15),
@@ -96,7 +98,7 @@ class Dashboard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Trang sổ giao dịch
+                  // Văn bản đến
                   Expanded(
                     child: GestureDetector(
                       onTap: () => controller.changePage(1),
@@ -111,16 +113,16 @@ class Dashboard extends StatelessWidget {
                               width: 25,
                               colorFilter: controller.currentIndex.value == 1
                                   ? ColorFilter.mode(
-                                      AppColor.fourthMain, BlendMode.srcIn)
+                                      AppColor.primary, BlendMode.srcIn)
                                   : null,
                             ),
                             Text(
-                              'Sổ giao dịch',
+                              'Văn bản đến',
                               textAlign: TextAlign.center,
                               style: controller.currentIndex.value == 1
                                   ? TextStyle(
                                       fontSize: DeviceHelper.getFontSize(15),
-                                      color: AppColor.fourthMain,
+                                      color: AppColor.primary,
                                       fontWeight: FontWeight.w700)
                                   : TextStyle(
                                       fontSize: DeviceHelper.getFontSize(15),
@@ -132,8 +134,8 @@ class Dashboard extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  // Trang ngân sách
+                  const SizedBox(width: 20),
+                  // Văn bản đi
                   Expanded(
                     child: GestureDetector(
                       onTap: () => controller.changePage(2),
@@ -148,16 +150,16 @@ class Dashboard extends StatelessWidget {
                               width: 25,
                               colorFilter: controller.currentIndex.value == 2
                                   ? ColorFilter.mode(
-                                      AppColor.fourthMain, BlendMode.srcIn)
+                                      AppColor.primary, BlendMode.srcIn)
                                   : null,
                             ),
                             Text(
-                              'Ngân sách',
+                              'Văn bản đi',
                               textAlign: TextAlign.center,
                               style: controller.currentIndex.value == 2
                                   ? TextStyle(
                                       fontSize: DeviceHelper.getFontSize(15),
-                                      color: AppColor.fourthMain,
+                                      color: AppColor.primary,
                                       fontWeight: FontWeight.w700)
                                   : TextStyle(
                                       fontSize: DeviceHelper.getFontSize(15),
@@ -184,7 +186,7 @@ class Dashboard extends StatelessWidget {
                               width: 25,
                               colorFilter: controller.currentIndex.value == 3
                                   ? ColorFilter.mode(
-                                      AppColor.fourthMain, BlendMode.srcIn)
+                                      AppColor.primary, BlendMode.srcIn)
                                   : null,
                             ),
                             Text(
@@ -193,7 +195,7 @@ class Dashboard extends StatelessWidget {
                               style: controller.currentIndex.value == 3
                                   ? TextStyle(
                                       fontSize: DeviceHelper.getFontSize(15),
-                                      color: AppColor.fourthMain,
+                                      color: AppColor.primary,
                                       fontWeight: FontWeight.w700)
                                   : TextStyle(
                                       fontSize: DeviceHelper.getFontSize(15),
@@ -208,6 +210,17 @@ class Dashboard extends StatelessWidget {
                 ]),
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+            backgroundColor: AppColor.primary,
+            shape: const CircleBorder(),
+            onPressed: () {
+              CustomBottomsheet.show(context: context, child: Text('hehe'));
+            },
+            child: Icon(
+              Icons.add,
+              size: 30,
+              color: AppColor.white,
+            )),
       ),
     );
   }
@@ -254,7 +267,7 @@ class Dashboard extends StatelessWidget {
                       "Hủy bỏ",
                       style: TextStyle(
                         fontSize: DeviceHelper.getFontSize(17),
-                        color: AppColor.fourthMain,
+                        color: AppColor.primary,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -262,7 +275,7 @@ class Dashboard extends StatelessWidget {
                   const SizedBox(width: 20),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColor.fourthMain,
+                      backgroundColor: AppColor.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),

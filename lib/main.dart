@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         ],
         title: 'EDocFlow',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: AppColor.fourthMain),
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColor.primary),
           useMaterial3: true,
           appBarTheme: AppBarTheme(
             titleSpacing: 20,

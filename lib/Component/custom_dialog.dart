@@ -50,7 +50,7 @@ class CustomDialog {
                       "Hủy bỏ",
                       style: TextStyle(
                         fontSize: DeviceHelper.getFontSize(15),
-                        color: AppColor.fourthMain,
+                        color: AppColor.primary,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -58,7 +58,7 @@ class CustomDialog {
                   const SizedBox(width: 20),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColor.fourthMain,
+                      backgroundColor: AppColor.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),

@@ -102,7 +102,7 @@ class EditField extends StatelessWidget {
               child: Obx(
                 () => ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColor.fourthMain,
+                    backgroundColor: AppColor.primary,
                     minimumSize: const Size(double.infinity, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),

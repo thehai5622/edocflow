@@ -1,6 +1,9 @@
+import 'package:edocflow/Component/custom_dialog.dart';
 import 'package:edocflow/Controller/Individual/individual_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
+import 'package:edocflow/Service/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class Individual extends StatelessWidget {
@@ -12,18 +15,114 @@ class Individual extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.subMain,
-      // appBar: ,
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(Get.width * 0.4),
+          child: SafeArea(
+            child: Container(
+              color: AppColor.primary,
+              height: double.infinity,
+              width: double.infinity,
+              child: Image.asset(
+                "assets/images/document.png",
+                fit: BoxFit.cover,
+              ),
+            ),
+          )),
       body: Column(
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Obx(
-              () => Text(
-                controller.name.value,
+            child: SizedBox(
+              width: double.infinity,
+              child: Obx(
+                () => Text(
+                  controller.name.value,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.text1),
+                ),
               ),
             ),
-          )
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              color: AppColor.white,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              children: [
+                _itemRow(
+                    title: "Hồ sơ cá nhân", icon: "assets/icons/user-edit.svg"),
+                _itemRow(
+                  title: "Đổi mật khẩu",
+                  icon: "assets/icons/shield-security.svg",
+                  // onTap: () => Get.toNamed(Routes.changePass),
+                ),
+                _itemRow(
+                  title: "Đăng xuất",
+                  icon: "assets/icons/logout.svg",
+                  onTap: () => CustomDialog.show(
+                    context: context,
+                    title: "Đăng xuất",
+                    content: "Bạn có chắc muốn đăng xuất khỏi ứng dụng?",
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Auth.backLogin(true);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  GestureDetector _itemRow({
+    required String title,
+    required String icon,
+    void Function()? onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        decoration: BoxDecoration(
+            border:
+                Border(bottom: BorderSide(width: 2, color: AppColor.subMain))),
+        child: Row(
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  SvgPicture.asset(icon,
+                      height: 20,
+                      width: 20,
+                      colorFilter: ColorFilter.mode(
+                          AppColor.primary, BlendMode.srcIn)),
+                  const SizedBox(width: 12),
+                  Text(
+                    title,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: AppColor.text1),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 12),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 18,
+              color: AppColor.primary,
+            )
+          ],
+        ),
       ),
     );
   }

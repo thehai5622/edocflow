@@ -13,7 +13,7 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.fourthMain,
+      backgroundColor: AppColor.primary,
       body: Form(
         key: _formKey,
         autovalidateMode: AutovalidateMode.onUnfocus,
@@ -65,7 +65,7 @@ class Login extends StatelessWidget {
                                   fontSize: DeviceHelper.getFontSize(14),
                                   fontStyle: FontStyle.normal,
                                   fontWeight: FontWeight.w500,
-                                  color: AppColor.fourthMain,
+                                  color: AppColor.primary,
                                 ),
                               ),
                               floatingLabelStyle: TextStyle(
@@ -121,7 +121,7 @@ class Login extends StatelessWidget {
                                   fontSize: DeviceHelper.getFontSize(14),
                                   fontStyle: FontStyle.normal,
                                   fontWeight: FontWeight.w500,
-                                  color: AppColor.fourthMain,
+                                  color: AppColor.primary,
                                 ),
                               ),
                               border: OutlineInputBorder(
@@ -158,7 +158,7 @@ class Login extends StatelessWidget {
                             child: Obx(
                               () => ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColor.fourthMain,
+                                  backgroundColor: AppColor.primary,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(14),
                                   ),

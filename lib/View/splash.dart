@@ -12,7 +12,7 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: AppColor.fourthMain,
+        color: AppColor.primary,
       ),
     );
   }

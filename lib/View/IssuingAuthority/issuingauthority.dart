@@ -36,7 +36,7 @@ class IssuingAuthority extends StatelessWidget {
           ? Center(
               child: CircularProgressIndicator(
                 strokeWidth: 2,
-                color: AppColor.fourthMain,
+                color: AppColor.primary,
               ),
             )
           : Column(
@@ -76,7 +76,7 @@ class IssuingAuthority extends StatelessWidget {
               ],
             )),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColor.fourthMain,
+        backgroundColor: AppColor.primary,
         elevation: 0,
         shape: const CircleBorder(),
         onPressed: () => Get.toNamed(Routes.createIa),
@@ -192,7 +192,7 @@ class IssuingAuthority extends StatelessWidget {
               children: [
                 _actionItem(
                   icon: Icons.edit,
-                  bgColor: AppColor.fourthMain,
+                  bgColor: AppColor.primary,
                   onTap: () => Get.toNamed(Routes.editIa,
                       arguments: controller.collection[index]),
                 ),
@@ -256,7 +256,7 @@ class IssuingAuthority extends StatelessWidget {
             textAlign: TextAlign.right,
             style: TextStyle(
               fontSize: DeviceHelper.getFontSize(15),
-              color: isHightlight ? AppColor.fourthMain : AppColor.text1,
+              color: isHightlight ? AppColor.primary : AppColor.text1,
               fontWeight: FontWeight.w600,
             ),
           ),
