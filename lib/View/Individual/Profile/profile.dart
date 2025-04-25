@@ -1,4 +1,4 @@
-import 'package:edocflow/Controller/Profile/profile_controller.dart';
+import 'package:edocflow/Controller/Individual/Profile/profile_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Utils/device_helper.dart';
 import 'package:flutter/material.dart';

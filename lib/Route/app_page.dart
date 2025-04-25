@@ -7,7 +7,7 @@ import 'package:edocflow/View/IssuingAuthority/create_ia.dart';
 import 'package:edocflow/View/IssuingAuthority/edit_ia.dart';
 import 'package:edocflow/View/IssuingAuthority/issuingauthority.dart';
 import 'package:edocflow/View/Login/login.dart';
-import 'package:edocflow/View/Profile/profile.dart';
+import 'package:edocflow/View/Individual/Profile/profile.dart';
 import 'package:edocflow/View/TypeTemplateFile/create_ttf.dart';
 import 'package:edocflow/View/TypeTemplateFile/edit_ttf.dart';
 import 'package:edocflow/View/TypeTemplateFile/type_template_file.dart';
