@@ -12,7 +12,7 @@ class ChangePass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.subMain,
+      backgroundColor: AppColor.background,
       appBar: AppBar(
         automaticallyImplyLeading: true,
         backgroundColor: AppColor.main,

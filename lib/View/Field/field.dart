@@ -17,7 +17,7 @@ class Field extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.subMain,
+      backgroundColor: AppColor.background,
       appBar: AppBar(
         automaticallyImplyLeading: true,
         backgroundColor: AppColor.main,
@@ -110,18 +110,18 @@ class Field extends StatelessWidget {
           prefixIcon: Icon(Icons.search, color: AppColor.text1, size: 20),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),
-            borderSide: BorderSide(width: 1, color: AppColor.subMain),
+            borderSide: BorderSide(width: 1, color: AppColor.background),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),
-            borderSide: BorderSide(width: 1, color: AppColor.subMain),
+            borderSide: BorderSide(width: 1, color: AppColor.background),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),
-            borderSide: BorderSide(width: 1, color: AppColor.subMain),
+            borderSide: BorderSide(width: 1, color: AppColor.background),
           ),
           filled: true,
-          fillColor: AppColor.subMain,
+          fillColor: AppColor.background,
           hintStyle: TextStyle(
             color: AppColor.grey,
             fontSize: DeviceHelper.getFontSize(15),
@@ -168,7 +168,7 @@ class Field extends StatelessWidget {
                   border: Border(
                       bottom: BorderSide(
                 width: 2,
-                color: AppColor.subMain,
+                color: AppColor.background,
               ))),
               child: Column(
                 children: [

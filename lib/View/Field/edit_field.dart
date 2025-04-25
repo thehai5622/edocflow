@@ -13,7 +13,7 @@ class EditField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.subMain,
+      backgroundColor: AppColor.background,
       appBar: AppBar(
         automaticallyImplyLeading: true,
         backgroundColor: AppColor.main,
@@ -61,12 +61,12 @@ class EditField extends StatelessWidget {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(6),
                               borderSide:
-                                  BorderSide(width: 1, color: AppColor.subMain),
+                                  BorderSide(width: 1, color: AppColor.background),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(6),
                               borderSide:
-                                  BorderSide(width: 1, color: AppColor.subMain),
+                                  BorderSide(width: 1, color: AppColor.background),
                             ),
                             filled: true,
                             fillColor: const Color(0xFFFFFFFF),

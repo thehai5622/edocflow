@@ -27,7 +27,7 @@ class Dashboard extends StatelessWidget {
         _showDialog(context);
       },
       child: Scaffold(
-        backgroundColor: AppColor.subMain,
+        backgroundColor: AppColor.background,
         resizeToAvoidBottomInset: false,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         extendBody: true,

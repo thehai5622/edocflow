@@ -14,7 +14,7 @@ class Individual extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.subMain,
+      backgroundColor: AppColor.background,
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(Get.width * 0.4),
           child: SafeArea(
@@ -93,7 +93,7 @@ class Individual extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         decoration: BoxDecoration(
             border:
-                Border(bottom: BorderSide(width: 2, color: AppColor.subMain))),
+                Border(bottom: BorderSide(width: 2, color: AppColor.background))),
         child: Row(
           children: [
             Expanded(
