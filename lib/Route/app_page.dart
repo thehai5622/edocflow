@@ -1,6 +1,7 @@
 import 'package:edocflow/View/Field/create_field.dart';
 import 'package:edocflow/View/Field/edit_field.dart';
 import 'package:edocflow/View/Field/field.dart';
+import 'package:edocflow/View/Individual/ChangePass/ChangePass.dart';
 import 'package:edocflow/View/Individual/individual.dart';
 import 'package:edocflow/View/IssuingAuthority/create_ia.dart';
 import 'package:edocflow/View/IssuingAuthority/edit_ia.dart';
@@ -35,5 +36,6 @@ class AppPage {
     GetPage(name: Routes.createIa, page: () => CreateIssuingAuthority()),
     GetPage(name: Routes.editIa, page: () => EditIssuingAuthority()),
     GetPage(name: Routes.individual, page: () => Individual()),
+    GetPage(name: Routes.changePass, page: () => ChangePass()),
   ];
 }
