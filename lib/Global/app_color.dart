@@ -15,4 +15,5 @@ class AppColor {
   static Color grey = const Color(0xFF8496AC);
   static Color text1  = const Color(0xFF29303C);
   static Color textHint  = const Color(0xFF788A9B);
+  static Color boder = const Color(0xFFECEFF3);
 }

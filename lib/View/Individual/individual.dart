@@ -1,7 +1,9 @@
 import 'package:edocflow/Component/custom_dialog.dart';
 import 'package:edocflow/Controller/Individual/individual_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
+import 'package:edocflow/Route/app_page.dart';
 import 'package:edocflow/Service/auth.dart';
+import 'package:edocflow/Utils/device_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -39,7 +41,7 @@ class Individual extends StatelessWidget {
                   controller.name.value,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: 24,
+                      fontSize: DeviceHelper.getFontSize(24),
                       fontWeight: FontWeight.w600,
                       color: AppColor.text1),
                 ),
@@ -59,7 +61,7 @@ class Individual extends StatelessWidget {
                 _itemRow(
                   title: "Đổi mật khẩu",
                   icon: "assets/icons/shield-security.svg",
-                  // onTap: () => Get.toNamed(Routes.changePass),
+                  onTap: () => Get.toNamed(Routes.changePass),
                 ),
                 _itemRow(
                   title: "Đăng xuất",
@@ -108,7 +110,7 @@ class Individual extends StatelessWidget {
                   Text(
                     title,
                     style: TextStyle(
-                        fontSize: 16,
+                        fontSize: DeviceHelper.getFontSize(16),
                         fontWeight: FontWeight.w500,
                         color: AppColor.text1),
                   ),
