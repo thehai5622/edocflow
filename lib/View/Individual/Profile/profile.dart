@@ -26,6 +26,19 @@ class Profile extends StatelessWidget {
           ),
         ),
       ),
+      body: ListView(
+        children: [
+          Align(
+              alignment: Alignment.center,
+              child: Image.network(
+                "${controller.baseUrl}${controller.avatar.value}",
+                height: Get.width * 0.2,
+                width: Get.width * 0.2,
+                errorBuilder: (context, error, stackTrace) =>
+                    Icon(Icons.person, size: Get.width * 0.2),
+              ))
+        ],
+      ),
     );
   }
 }

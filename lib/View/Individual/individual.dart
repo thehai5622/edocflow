@@ -43,10 +43,10 @@ class Individual extends StatelessWidget {
                       borderRadius: BorderRadius.circular(50),
                       child: Image.network(
                         controller.avatar.value,
-                        height: 70,
-                        width: 70,
+                        height: Get.width * 0.2,
+                        width: Get.width * 0.2,
                         errorBuilder: (context, error, stackTrace) =>
-                            const Icon(Icons.person, size: 70),
+                            Icon(Icons.person, size: Get.width * 0.2),
                       ),
                     ),
                   ),
