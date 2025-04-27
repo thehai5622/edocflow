@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:edocflow/Component/custom_bottomsheet.dart';
 import 'package:edocflow/Controller/dashboard_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
-import 'package:edocflow/Route/app_page.dart';
 import 'package:edocflow/Utils/device_helper.dart';
 import 'package:edocflow/View/Individual/individual.dart';
 import 'package:flutter/material.dart';
@@ -34,13 +33,7 @@ class Dashboard extends StatelessWidget {
         body: Obx(() {
           switch (controller.currentIndex.value) {
             case 0:
-              return Center(
-                child: ElevatedButton(
-                    onPressed: () async {
-                      Get.toNamed(Routes.issuingAuthority);
-                    },
-                    child: const Text('chuyển page')),
-              );
+              return Container();
             case 1:
               return Container();
             case 2:
