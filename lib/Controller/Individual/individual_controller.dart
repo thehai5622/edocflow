@@ -12,7 +12,10 @@ class IndividualController extends GetxController {
   void onInit() {
     super.onInit();
     Utils.getStringValueWithKey(Constant.NAME).then((value) {
-      name.value = baseUrl + value;
+      name.value = value;
+    });
+    Utils.getStringValueWithKey(Constant.AVATAR).then((value) {
+      avatar.value = baseUrl + value;
     });
   }
 }

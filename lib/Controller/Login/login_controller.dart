@@ -16,7 +16,6 @@ class LoginController extends GetxController {
       var response = await APICaller.getInstance().get('');
 
       if (response != null) {
-        print(response);
         await Auth.login(
           userName: usermame.text.trim(),
           password: password.text.trim(),

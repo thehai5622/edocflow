@@ -30,12 +30,20 @@ class Profile extends StatelessWidget {
         children: [
           Align(
               alignment: Alignment.center,
-              child: Image.network(
-                "${controller.baseUrl}${controller.avatar.value}",
+              child: Container(
                 height: Get.width * 0.2,
                 width: Get.width * 0.2,
-                errorBuilder: (context, error, stackTrace) =>
-                    Icon(Icons.person, size: Get.width * 0.2),
+                decoration: BoxDecoration(
+                  color: AppColor.white,
+                  shape: BoxShape.circle,
+                ),
+                child: Image.network(
+                  "${controller.baseUrl}${controller.avatar.value}",
+                  height: Get.width * 0.2,
+                  width: Get.width * 0.2,
+                  errorBuilder: (context, error, stackTrace) =>
+                      Icon(Icons.person, size: Get.width * 0.2),
+                ),
               ))
         ],
       ),

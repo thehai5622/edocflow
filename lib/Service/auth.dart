@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:edocflow/Global/constant.dart';
 import 'package:edocflow/Global/global_value.dart';
 import 'package:edocflow/Route/app_page.dart';
@@ -38,7 +36,6 @@ class Auth {
     try {
       var response =
           await APICaller.getInstance().post('v1/user/login', body: param);
-      print(jsonEncode(response));
       if (response != null) {
         GlobalValue.getInstance()
             .setToken('Bearer ${response['data']['access_token']}');
