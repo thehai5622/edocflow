@@ -37,6 +37,8 @@ class MyApp extends StatelessWidget {
         ],
         title: 'EDocFlow',
         theme: ThemeData(
+          primaryColorLight: AppColor.primary,
+          primaryColor: AppColor.primary,
           colorScheme: ColorScheme.fromSeed(seedColor: AppColor.primary),
           useMaterial3: true,
           appBarTheme: AppBarTheme(

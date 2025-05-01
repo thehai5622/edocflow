@@ -16,7 +16,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.background,
+      backgroundColor: AppColor.white,
       appBar: AppBar(
         automaticallyImplyLeading: true,
         backgroundColor: AppColor.main,
@@ -82,8 +82,57 @@ class Profile extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  CustomField.textformfield(
-                    enabled: false
+                  Obx(
+                    () => CustomField.textFormfield(
+                      controller: controller.name,
+                      enabled: controller.isEdit.value,
+                      label: "Tên",
+                      hintText: "Nguyễn Văn A",
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Vui lòng nhập tên!';
+                        }
+                        return null;
+                      }
+                    ).marginSymmetric(horizontal: 16, vertical: 8),
+                  ),
+                  Obx(
+                    () => CustomField.dateField(
+                      context: context,
+                      controller: controller.birthDay,
+                      enabled: controller.isEdit.value,
+                      label: "Ngày sinh",
+                      // hintText: "Nguyễn Văn A",
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Vui lòng nhập tên!';
+                        }
+                        return null;
+                      }
+                    ).marginSymmetric(horizontal: 16, vertical: 8),
+                  ),
+                  Obx(
+                    () => CustomField.textFormfield(
+                      controller: controller.phone,
+                      enabled: controller.isEdit.value,
+                      keyboardType: TextInputType.number,
+                      label: "Số điện thoại",
+                      hintText: "09876543231",
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Vui lòng nhập SĐT liên hệ!';
+                        }
+                        return null;
+                      }
+                    ).marginSymmetric(horizontal: 16, vertical: 8),
+                  ),
+                  Obx(
+                    () => CustomField.textFormfield(
+                      controller: controller.email,
+                      enabled: controller.isEdit.value,
+                      label: "Email",
+                      hintText: "abc@xyz.com",
+                    ).marginSymmetric(horizontal: 16, vertical: 8),
                   ),
                 ],
               ),
