@@ -17,6 +17,7 @@ class ProfileController extends GetxController {
   Profile detail = Profile();
   TextEditingController name = TextEditingController();
   final FocusNode nameFocus = FocusNode();
+  RxInt gender = (-1).obs;
   TextEditingController birthDay = TextEditingController();
   TextEditingController phone = TextEditingController();
   final FocusNode phoneFocus = FocusNode();
@@ -51,6 +52,7 @@ class ProfileController extends GetxController {
 
   _setValue() {
     name.text = detail.name ?? '';
+    gender.value = detail.gender ?? -1;
     birthDay.text = TimeHelper.convertDateFormat(detail.birthDay, false);
     phone.text = detail.phone ?? '';
     email.text = detail.email ?? '';
@@ -60,6 +62,9 @@ class ProfileController extends GetxController {
     isWaitSubmit.value = true;
     try {
       isWaitSubmit.value = false;
+      APICaller.getInstance().postFile(file: avatarLocal.value).then((value) {
+        print(value);
+      });
     } catch (e) {
       isWaitSubmit.value = false;
       Utils.showSnackBar(title: 'Thông báo', message: '$e');

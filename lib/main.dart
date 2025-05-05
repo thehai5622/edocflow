@@ -39,6 +39,11 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColorLight: AppColor.primary,
           primaryColor: AppColor.primary,
+          textSelectionTheme: TextSelectionThemeData(
+            cursorColor: AppColor.primary,
+            selectionColor: AppColor.primary,
+            selectionHandleColor: AppColor.primary,
+          ),
           colorScheme: ColorScheme.fromSeed(seedColor: AppColor.primary),
           useMaterial3: true,
           appBarTheme: AppBarTheme(

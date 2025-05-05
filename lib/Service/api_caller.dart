@@ -235,48 +235,67 @@ class APICaller {
     return handleResponse(response);
   }
 
-  Future<dynamic> postFile(
-      {required String endpoint,
-      required File filePath,
-      required String type,
-      required String keyCert,
-      required String time}) async {
-    final uri = Uri.parse(BASE_URL + endpoint);
+  Future<dynamic> postFile({required File file}) async {
+    Uri uri = Uri.parse("${BASE_URL}v1/file/single-upload");
+    String token = GlobalValue.getInstance().getToken();
+    var frequestHeaders = {
+      ...requestHeaders,
+      'Authorization': token,
+    };
 
     final request = http.MultipartRequest('POST', uri);
-    request.files
-        .add(await http.MultipartFile.fromPath('ImageFiles', filePath.path));
-    request.fields['Type'] = type;
-    request.fields['keyCert'] = keyCert;
-    request.fields['time'] = time;
-    request.headers.addAll(requestHeaders);
+    request.files.add(await http.MultipartFile.fromPath('file', file.path));
+    // request.fields['Type'] = type;
+    request.headers.addAll(frequestHeaders);
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse).timeout(
       const Duration(seconds: 30),
       onTimeout: () {
-        return http.Response(
-            'Không kết nối được đến máy chủ, bạn vui lòng kiểm tra lại.', 408);
+        return http.Response('Không kết nối được đến máy chủ', 408);
       },
     );
-    bool code401 = response.statusCode == 401;
-    if (code401) {
-      Auth.backLogin(code401);
-      Utils.showSnackBar(title: 'Thông báo', message: 'Đã hết phiên đăng nhập');
+
+    if (response.statusCode ~/ 100 == 2) {
+      return jsonDecode(response.body);
     }
-    if (response.statusCode != 200) {
-      // Utils.showSnackBar(
-      //     title: TextByNation.getStringByKey('notification'),
-      //     message: response.body);
-      return null;
+
+    if (response.statusCode == 401) {
+      var refreshToken =
+          await Utils.getStringValueWithKey(Constant.REFRESH_TOKEN);
+      Uri uriRF = Uri.parse('${BASE_URL}v1/user/refresh-token');
+
+      final data = await http
+          .post(uriRF,
+              headers: frequestHeaders,
+              body: jsonEncode({"token": refreshToken}))
+          .timeout(timeout, onTimeout: onTimeout);
+
+      if (data.statusCode ~/ 100 == 2) {
+        final dataRF = jsonDecode(data.body);
+        token = 'Bearer ${dataRF['data']['access_token']}';
+        frequestHeaders['Authorization'] = token;
+        GlobalValue.getInstance().setToken(token);
+        Utils.saveStringWithKey(
+            Constant.ACCESS_TOKEN, dataRF['data']['access_token']);
+        Utils.saveStringWithKey(
+            Constant.REFRESH_TOKEN, dataRF['data']['refresh_token']);
+      } else {
+        Auth.backLogin(true);
+        Utils.showSnackBar(
+            title: 'Thông báo', message: "Có lỗi xảy ra chưa xác định!");
+      }
     }
-    if (jsonDecode(response.body)['error']['code'] != 0) {
-      Utils.showSnackBar(
-          title: 'Thông báo',
-          message: jsonDecode(response.body)['error']['message']);
-      return null;
-    }
-    return jsonDecode(response.body);
+
+    streamedResponse = await request.send();
+    response = await http.Response.fromStream(streamedResponse).timeout(
+      const Duration(seconds: 30),
+      onTimeout: () {
+        return http.Response('Không kết nối được đến máy chủ', 408);
+      },
+    );
+
+    return handleResponse(response);
   }
 
   Future<dynamic> postFiles(String endpoint, List<File> filePath) async {

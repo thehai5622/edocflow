@@ -84,47 +84,70 @@ class Profile extends StatelessWidget {
                   const SizedBox(height: 12),
                   Obx(
                     () => CustomField.textFormfield(
-                      controller: controller.name,
-                      enabled: controller.isEdit.value,
-                      label: "Tên",
-                      hintText: "Nguyễn Văn A",
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Vui lòng nhập tên!';
-                        }
-                        return null;
-                      }
-                    ).marginSymmetric(horizontal: 16, vertical: 8),
+                        controller: controller.name,
+                        enabled: controller.isEdit.value,
+                        label: "Tên",
+                        hintText: "Nguyễn Văn A",
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Vui lòng nhập tên!';
+                          }
+                          return null;
+                        }).marginSymmetric(horizontal: 16, vertical: 8),
                   ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          "Giới tính",
+                          style: CustomField.labelStyle,
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      Obx(() => CustomField.radioButton(
+                          label: "Nam",
+                          enabled: controller.isEdit.value,
+                          value: 1,
+                          groupValue: controller.gender.value,
+                          onChanged: (value) {
+                            if (value != controller.gender.value) {
+                              controller.gender.value = value;
+                            }
+                          })),
+                      const SizedBox(width: 20),
+                      Obx(() => CustomField.radioButton(
+                          label: "Nữ",
+                          enabled: controller.isEdit.value,
+                          value: 0,
+                          groupValue: controller.gender.value,
+                          onChanged: (value) {
+                            if (value != controller.gender.value) {
+                              controller.gender.value = value;
+                            }
+                          })),
+                    ],
+                  ).marginSymmetric(horizontal: 16, vertical: 8),
                   Obx(
                     () => CustomField.dateField(
-                      context: context,
-                      controller: controller.birthDay,
-                      enabled: controller.isEdit.value,
-                      label: "Ngày sinh",
-                      // hintText: "Nguyễn Văn A",
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Vui lòng nhập tên!';
-                        }
-                        return null;
-                      }
-                    ).marginSymmetric(horizontal: 16, vertical: 8),
+                            context: context,
+                            controller: controller.birthDay,
+                            enabled: controller.isEdit.value,
+                            label: "Ngày sinh")
+                        .marginSymmetric(horizontal: 16, vertical: 8),
                   ),
                   Obx(
                     () => CustomField.textFormfield(
-                      controller: controller.phone,
-                      enabled: controller.isEdit.value,
-                      keyboardType: TextInputType.number,
-                      label: "Số điện thoại",
-                      hintText: "09876543231",
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Vui lòng nhập SĐT liên hệ!';
-                        }
-                        return null;
-                      }
-                    ).marginSymmetric(horizontal: 16, vertical: 8),
+                        controller: controller.phone,
+                        enabled: controller.isEdit.value,
+                        keyboardType: TextInputType.number,
+                        label: "Số điện thoại",
+                        hintText: "09876543231",
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Vui lòng nhập SĐT liên hệ!';
+                          }
+                          return null;
+                        }).marginSymmetric(horizontal: 16, vertical: 8),
                   ),
                   Obx(
                     () => CustomField.textFormfield(
