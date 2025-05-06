@@ -18,4 +18,12 @@ class IndividualController extends GetxController {
       avatar.value = baseUrl + value;
     });
   }
+
+  updateName(String name) {
+    this.name.value = name;
+  }
+
+  updateAvatar(String avatar) {
+    this.avatar.value = baseUrl + avatar;
+  }
 }

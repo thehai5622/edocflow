@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:edocflow/Controller/Individual/individual_controller.dart';
+import 'package:edocflow/Global/constant.dart';
 import 'package:edocflow/Model/profile.dart';
 import 'package:edocflow/Service/api_caller.dart';
 import 'package:edocflow/Utils/time_helper.dart';
@@ -56,14 +58,54 @@ class ProfileController extends GetxController {
     birthDay.text = TimeHelper.convertDateFormat(detail.birthDay, false);
     phone.text = detail.phone ?? '';
     email.text = detail.email ?? '';
+    avatar.value = detail.avatar ?? '';
   }
 
   submit() {
     isWaitSubmit.value = true;
     try {
       isWaitSubmit.value = false;
+      if (avatarLocal.value.path.isEmpty) {
+        APICaller.getInstance().put('v1/user/me', body: {
+          'name': name.text.trim(),
+          'gender': gender.value == -1 ? null : gender.value,
+          'birthDay': TimeHelper.convertDateFormat(birthDay.text, true),
+          'phone': phone.text.trim(),
+          'email': email.text.trim(),
+          'avatar': detail.avatar,
+        }).then((response) {
+          if (Get.isRegistered<IndividualController>()) {
+            Get.find<IndividualController>().updateName(name.text.trim());
+          }
+          Utils.saveStringWithKey(Constant.NAME, name.text.trim());
+          Get.back();
+          Utils.showSnackBar(title: "Thông báo", message: response['message']);
+          return;
+        });
+      }
       APICaller.getInstance().postFile(file: avatarLocal.value).then((value) {
-        print(value);
+        APICaller.getInstance().put('v1/user/me', body: {
+          'name': name.text.trim(),
+          'gender': gender.value == -1 ? null : gender.value,
+          'birthDay': TimeHelper.convertDateFormat(birthDay.text, true),
+          'phone': phone.text.trim(),
+          'email': email.text.trim(),
+          'avatar': value['file']
+        }).then((response) {
+          if (response == null) {
+            APICaller.getInstance().delete('v1/file/${value['file']}');
+          } else {
+            if (Get.isRegistered<IndividualController>()) {
+              Get.find<IndividualController>().updateAvatar(value['file']);
+              Get.find<IndividualController>().updateName(name.text.trim());
+            }
+            Utils.saveStringWithKey(Constant.NAME, name.text.trim());
+            Utils.saveStringWithKey(Constant.AVATAR, value['file']);
+            Get.back();
+            Utils.showSnackBar(
+                title: "Thông báo", message: response['message']);
+          }
+        });
       });
     } catch (e) {
       isWaitSubmit.value = false;

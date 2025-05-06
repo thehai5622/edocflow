@@ -45,6 +45,7 @@ class Individual extends StatelessWidget {
                         controller.avatar.value,
                         height: Get.width * 0.2,
                         width: Get.width * 0.2,
+                        fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
                             Icon(Icons.person, size: Get.width * 0.2),
                       ),
