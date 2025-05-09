@@ -61,7 +61,7 @@ class IssuingAuthority extends StatelessWidget {
                   child: Obx(
                     () => ListView.separated(
                       controller: controller.scrollController,
-                      padding: const EdgeInsets.only(bottom: 20),
+                      padding: const EdgeInsets.only(bottom: 100),
                       physics: const AlwaysScrollableScrollPhysics(),
                       separatorBuilder: (context, index) => const SizedBox(
                         height: 10,
@@ -174,8 +174,13 @@ class IssuingAuthority extends StatelessWidget {
                 children: [
                   _infoRow(
                       title: "Tên cơ quan ban hành:",
-                      value: controller.collection[index].name ?? "",
+                      value: controller.collection[index].name ?? "--",
                       isHightlight: true),
+                  _infoRow(
+                      title: "Cấp hành chính:",
+                      value: controller
+                              .collection[index].administrativeLevel?.name ??
+                          "--"),
                   _infoRow(
                       title: "Khởi tạo:",
                       value: Utils.formatDate(
