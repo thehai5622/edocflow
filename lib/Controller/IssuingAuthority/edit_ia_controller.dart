@@ -22,6 +22,8 @@ class EditIssuingAuthorityController extends GetxController {
     super.onInit();
     item = Get.arguments;
     name.text = item.name ?? '';
+    aLName.text = item.administrativeLevel?.name ?? '';
+    selectedALUUID = item.administrativeLevel?.uuid ?? -1;
   }
 
   void back() {
@@ -61,6 +63,7 @@ class EditIssuingAuthorityController extends GetxController {
     try {
       final param = {
         "name": name.text.trim(),
+        "administrativelevel_id": selectedALUUID == -1 ? null : selectedALUUID
       };
       APICaller.getInstance()
           .put('v1/issuingauthority/${item.uuid}', body: param)

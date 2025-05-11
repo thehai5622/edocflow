@@ -73,6 +73,12 @@ class EditIssuingAuthority extends StatelessWidget {
                           searchController: controller.searchAL,
                           enabled: true,
                           hintText: "Chọn cấp hành chính",
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Vui lòng chọn cấp hành chính";
+                            }
+                            return null;
+                          },
                           child: Obx(
                             () => controller.isLoadingAL.value == true
                                 ? Center(
