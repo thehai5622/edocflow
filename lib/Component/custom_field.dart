@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:edocflow/Component/custom_bottomsheet.dart';
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Utils/device_helper.dart';
 import 'package:edocflow/Utils/time_helper.dart';
@@ -41,16 +44,18 @@ class CustomField {
     ),
   );
 
-  static TextFormField textFormfield({
-    TextEditingController? controller,
-    String? Function(String?)? validator,
-    String? hintText,
-    bool? enabled,
-    String? label,
-    FocusNode? focusNode,
-    List<TextInputFormatter>? inputFormatters,
-    TextInputType? keyboardType,
-  }) {
+  static TextFormField textFormfield(
+      {TextEditingController? controller,
+      String? Function(String?)? validator,
+      String? hintText,
+      bool enabled = true,
+      String? label,
+      FocusNode? focusNode,
+      List<TextInputFormatter>? inputFormatters,
+      TextInputType? keyboardType,
+      Widget? prefixIcon,
+      Widget? suffixIcon,
+      void Function(String)? onChanged}) {
     return TextFormField(
       style: _textStyle,
       controller: controller,
@@ -59,11 +64,14 @@ class CustomField {
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
       cursorColor: AppColor.primary,
+      onChanged: onChanged,
       decoration: InputDecoration(
-        label: Text(
-          label ?? "",
-          style: labelStyle,
-        ),
+        label: label == null
+            ? null
+            : Text(
+                label,
+                style: labelStyle,
+              ),
         border: _outlineBoder,
         focusColor: AppColor.primary,
         enabledBorder: _outlineBoder,
@@ -79,6 +87,8 @@ class CustomField {
           left: 16,
           right: 16,
         ),
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
       ),
       validator: validator,
     );
@@ -171,6 +181,106 @@ class CustomField {
         ),
       ),
       onChanged: (value) => {},
+      validator: validator,
+    );
+  }
+
+  static TextFormField dropDownField({
+    required BuildContext context,
+    void Function()? onTap,
+    void Function({bool isRefresh, bool isClearData})? funcGetAndSearch,
+    TextEditingController? controller,
+    TextEditingController? searchController,
+    required Widget child,
+    bool enabled = true,
+    String? hintText,
+    FocusNode? focusNode,
+    String? label,
+    String? Function(String?)? validator,
+  }) {
+    Timer? debounceTimer;
+
+    return TextFormField(
+      style: _textStyle,
+      onTap: enabled == true
+          ? () {
+              FocusManager.instance.primaryFocus?.unfocus();
+              onTap?.call();
+              CustomBottomsheet.show(
+                context: context,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  height: MediaQuery.of(context).size.height * 0.55,
+                  child: Column(
+                    children: [
+                      textFormfield(
+                        controller: searchController,
+                        hintText: "Nhập từ khóa tìm kiếm",
+                        enabled: true,
+                        onChanged: funcGetAndSearch == null
+                            ? null
+                            : (value) {
+                                if (debounceTimer != null) {
+                                  debounceTimer!.cancel();
+                                }
+                                debounceTimer = Timer(
+                                    const Duration(milliseconds: 500), () {
+                                  funcGetAndSearch(
+                                      isClearData: true, isRefresh: true);
+                                });
+                              },
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: AppColor.text1,
+                          size: 20,
+                        ),
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(50),
+                        ],
+                        keyboardType: TextInputType.text,
+                      ),
+                      const SizedBox(height: 16),
+                      Expanded(
+                        child: child,
+                      )
+                    ],
+                  ),
+                ),
+              );
+            }
+          : null,
+      controller: controller,
+      readOnly: true,
+      enabled: enabled,
+      focusNode: focusNode,
+      cursorColor: AppColor.primary,
+      decoration: InputDecoration(
+        label: label == null
+            ? null
+            : Text(
+                label,
+                style: labelStyle,
+              ),
+        border: _outlineBoder,
+        focusColor: AppColor.primary,
+        enabledBorder: _outlineBoder,
+        disabledBorder: _outlineBoder,
+        errorBorder: _outlineBoder,
+        focusedBorder: _outlineBoder,
+        filled: true,
+        fillColor: enabled == true ? AppColor.white : AppColor.boder,
+        errorStyle: _errorStyle,
+        hintStyle: _hintStyle,
+        hintText: hintText,
+        contentPadding: const EdgeInsets.only(
+          left: 16,
+          right: 16,
+        ),
+        suffixIcon: const Icon(
+          Icons.keyboard_arrow_down_rounded,
+          color: Color(0xFF777E90),
+        ),
+      ),
       validator: validator,
     );
   }

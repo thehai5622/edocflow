@@ -1,3 +1,5 @@
+import 'package:edocflow/Component/custom_field.dart';
+import 'package:edocflow/Component/custom_listview.dart';
 import 'package:edocflow/Controller/IssuingAuthority/edit_ia_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Utils/device_helper.dart';
@@ -47,45 +49,62 @@ class EditIssuingAuthority extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Column(
                       children: [
-                        _titleForm(title: "Tên cơ quan ban hành", isRequired: true)
+                        _titleForm(
+                                title: "Tên cơ quan ban hành", isRequired: true)
                             .marginSymmetric(horizontal: 20),
-                        TextFormField(
+                        CustomField.textFormfield(
                           controller: controller.name,
-                          style: TextStyle(
-                            fontSize: DeviceHelper.getFontSize(15),
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w500,
-                            color: AppColor.text1,
-                          ),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
-                              borderSide:
-                                  BorderSide(width: 1, color: AppColor.background),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
-                              borderSide:
-                                  BorderSide(width: 1, color: AppColor.background),
-                            ),
-                            filled: true,
-                            fillColor: const Color(0xFFFFFFFF),
-                            hintStyle: TextStyle(
-                              color: AppColor.grey,
-                              fontSize: DeviceHelper.getFontSize(15),
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            hintText: 'Nhập tên cơ quan ban hành',
-                            contentPadding:
-                                const EdgeInsets.only(left: 16, right: 16),
-                          ),
+                          enabled: true,
+                          hintText: 'Nhập tên cơ quan ban hành',
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Vui lòng nhập tên cơ quan ban hành";
                             }
                             return null;
                           },
+                        ).marginSymmetric(horizontal: 20, vertical: 6),
+                        _titleForm(title: "Cấp hành chính", isRequired: true)
+                            .marginSymmetric(horizontal: 20),
+                        CustomField.dropDownField(
+                          context: context,
+                          onTap: controller.initAL,
+                          funcGetAndSearch: controller.getALCollection,
+                          controller: controller.aLName,
+                          searchController: controller.searchAL,
+                          enabled: true,
+                          hintText: "Chọn cấp hành chính",
+                          child: Obx(
+                            () => controller.isLoadingAL.value == true
+                                ? Center(
+                                    child: CircularProgressIndicator(
+                                    color: AppColor.primary,
+                                    strokeWidth: 2,
+                                  ))
+                                : CustomListView.show(
+                                    itemCount: controller.aLCollection.length,
+                                    gap: 0,
+                                    itemBuilder: (context, index) =>
+                                        CustomListView.viewItem(
+                                      onTap: () {
+                                        if (controller.selectedALUUID !=
+                                            controller
+                                                .aLCollection[index].uuid) {
+                                          Get.back();
+                                          controller.aLName.text = controller
+                                                  .aLCollection[index].name ??
+                                              "--";
+                                          controller.selectedALUUID = controller
+                                                  .aLCollection[index].uuid ??
+                                              -1;
+                                        }
+                                      },
+                                      title:
+                                          controller.aLCollection[index].name,
+                                      isSelected: controller.selectedALUUID ==
+                                          controller.aLCollection[index].uuid,
+                                    ),
+                                  ),
+                          ),
                         ).marginSymmetric(horizontal: 20, vertical: 6),
                       ],
                     ),
