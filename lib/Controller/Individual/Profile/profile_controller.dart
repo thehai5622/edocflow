@@ -20,10 +20,14 @@ class ProfileController extends GetxController {
   TextEditingController name = TextEditingController();
   final FocusNode nameFocus = FocusNode();
   RxInt gender = (-1).obs;
+  TextEditingController permission = TextEditingController();
+  TextEditingController issuingAuthority = TextEditingController();
   TextEditingController birthDay = TextEditingController();
   TextEditingController phone = TextEditingController();
   final FocusNode phoneFocus = FocusNode();
   TextEditingController email = TextEditingController();
+  TextEditingController createdAt = TextEditingController();
+  TextEditingController updatedAt= TextEditingController();
 
   @override
   void onInit() {
@@ -55,10 +59,14 @@ class ProfileController extends GetxController {
   _setValue() {
     name.text = detail.name ?? '';
     gender.value = detail.gender ?? -1;
+    permission.text = detail.permission?.name ?? '';
+    issuingAuthority.text = detail.issuingAuthority?.name ?? '';
     birthDay.text = TimeHelper.convertDateFormat(detail.birthDay, false);
     phone.text = detail.phone ?? '';
     email.text = detail.email ?? '';
     avatar.value = detail.avatar ?? '';
+    createdAt.text = TimeHelper.convertDateFormat(detail.createdAt, false);
+    updatedAt.text = TimeHelper.convertDateFormat(detail.updatedAt, false);
   }
 
   submit() {

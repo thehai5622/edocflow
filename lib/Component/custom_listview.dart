@@ -7,7 +7,7 @@ class CustomListView {
     fontSize: DeviceHelper.getFontSize(15),
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w500,
-    color: AppColor.primary,
+    color: AppColor.text1,
   );
 
   static Widget show({

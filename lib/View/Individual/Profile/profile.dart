@@ -127,27 +127,40 @@ class Profile extends StatelessWidget {
                           })),
                     ],
                   ).marginSymmetric(horizontal: 16, vertical: 8),
+                  CustomField.textFormfield(
+                    controller: controller.permission,
+                    enabled: false,
+                    label: "Quyền hành",
+                    hintText: "Quyền",
+                  ).marginSymmetric(horizontal: 16, vertical: 8),
+                  CustomField.textFormfield(
+                    controller: controller.issuingAuthority,
+                    enabled: false,
+                    label: "Cơ quan",
+                    hintText: "Cơ quan",
+                  ).marginSymmetric(horizontal: 16, vertical: 8),
                   Obx(
                     () => CustomField.dateField(
-                            context: context,
-                            controller: controller.birthDay,
-                            enabled: controller.isEdit.value,
-                            label: "Ngày sinh")
-                        .marginSymmetric(horizontal: 16, vertical: 8),
+                      context: context,
+                      controller: controller.birthDay,
+                      enabled: controller.isEdit.value,
+                      label: "Ngày sinh",
+                    ).marginSymmetric(horizontal: 16, vertical: 8),
                   ),
                   Obx(
                     () => CustomField.textFormfield(
-                        controller: controller.phone,
-                        enabled: controller.isEdit.value,
-                        keyboardType: TextInputType.number,
-                        label: "Số điện thoại",
-                        hintText: "09876543231",
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Vui lòng nhập SĐT liên hệ!';
-                          }
-                          return null;
-                        }).marginSymmetric(horizontal: 16, vertical: 8),
+                      controller: controller.phone,
+                      enabled: controller.isEdit.value,
+                      keyboardType: TextInputType.number,
+                      label: "Số điện thoại",
+                      hintText: "09876543231",
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Vui lòng nhập SĐT liên hệ!';
+                        }
+                        return null;
+                      },
+                    ).marginSymmetric(horizontal: 16, vertical: 8),
                   ),
                   Obx(
                     () => CustomField.textFormfield(
@@ -157,6 +170,17 @@ class Profile extends StatelessWidget {
                       hintText: "abc@xyz.com",
                     ).marginSymmetric(horizontal: 16, vertical: 8),
                   ),
+                  CustomField.textFormfield(
+                    controller: controller.createdAt,
+                    enabled: false,
+                    label: "Khởi tạo lúc",
+                  ).marginSymmetric(horizontal: 16, vertical: 8),
+                  CustomField.textFormfield(
+                    controller: controller.updatedAt,
+                    enabled: false,
+                    label: "Cập nhật lần cuối",
+                  ).marginSymmetric(horizontal: 16, vertical: 8),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
