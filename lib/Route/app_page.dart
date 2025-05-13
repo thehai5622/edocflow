@@ -8,6 +8,7 @@ import 'package:edocflow/View/IssuingAuthority/edit_ia.dart';
 import 'package:edocflow/View/IssuingAuthority/issuingauthority.dart';
 import 'package:edocflow/View/Login/login.dart';
 import 'package:edocflow/View/Individual/Profile/profile.dart';
+import 'package:edocflow/View/TemplateFile/templatefile.dart';
 import 'package:edocflow/View/TypeTemplateFile/create_ttf.dart';
 import 'package:edocflow/View/TypeTemplateFile/edit_ttf.dart';
 import 'package:edocflow/View/TypeTemplateFile/type_template_file.dart';
@@ -39,5 +40,6 @@ class AppPage {
     GetPage(name: Routes.individual, page: () => Individual()),
     GetPage(name: Routes.changePass, page: () => ChangePass()),
     GetPage(name: Routes.profile, page: () => Profile()),
+    GetPage(name: Routes.templateFile, page: () => TemplateFile()),
   ];
 }

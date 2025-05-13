@@ -96,6 +96,11 @@ class Individual extends StatelessWidget {
                     onTap: () => Get.toNamed(Routes.typeTemplateFile),
                   ),
                   _itemRow(
+                    title: "File mẫu",
+                    icon: "assets/icons/shield-security.svg",
+                    onTap: () => Get.toNamed(Routes.templateFile),
+                  ),
+                  _itemRow(
                     title: "Đổi mật khẩu",
                     icon: "assets/icons/shield-security.svg",
                     onTap: () => Get.toNamed(Routes.changePass),
