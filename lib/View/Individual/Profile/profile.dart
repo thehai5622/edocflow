@@ -51,33 +51,51 @@ class Profile extends StatelessWidget {
                           }
                         });
                       },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Obx(
-                          () => controller.avatarLocal.value.path != ""
-                              ? Image.file(
-                                  controller.avatarLocal.value,
-                                  height: 200,
-                                  width: 200,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.network(
-                                  "${controller.baseUrl}${controller.avatar.value}",
-                                  height: 200,
-                                  width: 200,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      Container(
-                                    height: 200,
-                                    width: 200,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: AppColor.white,
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Obx(
+                              () => controller.avatarLocal.value.path != ""
+                                  ? Image.file(
+                                      controller.avatarLocal.value,
+                                      height: 200,
+                                      width: 200,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.network(
+                                      "${controller.baseUrl}${controller.avatar.value}",
+                                      height: 200,
+                                      width: 200,
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) =>
+                                              Container(
+                                        height: 200,
+                                        width: 200,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: AppColor.white,
+                                        ),
+                                        child:
+                                            const Icon(Icons.person, size: 180),
+                                      ),
                                     ),
-                                    child: const Icon(Icons.person, size: 180),
-                                  ),
-                                ),
-                        ),
+                            ),
+                          ),
+                          Obx(
+                            () => controller.isEdit.value ? Positioned(
+                              top: 75,
+                              left: 75,
+                              child: Icon(
+                                Icons.camera_enhance,
+                                color: AppColor.white,
+                                size: 50,
+                              ),
+                            ) : const SizedBox(),
+                          ),
+                        ],
                       ),
                     ),
                   ),
