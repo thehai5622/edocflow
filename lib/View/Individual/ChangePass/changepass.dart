@@ -1,3 +1,4 @@
+import 'package:edocflow/Component/custom_field.dart';
 import 'package:edocflow/Controller/Individual/ChangePass/changepass_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Utils/device_helper.dart';
@@ -44,63 +45,27 @@ class ChangePass extends StatelessWidget {
                         _labelForm(label: "Mật khẩu hiện tại", isRequired: true)
                             .marginSymmetric(vertical: 6),
                         Obx(
-                          () => TextFormField(
-                            style: TextStyle(
-                              fontSize: DeviceHelper.getFontSize(14),
-                              fontWeight: FontWeight.w700,
-                              color: AppColor.text1,
-                            ),
+                          () => CustomField.textFormfield(
                             controller: controller.oldPassword,
                             obscureText: controller.isHidePass.value,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide:
-                                    BorderSide(width: 1, color: AppColor.boder),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide:
-                                    BorderSide(width: 1, color: AppColor.boder),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide:
-                                    BorderSide(width: 1, color: AppColor.boder),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide:
-                                    BorderSide(width: 1, color: AppColor.boder),
-                              ),
-                              filled: true,
-                              fillColor: const Color(0xFFFFFFFF),
-                              hintStyle: TextStyle(
-                                fontSize: DeviceHelper.getFontSize(14),
-                                fontWeight: FontWeight.w700,
-                                color: AppColor.textHint,
-                              ),
-                              hintText: 'Nhập mật khẩu hiện tại',
-                              contentPadding:
-                                  const EdgeInsets.only(left: 16, right: 16),
-                              suffixIcon: InkWell(
-                                onTap: () {
-                                  controller.isHidePass.value =
-                                      !controller.isHidePass.value;
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 12,
-                                  ),
-                                  child: SvgPicture.asset(
-                                    controller.isHidePass.value
-                                        ? 'assets/icons/eye_slash.svg'
-                                        : 'assets/icons/eye.svg',
-                                    height: 20,
-                                    width: 20,
-                                    fit: BoxFit.cover,
-                                  ),
+                            hintText: 'Nhập mật khẩu hiện tại',
+                            suffixIcon: InkWell(
+                              onTap: () {
+                                controller.isHidePass.value =
+                                    !controller.isHidePass.value;
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 12,
+                                ),
+                                child: SvgPicture.asset(
+                                  controller.isHidePass.value
+                                      ? 'assets/icons/eye_slash.svg'
+                                      : 'assets/icons/eye.svg',
+                                  height: 20,
+                                  width: 20,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
@@ -115,63 +80,27 @@ class ChangePass extends StatelessWidget {
                         _labelForm(label: "Mật khẩu mới", isRequired: true)
                             .marginSymmetric(vertical: 6),
                         Obx(
-                          () => TextFormField(
-                            style: TextStyle(
-                              fontSize: DeviceHelper.getFontSize(14),
-                              fontWeight: FontWeight.w700,
-                              color: AppColor.text1,
-                            ),
+                          () => CustomField.textFormfield(
                             controller: controller.newPassword,
                             obscureText: controller.isHideNew.value,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide:
-                                    BorderSide(width: 1, color: AppColor.boder),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide:
-                                    BorderSide(width: 1, color: AppColor.boder),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide:
-                                    BorderSide(width: 1, color: AppColor.boder),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide:
-                                    BorderSide(width: 1, color: AppColor.boder),
-                              ),
-                              filled: true,
-                              fillColor: const Color(0xFFFFFFFF),
-                              hintStyle: TextStyle(
-                                fontSize: DeviceHelper.getFontSize(14),
-                                fontWeight: FontWeight.w700,
-                                color: AppColor.textHint,
-                              ),
-                              hintText: 'Nhập mật khẩu mới',
-                              contentPadding:
-                                  const EdgeInsets.only(left: 16, right: 16),
-                              suffixIcon: InkWell(
-                                onTap: () {
-                                  controller.isHideNew.value =
-                                      !controller.isHideNew.value;
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 12,
-                                  ),
-                                  child: SvgPicture.asset(
-                                    controller.isHideNew.value
-                                        ? 'assets/icons/eye_slash.svg'
-                                        : 'assets/icons/eye.svg',
-                                    height: 20,
-                                    width: 20,
-                                    fit: BoxFit.cover,
-                                  ),
+                            hintText: 'Nhập mật khẩu mới',
+                            suffixIcon: InkWell(
+                              onTap: () {
+                                controller.isHideNew.value =
+                                    !controller.isHideNew.value;
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 12,
+                                ),
+                                child: SvgPicture.asset(
+                                  controller.isHideNew.value
+                                      ? 'assets/icons/eye_slash.svg'
+                                      : 'assets/icons/eye.svg',
+                                  height: 20,
+                                  width: 20,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
@@ -188,63 +117,27 @@ class ChangePass extends StatelessWidget {
                         _labelForm(label: "Xác nhận mật khẩu", isRequired: true)
                             .marginSymmetric(vertical: 6),
                         Obx(
-                          () => TextFormField(
-                            style: TextStyle(
-                              fontSize: DeviceHelper.getFontSize(14),
-                              fontWeight: FontWeight.w700,
-                              color: AppColor.text1,
-                            ),
+                          () => CustomField.textFormfield(
                             controller: controller.confirmNewPassword,
                             obscureText: controller.isHideConfirm.value,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide:
-                                    BorderSide(width: 1, color: AppColor.boder),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide:
-                                    BorderSide(width: 1, color: AppColor.boder),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide:
-                                    BorderSide(width: 1, color: AppColor.boder),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
-                                borderSide:
-                                    BorderSide(width: 1, color: AppColor.boder),
-                              ),
-                              filled: true,
-                              fillColor: const Color(0xFFFFFFFF),
-                              hintStyle: TextStyle(
-                                fontSize: DeviceHelper.getFontSize(14),
-                                fontWeight: FontWeight.w700,
-                                color: AppColor.textHint,
-                              ),
-                              hintText: 'Nhập xác nhận mật khẩu mới',
-                              contentPadding:
-                                  const EdgeInsets.only(left: 16, right: 16),
-                              suffixIcon: InkWell(
-                                onTap: () {
-                                  controller.isHideConfirm.value =
-                                      !controller.isHideConfirm.value;
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 12,
-                                  ),
-                                  child: SvgPicture.asset(
-                                    controller.isHideConfirm.value
-                                        ? 'assets/icons/eye_slash.svg'
-                                        : 'assets/icons/eye.svg',
-                                    height: 20,
-                                    width: 20,
-                                    fit: BoxFit.cover,
-                                  ),
+                            hintText: 'Nhập xác nhận mật khẩu mới',
+                            suffixIcon: InkWell(
+                              onTap: () {
+                                controller.isHideConfirm.value =
+                                    !controller.isHideConfirm.value;
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 12,
+                                ),
+                                child: SvgPicture.asset(
+                                  controller.isHideConfirm.value
+                                      ? 'assets/icons/eye_slash.svg'
+                                      : 'assets/icons/eye.svg',
+                                  height: 20,
+                                  width: 20,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),

@@ -54,6 +54,7 @@ class CustomField {
       List<TextInputFormatter>? inputFormatters,
       TextInputType? keyboardType,
       Widget? prefixIcon,
+      bool obscureText = false,
       Widget? suffixIcon,
       void Function(String)? onChanged}) {
     return TextFormField(
@@ -65,6 +66,7 @@ class CustomField {
       inputFormatters: inputFormatters,
       cursorColor: AppColor.primary,
       onChanged: onChanged,
+      obscureText: obscureText,
       decoration: InputDecoration(
         label: label == null
             ? null
