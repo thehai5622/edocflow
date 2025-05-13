@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:edocflow/Component/custom_dialog.dart';
+import 'package:edocflow/Component/custom_field.dart';
 import 'package:edocflow/Controller/Field/field_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Route/app_page.dart';
@@ -45,7 +46,37 @@ class Field extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 20),
                     color: AppColor.main,
-                    child: _textFieldSearch()),
+                    child: CustomField.textFormfield(
+                        controller: controller.searchController.value,
+                        hintText: "Nhập từ khóa tìm kiếm",
+                        prefixIcon:
+                            Icon(Icons.search, color: AppColor.text1, size: 20),
+                        onChanged: (value) => {
+                              controller.isShowClearText.value =
+                                  value.isNotEmpty,
+                              if (controller.debounceTimer != null)
+                                {controller.debounceTimer!.cancel()},
+                              controller.debounceTimer =
+                                  Timer(const Duration(milliseconds: 500), () {
+                                controller.getData();
+                              })
+                            },
+                        suffixIcon: Obx(() => controller.isShowClearText.value
+                            ? GestureDetector(
+                                onTap: () {
+                                  controller.isShowClearText.value = false;
+                                  controller.searchController.value.clear();
+                                  if (controller.debounceTimer != null) {
+                                    controller.debounceTimer!.cancel();
+                                  }
+                                  controller.debounceTimer = Timer(
+                                      const Duration(milliseconds: 500), () {
+                                    controller.getData();
+                                  });
+                                },
+                                child: Icon(Icons.close,
+                                    color: AppColor.text1, size: 20))
+                            : const SizedBox(width: 0)))),
                 Text(
                   "-----------   Tổng số lĩnh vực: ${controller.totalCount.value}   -----------",
                   textAlign: TextAlign.center,
@@ -85,66 +116,6 @@ class Field extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-    );
-  }
-
-  TextFormField _textFieldSearch() {
-    RxBool isShowClearText = false.obs;
-    return TextFormField(
-      controller: controller.searchController.value,
-      style: TextStyle(
-        fontSize: DeviceHelper.getFontSize(15),
-        fontStyle: FontStyle.normal,
-        fontWeight: FontWeight.w500,
-        color: AppColor.text1,
-      ),
-      onChanged: (value) => {
-        isShowClearText.value = value.isNotEmpty,
-        if (controller.debounceTimer != null)
-          {controller.debounceTimer!.cancel()},
-        controller.debounceTimer = Timer(const Duration(milliseconds: 500), () {
-          controller.getData();
-        })
-      },
-      decoration: InputDecoration(
-          prefixIcon: Icon(Icons.search, color: AppColor.text1, size: 20),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(6),
-            borderSide: BorderSide(width: 1, color: AppColor.background),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(6),
-            borderSide: BorderSide(width: 1, color: AppColor.background),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(6),
-            borderSide: BorderSide(width: 1, color: AppColor.background),
-          ),
-          filled: true,
-          fillColor: AppColor.background,
-          hintStyle: TextStyle(
-            color: AppColor.grey,
-            fontSize: DeviceHelper.getFontSize(15),
-            fontStyle: FontStyle.normal,
-            fontWeight: FontWeight.w500,
-          ),
-          hintText: 'Nhập từ khóa tìm kiếm',
-          contentPadding: const EdgeInsets.only(left: 16, right: 16),
-          suffix: Obx(() => isShowClearText.value
-              ? GestureDetector(
-                  onTap: () {
-                    isShowClearText.value = false;
-                    controller.searchController.value.clear();
-                    if (controller.debounceTimer != null) {
-                      controller.debounceTimer!.cancel();
-                    }
-                    controller.debounceTimer =
-                        Timer(const Duration(milliseconds: 500), () {
-                      controller.getData();
-                    });
-                  },
-                  child: Icon(Icons.close, color: AppColor.text1, size: 20))
-              : const SizedBox(width: 0))),
     );
   }
 

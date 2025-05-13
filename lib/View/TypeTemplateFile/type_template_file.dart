@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:edocflow/Component/custom_dialog.dart';
+import 'package:edocflow/Component/custom_field.dart';
 import 'package:edocflow/Controller/TypeTemplateFile/type_template_file_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Route/app_page.dart';
@@ -45,7 +46,37 @@ class TypeTemplateFile extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 20),
                     color: AppColor.main,
-                    child: _textFieldSearch()),
+                    child: CustomField.textFormfield(
+                        controller: controller.searchController.value,
+                        hintText: "Nhập từ khóa tìm kiếm",
+                        prefixIcon:
+                            Icon(Icons.search, color: AppColor.text1, size: 20),
+                        onChanged: (value) => {
+                              controller.isShowClearText.value =
+                                  value.isNotEmpty,
+                              if (controller.debounceTimer != null)
+                                {controller.debounceTimer!.cancel()},
+                              controller.debounceTimer =
+                                  Timer(const Duration(milliseconds: 500), () {
+                                controller.getData();
+                              })
+                            },
+                        suffixIcon: Obx(() => controller.isShowClearText.value
+                            ? GestureDetector(
+                                onTap: () {
+                                  controller.isShowClearText.value = false;
+                                  controller.searchController.value.clear();
+                                  if (controller.debounceTimer != null) {
+                                    controller.debounceTimer!.cancel();
+                                  }
+                                  controller.debounceTimer = Timer(
+                                      const Duration(milliseconds: 500), () {
+                                    controller.getData();
+                                  });
+                                },
+                                child: Icon(Icons.close,
+                                    color: AppColor.text1, size: 20))
+                            : const SizedBox(width: 0)))),
                 Text(
                   "-----------   Tổng số loại file mẫu: ${controller.totalCount.value}   -----------",
                   textAlign: TextAlign.center,

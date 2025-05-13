@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 class TypeTemplateFileController extends GetxController {
   final ScrollController scrollController = ScrollController();
   RxBool isLoading = true.obs;
+  RxBool isShowClearText = false.obs;
   int page = 1;
   int limit = 12;
   RxInt totalCount = 0.obs;
