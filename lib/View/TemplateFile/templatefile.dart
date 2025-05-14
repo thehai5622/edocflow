@@ -110,7 +110,8 @@ class TemplateFile extends StatelessWidget {
         backgroundColor: AppColor.primary,
         elevation: 0,
         shape: const CircleBorder(),
-        onPressed: () => Get.toNamed(Routes.createIa),
+        onPressed: () =>
+            Get.toNamed(Routes.upsertTemplateFile, arguments: {"uuid": ""}),
         child: const Icon(
           Icons.add,
           color: Colors.white,
@@ -176,8 +177,8 @@ class TemplateFile extends StatelessWidget {
                 _actionItem(
                   icon: Icons.edit,
                   bgColor: AppColor.primary,
-                  onTap: () => Get.toNamed(Routes.editIa,
-                      arguments: controller.collection[index]),
+                  onTap: () => Get.toNamed(Routes.upsertTemplateFile,
+                      arguments: {"uuid": controller.collection[index].uuid}),
                 ),
                 const SizedBox(width: 6),
                 _actionItem(

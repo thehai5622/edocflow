@@ -119,66 +119,6 @@ class TypeTemplateFile extends StatelessWidget {
     );
   }
 
-  TextFormField _textFieldSearch() {
-    RxBool isShowClearText = false.obs;
-    return TextFormField(
-      controller: controller.searchController.value,
-      style: TextStyle(
-        fontSize: DeviceHelper.getFontSize(15),
-        fontStyle: FontStyle.normal,
-        fontWeight: FontWeight.w500,
-        color: AppColor.text1,
-      ),
-      onChanged: (value) => {
-        isShowClearText.value = value.isNotEmpty,
-        if (controller.debounceTimer != null)
-          {controller.debounceTimer!.cancel()},
-        controller.debounceTimer = Timer(const Duration(milliseconds: 500), () {
-          controller.getData();
-        })
-      },
-      decoration: InputDecoration(
-          prefixIcon: Icon(Icons.search, color: AppColor.text1, size: 20),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(6),
-            borderSide: BorderSide(width: 1, color: AppColor.background),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(6),
-            borderSide: BorderSide(width: 1, color: AppColor.background),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(6),
-            borderSide: BorderSide(width: 1, color: AppColor.background),
-          ),
-          filled: true,
-          fillColor: AppColor.background,
-          hintStyle: TextStyle(
-            color: AppColor.grey,
-            fontSize: DeviceHelper.getFontSize(15),
-            fontStyle: FontStyle.normal,
-            fontWeight: FontWeight.w500,
-          ),
-          hintText: 'Nhập từ khóa tìm kiếm',
-          contentPadding: const EdgeInsets.only(left: 16, right: 16),
-          suffix: Obx(() => isShowClearText.value
-              ? GestureDetector(
-                  onTap: () {
-                    isShowClearText.value = false;
-                    controller.searchController.value.clear();
-                    if (controller.debounceTimer != null) {
-                      controller.debounceTimer!.cancel();
-                    }
-                    controller.debounceTimer =
-                        Timer(const Duration(milliseconds: 500), () {
-                      controller.getData();
-                    });
-                  },
-                  child: Icon(Icons.close, color: AppColor.text1, size: 20))
-              : const SizedBox(width: 0))),
-    );
-  }
-
   GestureDetector _collectionItem(
       {required BuildContext context, required int index}) {
     return GestureDetector(

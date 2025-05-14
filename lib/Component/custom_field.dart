@@ -325,4 +325,36 @@ class CustomField {
       ],
     );
   }
+
+  static Align titleForm({
+    required String title,
+    isRequired = false,
+  }) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Row(
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: DeviceHelper.getFontSize(16),
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w700,
+              color: const Color(0xFF535763),
+            ),
+          ),
+          if (isRequired)
+            Text(
+              ' *',
+              style: TextStyle(
+                fontSize: DeviceHelper.getFontSize(15),
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w700,
+                color: const Color(0xFFFF0000),
+              ),
+            )
+        ],
+      ),
+    );
+  }
 }

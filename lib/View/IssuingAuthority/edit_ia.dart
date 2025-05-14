@@ -49,7 +49,7 @@ class EditIssuingAuthority extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Column(
                       children: [
-                        _titleForm(
+                        CustomField.titleForm(
                                 title: "Tên cơ quan ban hành", isRequired: true)
                             .marginSymmetric(horizontal: 20),
                         CustomField.textFormfield(
@@ -63,7 +63,7 @@ class EditIssuingAuthority extends StatelessWidget {
                             return null;
                           },
                         ).marginSymmetric(horizontal: 20, vertical: 6),
-                        _titleForm(title: "Cấp hành chính", isRequired: true)
+                        CustomField.titleForm(title: "Cấp hành chính", isRequired: true)
                             .marginSymmetric(horizontal: 20),
                         CustomField.dropDownField(
                           context: context,
@@ -155,38 +155,6 @@ class EditIssuingAuthority extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Align _titleForm({
-    required String title,
-    isRequired = false,
-  }) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Row(
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: DeviceHelper.getFontSize(16),
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF535763),
-            ),
-          ),
-          if (isRequired)
-            Text(
-              ' *',
-              style: TextStyle(
-                fontSize: DeviceHelper.getFontSize(15),
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w700,
-                color: const Color(0xFFFF0000),
-              ),
-            )
-        ],
       ),
     );
   }
