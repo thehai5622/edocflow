@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:edocflow/Controller/TemplateFile/templatefile_controller.dart';
 import 'package:edocflow/Model/templatefile.dart';
 import 'package:edocflow/Model/type_template_file.dart';
 import 'package:edocflow/Service/api_caller.dart';
+import 'package:edocflow/Utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,6 +14,12 @@ class UpsertTFController extends GetxController {
   RxBool isWaitSubmit = false.obs;
   TextEditingController name = TextEditingController();
   TemplateFile detail = TemplateFile();
+  Rx<File> file = Rx<File>(File(""));
+  RxString fileSize = "".obs;
+  RxInt type = 1.obs;
+  RxInt status = 1.obs;
+  TextEditingController note = TextEditingController();
+  bool isChangeFile = false;
   // Type Template File
   bool isTTFFirstFetch = true;
   String selectedTTFUUID = "";
@@ -50,6 +60,17 @@ class UpsertTFController extends GetxController {
     name.text = detail.name ?? '';
     selectedTTFUUID = detail.typeTemplateFile?.uuid ?? '';
     ttfName.text = detail.typeTemplateFile?.name ?? '';
+    type.value = detail.type ?? 1;
+    status.value = detail.status ?? 1;
+    note.text = detail.note ?? '';
+    APICaller.getInstance().downloadAndGetFile(detail.file ?? "").then((value) {
+      if (value != null) {
+        file.value = value;
+        file.value.length().then((data) {
+          fileSize.value = "$data bytes";
+        });
+      }
+    });
   }
 
   // Type Template File
@@ -83,79 +104,85 @@ class UpsertTFController extends GetxController {
   submit() {
     isWaitSubmit.value = true;
     try {
-      // if (image.value.path == "") {
-      //   var param = {
-      //     "uuid": detail.value.uuid ?? "",
-      //     "name": detail.value.name ?? "",
-      //     "email": email.text,
-      //     "address": address.text,
-      //     "gender": gender.value,
-      //     "birthday": convertDateFormat(birthday.text, true),
-      //     "height": int.parse(height.text),
-      //     "weight": int.parse(weight.text),
-      //     "phoneNumber": phoneNumber.text,
-      //     "introduce": introduce.text,
-      //     "skill": skill.text,
-      //     "hobby": hobby.text,
-      //     "imagePath": detail.value.imagePath ?? "",
-      //   };
-      //   APICaller.getInstance().post('v1/Cv/upsert-cv', param).then((value) {
-      //     isWaitSubmit.value = false;
-      //     if (value != null) {
-      //       if (Get.isRegistered<CVManagementController>()) {
-      //         Get.find<CVManagementController>().getDetail();
-      //       }
-      //       Get.back();
-      //       Utils.showSnackBar(
-      //         title: 'Thông báo!',
-      //         message:
-      //             'Đã ${isCreate ? "khởi tạo" : "chỉnh sửa"} CV thành công!',
-      //       );
-      //     }
-      //   });
-      // } else {
-      //   APICaller.getInstance()
-      //       .putFile(
-      //         endpoint: 'v1/Upload/upload-single-image',
-      //         filePath: image.value,
-      //         type: 9,
-      //       )
-      //       .then((response) {
-      //         if (response != null) {
-      //           var param = {
-      //             "uuid": detail.value.uuid ?? "",
-      //             "name": detail.value.name ?? "",
-      //             "email": email.text,
-      //             "address": address.text,
-      //             "gender": gender.value,
-      //             "birthday": convertDateFormat(birthday.text, true),
-      //             "height": int.parse(height.text),
-      //             "weight": int.parse(weight.text),
-      //             "phoneNumber": phoneNumber.text,
-      //             "introduce": introduce.text,
-      //             "skill": skill.text,
-      //             "hobby": hobby.text,
-      //             "imagePath": response["data"],
-      //           };
-      //           APICaller.getInstance().post('v1/Cv/upsert-cv', param).then((
-      //             value,
-      //           ) {
-      //             isWaitSubmit.value = false;
-      //             if (value != null) {
-      //               if (Get.isRegistered<CVManagementController>()) {
-      //                 Get.find<CVManagementController>().getDetail();
-      //               }
-      //               Get.back();
-      //               Utils.showSnackBar(
-      //                 title: 'Thông báo!',
-      //                 message:
-      //                     'Đã ${isCreate ? "khởi tạo" : "chỉnh sửa"} CV thành công!',
-      //               );
-      //             }
-      //           });
-      //         }
-      //       });
-      // }
+      if (uuid == "") {
+        APICaller.getInstance().postFile(file: file.value).then((res) {
+          var param = {
+            "name": name.text,
+            "typetemplatefile_id": selectedTTFUUID,
+            "file": res['file'],
+            "type": type.value,
+            "status": status.value,
+            "note": note.text == "" ? null : note.text,
+          };
+          APICaller.getInstance()
+              .post('v1/template-file', body: param)
+              .then((value) {
+            isWaitSubmit.value = false;
+            if (value != null) {
+              if (Get.isRegistered<TemplateFileController>()) {
+                Get.find<TemplateFileController>().refreshData();
+              }
+              Get.back();
+              Utils.showSnackBar(
+                title: 'Thông báo!',
+                message: value['message'],
+              );
+            }
+          });
+        });
+      } else {
+        if (isChangeFile == true) {
+          APICaller.getInstance().postFile(file: file.value).then((res) {
+            var param = {
+              "name": name.text,
+              "typetemplatefile_id": selectedTTFUUID,
+              "file": res['file'],
+              "type": type.value,
+              "status": status.value,
+              "note": note.text == "" ? null : note.text,
+            };
+            APICaller.getInstance()
+                .put('v1/template-file/$uuid', body: param)
+                .then((value) {
+              isWaitSubmit.value = false;
+              if (value != null) {
+                if (Get.isRegistered<TemplateFileController>()) {
+                  Get.find<TemplateFileController>().refreshData();
+                }
+                Get.back();
+                Utils.showSnackBar(
+                  title: 'Thông báo!',
+                  message: value['message'],
+                );
+              }
+            });
+          });
+        } else {
+          var param = {
+            "name": name.text,
+            "typetemplatefile_id": selectedTTFUUID,
+            "file": detail.file,
+            "type": type.value,
+            "status": status.value,
+            "note": note.text == "" ? null : note.text,
+          };
+          APICaller.getInstance()
+              .put('v1/template-file/$uuid', body: param)
+              .then((value) {
+            isWaitSubmit.value = false;
+            if (value != null) {
+              if (Get.isRegistered<TemplateFileController>()) {
+                Get.find<TemplateFileController>().refreshData();
+              }
+              Get.back();
+              Utils.showSnackBar(
+                title: 'Thông báo!',
+                message: value['message'],
+              );
+            }
+          });
+        }
+      }
       isWaitSubmit.value = false;
     } catch (e) {
       debugPrint(e.toString());

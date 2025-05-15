@@ -56,6 +56,9 @@ class CustomField {
       Widget? prefixIcon,
       bool obscureText = false,
       Widget? suffixIcon,
+      int? minLines,
+      int? maxLines = 1,
+      int? maxLength,
       void Function(String)? onChanged}) {
     return TextFormField(
       style: _textStyle,
@@ -67,6 +70,9 @@ class CustomField {
       cursorColor: AppColor.primary,
       onChanged: onChanged,
       obscureText: obscureText,
+      minLines: minLines,
+      maxLines: maxLines,
+      maxLength: maxLength,
       decoration: InputDecoration(
         label: label == null
             ? null

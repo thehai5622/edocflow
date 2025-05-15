@@ -8,6 +8,7 @@ import 'package:edocflow/Service/auth.dart';
 import 'package:edocflow/Utils/utils.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
 class APICaller {
   static APICaller? _apiCaller = APICaller();
@@ -336,6 +337,83 @@ class APICaller {
       return null;
     }
     return jsonDecode(response.body);
+  }
+
+  Future<File?> downloadAndGetFile(String endpoint) async {
+    Uri uri = Uri.parse(BASE_URL + endpoint);
+    String token = GlobalValue.getInstance().getToken();
+    var frequestHeaders = {
+      ...requestHeaders,
+      'Accept': '*/*',
+      'Authorization': token,
+    };
+
+    var response = await http
+        .get(uri, headers: frequestHeaders)
+        .timeout(timeout, onTimeout: onTimeout);
+
+    if (response.statusCode == 401) {
+      var refreshToken =
+          await Utils.getStringValueWithKey(Constant.REFRESH_TOKEN);
+      Uri uriRF = Uri.parse('${BASE_URL}v1/user/refresh-token');
+
+      final data = await http
+          .post(uriRF,
+              headers: frequestHeaders,
+              body: jsonEncode({"token": refreshToken}))
+          .timeout(timeout, onTimeout: onTimeout);
+
+      if (data.statusCode ~/ 100 == 2) {
+        final dataRF = jsonDecode(data.body);
+        token = 'Bearer ${dataRF['data']['access_token']}';
+        frequestHeaders['Authorization'] = token;
+        GlobalValue.getInstance().setToken(token);
+        Utils.saveStringWithKey(
+            Constant.ACCESS_TOKEN, dataRF['data']['access_token']);
+        Utils.saveStringWithKey(
+            Constant.REFRESH_TOKEN, dataRF['data']['refresh_token']);
+      } else {
+        Auth.backLogin(true);
+        Utils.showSnackBar(
+            title: 'Thông báo', message: "Có lỗi xảy ra chưa xác định!");
+        return null;
+      }
+
+      response = await http
+          .get(uri, headers: frequestHeaders)
+          .timeout(timeout, onTimeout: onTimeout);
+    }
+
+    if (response.statusCode ~/ 100 != 2) {
+      Utils.showSnackBar(title: 'Lỗi', message: 'Tải file thất bại.');
+      return null;
+    }
+
+    try {
+      // Lấy tên file từ header
+      String? fileName;
+      String? contentDisposition = response.headers['content-disposition'];
+      if (contentDisposition != null &&
+          contentDisposition.contains('filename=')) {
+        final regex = RegExp(r'filename="?(.+?)"?$', caseSensitive: false);
+        final match = regex.firstMatch(contentDisposition);
+        if (match != null) {
+          fileName = match.group(1);
+        }
+      }
+      fileName ??= endpoint.split('/').last;
+
+      // Lưu file tạm thời
+      final tempDir = await getTemporaryDirectory();
+      final filePath = '${tempDir.path}/$fileName';
+      final file = File(filePath);
+      await file.writeAsBytes(response.bodyBytes);
+
+      return file;
+    } catch (e) {
+      Utils.showSnackBar(title: 'Lỗi', message: 'Có lỗi xảy ra khi tải file.');
+      return null;
+    }
   }
 
   Future<dynamic> putFile(
