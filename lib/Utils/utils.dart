@@ -2,14 +2,20 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
+import 'package:edocflow/Service/api_caller.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:open_file/open_file.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:photo_view/photo_view.dart';
 
 class Utils {
+  static final String _baseUrl = dotenv.env['API_URL'] ?? '';
+
   static final Future<SharedPreferences> _prefs =
       SharedPreferences.getInstance();
 
@@ -145,5 +151,100 @@ class Utils {
       firstDate: firstDate,
       lastDate: lastDate,
     ).then(onValue, onError: onError);
+  }
+
+  static openFile(String filePath) async {
+    final extension = filePath.split('.').last.toLowerCase();
+    final imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+
+    if (imageExtensions.contains(extension)) {
+      final imageUrl = "$_baseUrl$filePath";
+      Get.dialog(
+        Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: const EdgeInsets.all(0),
+          child: Stack(
+            children: [
+              PhotoView(
+                imageProvider: NetworkImage(imageUrl),
+                backgroundDecoration: const BoxDecoration(
+                  color: Colors.black87,
+                ),
+                minScale: PhotoViewComputedScale.contained,
+                maxScale: PhotoViewComputedScale.covered * 3,
+                errorBuilder:
+                    (context, error, stackTrace) => const Center(
+                      child: Icon(Icons.error, color: Colors.red, size: 50),
+                    ),
+              ),
+              Positioned(
+                top: 40,
+                right: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.close, color: Colors.white, size: 30),
+                  onPressed: () => Get.back(),
+                ),
+              ),
+            ],
+          ),
+        ),
+        barrierColor: Colors.black54,
+      );
+    } else {
+      try {
+        // Hiển thị thông báo đang tải
+        // Utils.showSnackBar(
+        //   title: 'Đang tải',
+        //   message: 'Đang tải file, vui lòng chờ...',
+        //   duration: const Duration(seconds: 10),
+        // );
+
+        final fileUrl = "$_baseUrl$filePath";
+
+        final file = await APICaller.getInstance().downloadAndGetFile(filePath);
+
+        if (file == null) {
+          Utils.showSnackBar(
+            title: 'Lỗi',
+            message: 'Không thể tải file từ server. URL: $fileUrl',
+          );
+          return;
+        }
+
+        // Kiểm tra file có tồn tại và kích thước file
+        final fileExists = await file.exists();
+        final fileSize = await file.length();
+
+        if (!fileExists || fileSize == 0) {
+          Utils.showSnackBar(
+            title: 'Lỗi',
+            message:
+                'File tải về không tồn tại hoặc rỗng. Vui lòng kiểm tra file trên server. URL: $fileUrl',
+          );
+          return;
+        }
+
+        final result = await OpenFile.open(file.path);
+        if (result.type != ResultType.done) {
+          if (result.type == ResultType.noAppToOpen) {
+            Utils.showSnackBar(
+              title: 'Lỗi',
+              message:
+                  'Không tìm thấy ứng dụng để mở file ${extension.toUpperCase()}. Vui lòng cài ứng dụng hỗ trợ.',
+            );
+          } else {
+            Utils.showSnackBar(
+              title: 'Lỗi',
+              message: 'Không thể mở file: ${result.message}',
+            );
+          }
+        }
+      } catch (e) {
+        Utils.showSnackBar(
+          title: 'Lỗi',
+          message: 'Đã có lỗi xảy ra khi tải hoặc mở file: $e',
+        );
+      }
+    }
   }
 }

@@ -3,6 +3,7 @@ import 'package:edocflow/Component/custom_field.dart';
 import 'package:edocflow/Controller/TemplateFile/detail_templatefile_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Utils/device_helper.dart';
+import 'package:edocflow/Utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -43,14 +44,51 @@ class DetailTemplateFile extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 16),
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CustomField.titleForm(title: "Tên file mẫu"),
-                          const SizedBox(width: 10),
-                          Text(controller.detail.name ?? "--", style: TextStyle(),)
-                        ],
-                      )
+                      CustomField.titleForm(title: "Tên file mẫu:"),
+                      Text(
+                        controller.detail.name ?? "--",
+                        style: TextStyle(
+                          fontSize: DeviceHelper.getFontSize(16),
+                          color: AppColor.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ).marginSymmetric(vertical: 8, horizontal: 16),
+                      CustomField.titleForm(title: "Loại file mẫu:"),
+                      Text(
+                        controller.detail.typeTemplateFile?.name ?? "--",
+                        style: TextStyle(
+                          fontSize: DeviceHelper.getFontSize(15),
+                          color: AppColor.text1,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ).marginSymmetric(vertical: 8, horizontal: 16),
+                      CustomField.titleForm(title: "Kiểu file:"),
+                      Text(
+                        controller.detail.type == 1 ? "Dùng chung" : "Cá nhân",
+                        style: TextStyle(
+                          fontSize: DeviceHelper.getFontSize(15),
+                          color: AppColor.text1,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ).marginSymmetric(vertical: 8, horizontal: 16),
+                      CustomField.titleForm(title: "Trạng thái:"),
+                      Text(
+                        controller.detail.type == 1 ? "Hoạt động" : "Bị khóa",
+                        style: TextStyle(
+                          fontSize: DeviceHelper.getFontSize(15),
+                          color: AppColor.text1,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ).marginSymmetric(vertical: 8, horizontal: 16),
+                      CustomField.titleForm(title: "Ghi chú:"),
+                      Text(
+                        controller.detail.note ?? "--",
+                        style: TextStyle(
+                          fontSize: DeviceHelper.getFontSize(15),
+                          color: AppColor.text1,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ).marginSymmetric(vertical: 8, horizontal: 16),
                     ],
                   ),
           )),
@@ -70,7 +108,9 @@ class DetailTemplateFile extends StatelessWidget {
             child: Obx(
               () => CustomButton.primary(
                 text: "Xem file mẫu",
-                onPressed: controller.isLoading.value ? null : () {},
+                onPressed: controller.isLoading.value ? null : () {
+                  Utils.openFile(controller.detail.file ?? "");
+                },
               ),
             ),
           ),
