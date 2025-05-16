@@ -123,7 +123,8 @@ class TemplateFile extends StatelessWidget {
   GestureDetector _collectionItem(
       {required BuildContext context, required int index}) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => Get.toNamed(Routes.detailTemplateFile,
+          arguments: {"uuid": controller.collection[index].uuid}),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
@@ -174,6 +175,11 @@ class TemplateFile extends StatelessWidget {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
+                _actionItem(
+                  icon: Icons.remove_red_eye,
+                  bgColor: AppColor.thirdMain,
+                ),
+                const SizedBox(width: 6),
                 _actionItem(
                   icon: Icons.edit,
                   bgColor: AppColor.primary,
