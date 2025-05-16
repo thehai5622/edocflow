@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:edocflow/Component/custom_bottomsheet.dart';
+import 'package:edocflow/Component/custom_dialog.dart';
 import 'package:edocflow/Controller/dashboard_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
+import 'package:edocflow/Route/app_page.dart';
 import 'package:edocflow/Utils/device_helper.dart';
 import 'package:edocflow/View/Individual/individual.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +25,17 @@ class Dashboard extends StatelessWidget {
         if (didPop) {
           return;
         }
-        _showDialog(context);
+        CustomDialog.show(
+            context: context,
+            title: "Đóng ứng dụng",
+            content: "Ứng dụng sẽ được đóng lại?",
+            onPressed: () {
+              if (Platform.isAndroid) {
+                SystemNavigator.pop();
+              } else if (Platform.isIOS) {
+                exit(0);
+              }
+            });
       },
       child: Scaffold(
         backgroundColor: AppColor.background,
@@ -207,7 +219,22 @@ class Dashboard extends StatelessWidget {
             backgroundColor: AppColor.primary,
             shape: const CircleBorder(),
             onPressed: () {
-              CustomBottomsheet.show(context: context, child: Text('hehe'));
+              CustomBottomsheet.show(
+                context: context,
+                child: Column(
+                  children: [
+                    CustomBottomsheet.item(
+                      title: 'Thêm file mẫu',
+                      onTap: () => Get.toNamed(Routes.upsertTemplateFile,
+                          arguments: {"uuid": ""}),
+                    ),
+                    CustomBottomsheet.item(
+                      title: 'Thêm văn bản đi',
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+                ),
+              );
             },
             child: Icon(
               Icons.add,
@@ -215,89 +242,6 @@ class Dashboard extends StatelessWidget {
               color: AppColor.white,
             )),
       ),
-    );
-  }
-
-  _showDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: AppColor.main,
-          contentPadding: const EdgeInsets.all(20),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Đóng ứng dụng",
-                style: TextStyle(
-                  fontSize: DeviceHelper.getFontSize(20),
-                  color: AppColor.text1,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                "Ứng dụng sẽ được đóng lại ?",
-                style: TextStyle(
-                  fontSize: DeviceHelper.getFontSize(16),
-                  color: AppColor.grey,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: Text(
-                      "Hủy bỏ",
-                      style: TextStyle(
-                        fontSize: DeviceHelper.getFontSize(17),
-                        color: AppColor.primary,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColor.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 12, horizontal: 20),
-                    ),
-                    onPressed: () {
-                      Get.back();
-                      if (Platform.isAndroid) {
-                        SystemNavigator.pop();
-                      } else if (Platform.isIOS) {
-                        exit(0);
-                      }
-                    },
-                    child: Text(
-                      "Xác nhận",
-                      style: TextStyle(
-                        fontSize: DeviceHelper.getFontSize(16),
-                        color: AppColor.white,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }

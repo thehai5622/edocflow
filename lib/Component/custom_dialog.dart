@@ -42,39 +42,51 @@ class CustomDialog {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: Text(
-                      "Hủy bỏ",
-                      style: TextStyle(
-                        fontSize: DeviceHelper.getFontSize(15),
-                        color: AppColor.primary,
-                        fontWeight: FontWeight.w700,
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColor.boder,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 20),
+                      ),
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: Text(
+                        "Hủy bỏ",
+                        style: TextStyle(
+                          fontSize: DeviceHelper.getFontSize(14),
+                          color: AppColor.text1,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 20),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColor.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColor.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 20),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 12, horizontal: 20),
-                    ),
-                    onPressed: () {
-                      Get.back();
-                      onPressed();
-                    },
-                    child: Text(
-                      "Xác nhận",
-                      style: TextStyle(
-                        fontSize: DeviceHelper.getFontSize(14),
-                        color: AppColor.white,
-                        fontWeight: FontWeight.w700,
+                      onPressed: () {
+                        Get.back();
+                        onPressed();
+                      },
+                      child: Text(
+                        "Xác nhận",
+                        style: TextStyle(
+                          fontSize: DeviceHelper.getFontSize(14),
+                          color: AppColor.white,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                   )
