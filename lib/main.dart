@@ -1,14 +1,72 @@
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Route/app_page.dart';
+import 'package:edocflow/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+Future<void> _backgroundMessaging(RemoteMessage message) async {}
+
+/// Khởi tạo thông báo local
+Future<void> _initializeNotifications() async {
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  const InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+  );
+
+  await _localNotificationsPlugin.initialize(initializationSettings);
+}
+
+Future<void> _showNotification({
+  required String title,
+  required String body,
+}) async {
+  const AndroidNotificationDetails androidPlatformChannelSpecifics =
+      AndroidNotificationDetails(
+        'high_importance_channel', // ID kênh
+        'Thông báo quan trọng', // Tên kênh
+        channelDescription: 'Kênh dành cho các thông báo quan trọng',
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: 'ticker',
+      );
+
+  const NotificationDetails platformChannelSpecifics = NotificationDetails(
+    android: androidPlatformChannelSpecifics,
+  );
+
+  await _localNotificationsPlugin.show(
+    0, // ID thông báo
+    title,
+    body,
+    platformChannelSpecifics,
+  );
+}
+
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "assets/.env");
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await _initializeNotifications();
+  FirebaseMessaging.onBackgroundMessage(_backgroundMessaging);
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    String title = message.notification?.title ?? "Thông báo";
+    String body = message.notification?.body ?? "Không có nội dung!";
+
+    _showNotification(title: title, body: body);
+  });
   runApp(const MyApp());
 }
 
