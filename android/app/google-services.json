@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "206792845145",
+    "project_id": "edocflow-6d9ef",
+    "storage_bucket": "edocflow-6d9ef.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206792845145:android:0971a9e976a1b89a854e48",
+        "android_client_info": {
+          "package_name": "com.thehai.edocflow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv_7Rz7qJS59_HTmYHZ1cs8eXO16DLO-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
