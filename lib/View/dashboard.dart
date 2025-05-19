@@ -6,6 +6,9 @@ import 'package:edocflow/Controller/dashboard_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Route/app_page.dart';
 import 'package:edocflow/Utils/device_helper.dart';
+import 'package:edocflow/View/Document/document_in.dart';
+import 'package:edocflow/View/Document/document_out.dart';
+import 'package:edocflow/View/Home/home.dart';
 import 'package:edocflow/View/Individual/individual.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,11 +48,11 @@ class Dashboard extends StatelessWidget {
         body: Obx(() {
           switch (controller.currentIndex.value) {
             case 0:
-              return Container();
+              return Home();
             case 1:
-              return Container();
+              return DocumentIn();
             case 2:
-              return Container();
+              return DocumentOut();
             case 3:
               return Individual();
             default:
@@ -230,6 +233,8 @@ class Dashboard extends StatelessWidget {
                     ),
                     CustomBottomsheet.item(
                       title: 'Thêm văn bản đi',
+                      onTap: () => Get.toNamed(Routes.upsertDocumentOut,
+                          arguments: {"uuid": ""}),
                     ),
                     const SizedBox(height: 16),
                   ],

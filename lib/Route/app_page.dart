@@ -1,6 +1,10 @@
+import 'package:edocflow/View/Document/document_in.dart';
+import 'package:edocflow/View/Document/document_out.dart';
+import 'package:edocflow/View/Document/upsert_document_out.dart';
 import 'package:edocflow/View/Field/create_field.dart';
 import 'package:edocflow/View/Field/edit_field.dart';
 import 'package:edocflow/View/Field/field.dart';
+import 'package:edocflow/View/Home/home.dart';
 import 'package:edocflow/View/Individual/ChangePass/ChangePass.dart';
 import 'package:edocflow/View/Individual/individual.dart';
 import 'package:edocflow/View/IssuingAuthority/create_ia.dart';
@@ -28,7 +32,7 @@ class AppPage {
   static final List<GetPage<dynamic>> routes = [
     GetPage(name: Routes.dashboard, page: () => Dashboard()),
     GetPage(name: Routes.splash, page: () => Splash()),
-    // GetPage(name: Routes.home, page: () => Home()),
+    GetPage(name: Routes.home, page: () => Home()),
     GetPage(name: Routes.login, page: () => Login()),
     GetPage(name: Routes.field, page: () => Field()),
     GetPage(name: Routes.createField, page: () => CreateField()),
@@ -46,5 +50,8 @@ class AppPage {
     GetPage(name: Routes.upsertTemplateFile, page: () => UpsertTemplateFile()),
     GetPage(name: Routes.upsertTemplateFile, page: () => UpsertTemplateFile()),
     GetPage(name: Routes.detailTemplateFile, page: () => DetailTemplateFile()),
+    GetPage(name: Routes.documentIn, page: () => DocumentIn()),
+    GetPage(name: Routes.documentOut, page: () => DocumentOut()),
+    GetPage(name: Routes.upsertDocumentOut, page: () => UpsertDocumentOut()),
   ];
 }
