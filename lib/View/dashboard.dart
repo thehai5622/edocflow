@@ -228,13 +228,19 @@ class Dashboard extends StatelessWidget {
                   children: [
                     CustomBottomsheet.item(
                       title: 'Thêm file mẫu',
-                      onTap: () => Get.toNamed(Routes.upsertTemplateFile,
-                          arguments: {"uuid": ""}),
+                      onTap: () {
+                        Get.back();
+                        Get.toNamed(Routes.upsertTemplateFile,
+                            arguments: {"uuid": ""});
+                      },
                     ),
                     CustomBottomsheet.item(
                       title: 'Thêm văn bản đi',
-                      onTap: () => Get.toNamed(Routes.upsertDocumentOut,
-                          arguments: {"uuid": ""}),
+                      onTap: () {
+                        Get.back();
+                        Get.toNamed(Routes.upsertDocumentOut,
+                            arguments: {"uuid": ""});
+                      },
                     ),
                     const SizedBox(height: 16),
                   ],
