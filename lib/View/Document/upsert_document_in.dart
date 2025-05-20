@@ -301,9 +301,9 @@ class UpsertDocumentIn extends StatelessWidget {
                   text: "Xác nhận",
                   onPressed: controller.isWaitSubmit.value
                       ? null
-                      : () {
+                      : () async {
                           if (_formKey.currentState?.validate() ?? false) {
-                            controller.submit();
+                            await controller.submit();
                           }
                         },
                 ),

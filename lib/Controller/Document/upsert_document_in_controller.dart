@@ -1,4 +1,5 @@
 import 'package:edocflow/Controller/Document/document_in_controller.dart';
+import 'package:edocflow/Global/constant.dart';
 import 'package:edocflow/Model/Issuingauthority.dart';
 import 'package:edocflow/Model/field.dart';
 import 'package:edocflow/Model/templatefile.dart';
@@ -133,11 +134,13 @@ class UpsertDocumentInController extends GetxController {
     }
   }
 
-  submit() {
+  submit() async {
     isWaitSubmit.value = true;
     try {
       if (uuid == "") {
         var param = {
+          "from_issuingauthority_id":
+              await Utils.getStringValueWithKey(Constant.ISSUING_AUTHORITY),
           "issuing_authority": selectedIAUUID,
           "field": selectedFUUID,
           "template_file": selectedTFUUID,
@@ -146,11 +149,10 @@ class UpsertDocumentInController extends GetxController {
           "original_location": originalLocation.text.trim(),
           "number_releases": int.tryParse(numberReleases.text.trim()),
           "urgency_level": int.tryParse(urgencyLevel.value.trim()),
-          "confidentiality_level": int.tryParse(confidentialityLevel.value.trim()),
+          "confidentiality_level":
+              int.tryParse(confidentialityLevel.value.trim()),
         };
-        APICaller.getInstance()
-            .post('v1/document', body: param)
-            .then((value) {
+        APICaller.getInstance().post('v1/document', body: param).then((value) {
           isWaitSubmit.value = false;
           if (value != null) {
             if (Get.isRegistered<DocumentInController>()) {
