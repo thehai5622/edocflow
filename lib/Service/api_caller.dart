@@ -63,7 +63,11 @@ class APICaller {
       final data = await http
           .post(uriRF,
               headers: frequestHeaders,
-              body: jsonEncode({"token": refreshToken}))
+              body: jsonEncode({
+                "token": refreshToken,
+                "fcm_token":
+                    await Utils.getStringValueWithKey(Constant.FCMTOKEN)
+              }))
           .timeout(timeout, onTimeout: onTimeout);
 
       if (data.statusCode ~/ 100 == 2) {
@@ -112,7 +116,11 @@ class APICaller {
       final data = await http
           .post(uriRF,
               headers: frequestHeaders,
-              body: jsonEncode({"token": refreshToken}))
+              body: jsonEncode({
+                "token": refreshToken,
+                "fcm_token":
+                    await Utils.getStringValueWithKey(Constant.FCMTOKEN)
+              }))
           .timeout(timeout, onTimeout: onTimeout);
 
       if (data.statusCode ~/ 100 == 2) {
@@ -161,7 +169,11 @@ class APICaller {
       final data = await http
           .post(uriRF,
               headers: frequestHeaders,
-              body: jsonEncode({"token": refreshToken}))
+              body: jsonEncode({
+                "token": refreshToken,
+                "fcm_token":
+                    await Utils.getStringValueWithKey(Constant.FCMTOKEN)
+              }))
           .timeout(timeout, onTimeout: onTimeout);
 
       if (data.statusCode ~/ 100 == 2) {
@@ -210,7 +222,11 @@ class APICaller {
       final data = await http
           .post(uriRF,
               headers: frequestHeaders,
-              body: jsonEncode({"token": refreshToken}))
+              body: jsonEncode({
+                "token": refreshToken,
+                "fcm_token":
+                    await Utils.getStringValueWithKey(Constant.FCMTOKEN)
+              }))
           .timeout(timeout, onTimeout: onTimeout);
 
       if (data.statusCode ~/ 100 == 2) {
@@ -269,7 +285,11 @@ class APICaller {
       final data = await http
           .post(uriRF,
               headers: frequestHeaders,
-              body: jsonEncode({"token": refreshToken}))
+              body: jsonEncode({
+                "token": refreshToken,
+                "fcm_token":
+                    await Utils.getStringValueWithKey(Constant.FCMTOKEN)
+              }))
           .timeout(timeout, onTimeout: onTimeout);
 
       if (data.statusCode ~/ 100 == 2) {
@@ -360,7 +380,11 @@ class APICaller {
       final data = await http
           .post(uriRF,
               headers: frequestHeaders,
-              body: jsonEncode({"token": refreshToken}))
+              body: jsonEncode({
+                "token": refreshToken,
+                "fcm_token":
+                    await Utils.getStringValueWithKey(Constant.FCMTOKEN)
+              }))
           .timeout(timeout, onTimeout: onTimeout);
 
       if (data.statusCode ~/ 100 == 2) {

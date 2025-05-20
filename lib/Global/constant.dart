@@ -11,6 +11,7 @@ class Constant {
   static const String REFRESH_TOKEN = "refreshToken";
   static const String NAME = 'name';
   static const String AVATAR = 'avatar';
+  static const String ISSUING_AUTHORITY = 'issuing_authority';
 
   static const String FCMTOKEN = "fcm_token";
 }

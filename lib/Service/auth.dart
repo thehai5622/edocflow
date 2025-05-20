@@ -11,7 +11,7 @@ class Auth {
       return null;
     }
 
-    APICaller.getInstance().delete("v1/user/logout");
+    await APICaller.getInstance().delete("v1/user/logout");
     await Utils.saveStringWithKey(Constant.ACCESS_TOKEN, '');
     await Utils.saveStringWithKey(Constant.REFRESH_TOKEN, '');
     await Utils.saveStringWithKey(Constant.USERNAME, '');
@@ -26,12 +26,13 @@ class Auth {
         await Utils.getStringValueWithKey(Constant.USERNAME);
     String passwordPreferences =
         await Utils.getStringValueWithKey(Constant.PASSWORD);
+    String fcmToken = await Utils.getStringValueWithKey(Constant.FCMTOKEN);
 
     Map<String, String> param = {
       "username": userName ?? userNamePreferences,
       "password":
           password != null ? Utils.generateMd5(password) : passwordPreferences,
-      // "fcmToken": await Utils.getStringValueWithKey(Constant.FCMTOKEN)
+      "fcm_token": fcmToken,
     };
 
     try {
@@ -45,7 +46,10 @@ class Auth {
         Utils.saveStringWithKey(
             Constant.REFRESH_TOKEN, response['data']['refresh_token']);
         Utils.saveStringWithKey(Constant.NAME, response['data']['name'] ?? '');
-        Utils.saveStringWithKey(Constant.AVATAR, response['data']['avatar'] ?? '');
+        Utils.saveStringWithKey(
+            Constant.AVATAR, response['data']['avatar'] ?? '');
+        Utils.saveStringWithKey(Constant.ISSUING_AUTHORITY,
+            response['data']['issuing_authority'] ?? '');
         Utils.saveStringWithKey(
             Constant.USERNAME, userName ?? userNamePreferences);
         Utils.saveStringWithKey(Constant.PASSWORD, param['password']!);
