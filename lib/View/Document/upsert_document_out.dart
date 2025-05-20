@@ -20,7 +20,6 @@ class UpsertDocumentOut extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         backgroundColor: AppColor.main,
-        scrolledUnderElevation: 0.0,
         shadowColor: AppColor.text1,
         title: Text(
           controller.title,

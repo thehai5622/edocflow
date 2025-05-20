@@ -1,7 +1,9 @@
+import 'package:edocflow/Controller/Document/document_in_controller.dart';
 import 'package:edocflow/Model/Issuingauthority.dart';
 import 'package:edocflow/Model/field.dart';
 import 'package:edocflow/Model/templatefile.dart';
 import 'package:edocflow/Service/api_caller.dart';
+import 'package:edocflow/Utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -65,8 +67,9 @@ class UpsertDocumentOutController extends GetxController {
         isLoadingIA.value = false;
         if (response != null) {
           List<dynamic> list = response['data'];
-          var listItem =
-              list.map((dynamic json) => IssuingAuthority.fromJson(json)).toList();
+          var listItem = list
+              .map((dynamic json) => IssuingAuthority.fromJson(json))
+              .toList();
           iaCollection.addAll(listItem);
         }
       });
@@ -133,6 +136,34 @@ class UpsertDocumentOutController extends GetxController {
   submit() {
     isWaitSubmit.value = true;
     try {
+      if (uuid == "") {
+        var param = {
+          "issuing_authority": selectedIAUUID,
+          "field": selectedFUUID,
+          "template_file": selectedTFUUID,
+          "summary": summary.text.trim(),
+          "year": int.tryParse(year.text.trim()),
+          "original_location": originalLocation.text.trim(),
+          "number_releases": int.tryParse(numberReleases.text.trim()),
+          "urgency_level": int.tryParse(urgencyLevel.value.trim()),
+          "confidentiality_level": int.tryParse(confidentialityLevel.value.trim()),
+        };
+        APICaller.getInstance()
+            .post('v1/document', body: param)
+            .then((value) {
+          isWaitSubmit.value = false;
+          if (value != null) {
+            if (Get.isRegistered<DocumentInController>()) {
+              // Get.find<DocumentInController>().refreshData();
+            }
+            Get.back();
+            Utils.showSnackBar(
+              title: 'Thông báo!',
+              message: value['message'],
+            );
+          }
+        });
+      }
       isWaitSubmit.value = false;
     } catch (e) {
       debugPrint(e.toString());
