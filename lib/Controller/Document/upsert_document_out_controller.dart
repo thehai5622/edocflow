@@ -13,6 +13,8 @@ class UpsertDocumentOutController extends GetxController {
   TextEditingController year = TextEditingController();
   TextEditingController originalLocation = TextEditingController();
   TextEditingController numberReleases = TextEditingController();
+  RxString urgencyLevel = "0".obs;
+  RxString confidentialityLevel = "0".obs;
   // Issuing Authority
   bool isIAFirstFetch = true;
   String selectedIAUUID = "";

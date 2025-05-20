@@ -332,6 +332,54 @@ class CustomField {
     );
   }
 
+  static Widget dropdownButton({
+    String? value,
+    required List<Map<String, String>> items,
+    required void Function(String?)? onChanged,
+    String? hint,
+    String? Function(String?)? validator
+  }) {
+    return ButtonTheme(
+      alignedDropdown: true,
+      child: DropdownButtonFormField<String>(
+        dropdownColor: Colors.white,
+        isExpanded: true,
+        borderRadius: BorderRadius.circular(16),
+        icon: Icon(
+          Icons.keyboard_arrow_down_rounded,
+          color: AppColor.grey,
+        ),
+        style: _textStyle,
+        hint: Text(
+          hint ?? "",
+          style: _hintStyle,
+        ),
+        decoration: InputDecoration(
+          border: _outlineBoder,
+          enabledBorder: _outlineBoder,
+          focusedBorder: _outlineBoder,
+          filled: true,
+          fillColor: const Color(0xFFFFFFFF),
+          contentPadding: const EdgeInsets.only(
+            right: 12,
+          ),
+        ),
+        items: items.map<DropdownMenuItem<String>>((value) {
+          return DropdownMenuItem<String>(
+            value: value["value"].toString(),
+            child: Text(
+              value["label"].toString(),
+              style: _textStyle,
+            ),
+          );
+        }).toList(),
+        onChanged: onChanged,
+        value: value,
+        validator: validator,
+      ),
+    );
+  }
+
   static Align titleForm({
     required String title,
     isRequired = false,

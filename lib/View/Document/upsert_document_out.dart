@@ -69,12 +69,12 @@ class UpsertDocumentOut extends StatelessWidget {
                                     if (controller.selectedIAUUID !=
                                         controller.iaCollection[index].uuid) {
                                       Get.back();
-                                      controller.iaName.text = controller
-                                              .iaCollection[index].name ??
-                                          "--";
-                                      controller.selectedIAUUID = controller
-                                              .iaCollection[index].uuid ??
-                                          "";
+                                      controller.iaName.text =
+                                          controller.iaCollection[index].name ??
+                                              "--";
+                                      controller.selectedIAUUID =
+                                          controller.iaCollection[index].uuid ??
+                                              "";
                                     }
                                   },
                                   title: controller.iaCollection[index].name,
@@ -130,12 +130,12 @@ class UpsertDocumentOut extends StatelessWidget {
                                     if (controller.selectedTFUUID !=
                                         controller.tfCollection[index].uuid) {
                                       Get.back();
-                                      controller.tfName.text = controller
-                                              .tfCollection[index].name ??
-                                          "--";
-                                      controller.selectedTFUUID = controller
-                                              .tfCollection[index].uuid ??
-                                          "";
+                                      controller.tfName.text =
+                                          controller.tfCollection[index].name ??
+                                              "--";
+                                      controller.selectedTFUUID =
+                                          controller.tfCollection[index].uuid ??
+                                              "";
                                     }
                                   },
                                   title: controller.tfCollection[index].name,
@@ -177,12 +177,12 @@ class UpsertDocumentOut extends StatelessWidget {
                                     if (controller.selectedFUUID !=
                                         controller.fCollection[index].uuid) {
                                       Get.back();
-                                      controller.fName.text = controller
-                                              .fCollection[index].name ??
-                                          "--";
-                                      controller.selectedFUUID = controller
-                                              .fCollection[index].uuid ??
-                                          "";
+                                      controller.fName.text =
+                                          controller.fCollection[index].name ??
+                                              "--";
+                                      controller.selectedFUUID =
+                                          controller.fCollection[index].uuid ??
+                                              "";
                                     }
                                   },
                                   title: controller.fCollection[index].name,
@@ -192,13 +192,13 @@ class UpsertDocumentOut extends StatelessWidget {
                               ),
                       ),
                     ).marginSymmetric(horizontal: 20, vertical: 6),
-                    CustomField.titleForm(title: "Năm phát hành", isRequired: true)
+                    CustomField.titleForm(
+                            title: "Năm phát hành", isRequired: true)
                         .marginSymmetric(horizontal: 20),
                     CustomField.textFormfield(
                       controller: controller.year,
                       keyboardType: TextInputType.number,
-                      hintText:
-                          "2025",
+                      hintText: "2025",
                       maxLength: 4,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -207,12 +207,12 @@ class UpsertDocumentOut extends StatelessWidget {
                         return null;
                       },
                     ).marginSymmetric(horizontal: 16, vertical: 8),
-                    CustomField.titleForm(title: "Nơi lưu bản chính", isRequired: true)
+                    CustomField.titleForm(
+                            title: "Nơi lưu bản chính", isRequired: true)
                         .marginSymmetric(horizontal: 20),
                     CustomField.textFormfield(
                       controller: controller.originalLocation,
-                      hintText:
-                          "Kho hành chính...",
+                      hintText: "Kho hành chính...",
                       maxLength: 75,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -221,17 +221,61 @@ class UpsertDocumentOut extends StatelessWidget {
                         return null;
                       },
                     ).marginSymmetric(horizontal: 16, vertical: 8),
-                    CustomField.titleForm(title: "Số bản phát hành", isRequired: true)
+                    CustomField.titleForm(
+                            title: "Số bản phát hành", isRequired: true)
                         .marginSymmetric(horizontal: 20),
                     CustomField.textFormfield(
                       controller: controller.numberReleases,
                       keyboardType: TextInputType.number,
-                      hintText:
-                          "12",
+                      hintText: "12",
                       maxLength: 2,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Vui lòng nhập số bản phát hành';
+                        }
+                        return null;
+                      },
+                    ).marginSymmetric(horizontal: 16, vertical: 8),
+                    CustomField.titleForm(
+                            title: "Mức độ khẩn", isRequired: true)
+                        .marginSymmetric(horizontal: 20),
+                    CustomField.dropdownButton(
+                      hint: "Chọn mức độ khẩn",
+                      value: controller.urgencyLevel.value,
+                      items: [
+                        {"value": "0", "label": "Bình thường"},
+                        {"value": "1", "label": "Hỏa tốc"},
+                        {"value": "2", "label": "Thượng khẩn"},
+                        {"value": "3", "label": "Khẩn"},
+                      ],
+                      onChanged: (value) {
+                        controller.urgencyLevel.value = value ?? "0";
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Yêu cầu có mức độ khẩn';
+                        }
+                        return null;
+                      },
+                    ).marginSymmetric(horizontal: 16, vertical: 8),
+                    CustomField.titleForm(
+                            title: "Mức độ bảo mật", isRequired: true)
+                        .marginSymmetric(horizontal: 20),
+                    CustomField.dropdownButton(
+                      hint: "Chọn mức độ bảo mật",
+                      value: controller.confidentialityLevel.value,
+                      items: [
+                        {"value": "0", "label": "Bình thường"},
+                        {"value": "1", "label": "Tuyệt mật-A"},
+                        {"value": "2", "label": "Tối mật-B"},
+                        {"value": "3", "label": "Mật-C"},
+                      ],
+                      onChanged: (value) {
+                        controller.confidentialityLevel.value = value ?? "0";
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Yêu cầu có mức độ bảo mật';
                         }
                         return null;
                       },
