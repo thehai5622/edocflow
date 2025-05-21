@@ -5,6 +5,7 @@ import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Global/confidentiality_level.dart';
 import 'package:edocflow/Global/document_status.dart';
 import 'package:edocflow/Global/urgency_level.dart';
+import 'package:edocflow/Route/app_page.dart';
 import 'package:edocflow/Utils/device_helper.dart';
 import 'package:edocflow/Utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,8 @@ class DetailDocument extends StatelessWidget {
                         children: [
                           CustomField.titleForm(title: "Trạng thái:"),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 6),
                             decoration: BoxDecoration(
                               color: DocumentStatus.getColorStatus(
                                 controller.detail.status ?? 0,
@@ -59,6 +61,7 @@ class DetailDocument extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: _detailValue(
+                              isStatus: true,
                               value: DocumentStatus.getTextStatus(
                                 controller.detail.status ?? 0,
                               ),
@@ -73,16 +76,14 @@ class DetailDocument extends StatelessWidget {
                       ).marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Mức độ khẩn:"),
                       _detailValue(
-                        value: UrgencyLevel.getUrgencyLevel(
-                          controller.detail.urgencyLevel ?? 0,
-                        )
-                      ).marginSymmetric(vertical: 8, horizontal: 16),
+                          value: UrgencyLevel.getUrgencyLevel(
+                        controller.detail.urgencyLevel ?? 0,
+                      )).marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Mức độ bảo mật:"),
                       _detailValue(
-                        value: ConfidentialityLevel.getConfidentialityLevel(
-                          controller.detail.confidentialityLevel ?? 0,
-                        )
-                      ).marginSymmetric(vertical: 8, horizontal: 16),
+                          value: ConfidentialityLevel.getConfidentialityLevel(
+                        controller.detail.confidentialityLevel ?? 0,
+                      )).marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Trích yếu:"),
                       _detailValue(value: controller.detail.summary)
                           .marginSymmetric(vertical: 8, horizontal: 16),
@@ -143,7 +144,9 @@ class DetailDocument extends StatelessWidget {
                 onPressed: controller.isLoading.value
                     ? null
                     : () {
-                        // Utils.openFile(controller.detail.file ?? "");
+                        Get.toNamed(Routes.detailTemplateFile, arguments: {
+                          "uuid": controller.detail.templatefile?.uuid
+                        });
                       },
               ),
             ),
@@ -153,12 +156,17 @@ class DetailDocument extends StatelessWidget {
     );
   }
 
-  Text _detailValue({String? value, bool isHightlight = false}) {
+  Text _detailValue(
+      {String? value, bool isHightlight = false, bool isStatus = false}) {
     return Text(
       value ?? "--",
       style: TextStyle(
         fontSize: DeviceHelper.getFontSize(15),
-        color: isHightlight ? AppColor.primary : AppColor.text1,
+        color: isStatus
+            ? Colors.white
+            : isHightlight
+                ? AppColor.primary
+                : AppColor.text1,
         fontWeight: isHightlight ? FontWeight.w600 : FontWeight.w500,
       ),
     );
