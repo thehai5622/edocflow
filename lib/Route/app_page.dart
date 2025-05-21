@@ -1,3 +1,4 @@
+import 'package:edocflow/View/Document/detail_document.dart';
 import 'package:edocflow/View/Document/document_in.dart';
 import 'package:edocflow/View/Document/document_out.dart';
 import 'package:edocflow/View/Document/upsert_document_out.dart';
@@ -53,5 +54,6 @@ class AppPage {
     GetPage(name: Routes.documentIn, page: () => DocumentIn()),
     GetPage(name: Routes.documentOut, page: () => DocumentOut()),
     GetPage(name: Routes.upsertDocumentOut, page: () => UpsertDocumentOut()),
+    GetPage(name: Routes.detailDocument, page: () => DetailDocument()),
   ];
 }

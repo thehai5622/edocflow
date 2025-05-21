@@ -24,6 +24,7 @@ abstract class Routes {
   static const documentIn = _Paths.documentIn;
   static const documentOut = _Paths.documentOut;
   static const upsertDocumentOut = _Paths.upsertDocumentOut;
+  static const detailDocument = _Paths.detailDocument;
 }
 
 abstract class _Paths {
@@ -50,4 +51,5 @@ abstract class _Paths {
   static const String documentIn = '/document-in';
   static const String documentOut = '/document-out';
   static const String upsertDocumentOut = '/upsert-document-out';
+  static const String detailDocument = '/detail-document';
 }
