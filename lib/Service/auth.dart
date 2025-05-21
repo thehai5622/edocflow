@@ -11,7 +11,6 @@ class Auth {
       return null;
     }
 
-    await APICaller.getInstance().delete("v1/user/logout");
     await Utils.saveStringWithKey(Constant.ACCESS_TOKEN, '');
     await Utils.saveStringWithKey(Constant.REFRESH_TOKEN, '');
     await Utils.saveStringWithKey(Constant.USERNAME, '');

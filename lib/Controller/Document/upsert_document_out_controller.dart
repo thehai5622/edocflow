@@ -8,7 +8,7 @@ import 'package:edocflow/Utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class UpsertDocumentInController extends GetxController {
+class UpsertDocumentOutController extends GetxController {
   late String uuid;
   late String title;
   RxBool isWaitSubmit = false.obs;

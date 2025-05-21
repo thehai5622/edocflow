@@ -1,16 +1,16 @@
 import 'package:edocflow/Component/custom_button.dart';
 import 'package:edocflow/Component/custom_field.dart';
 import 'package:edocflow/Component/custom_listview.dart';
-import 'package:edocflow/Controller/Document/upsert_document_in_controller.dart';
+import 'package:edocflow/Controller/Document/upsert_document_out_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Utils/device_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class UpsertDocumentIn extends StatelessWidget {
-  UpsertDocumentIn({super.key});
+class UpsertDocumentOut extends StatelessWidget {
+  UpsertDocumentOut({super.key});
 
-  final controller = Get.put(UpsertDocumentInController());
+  final controller = Get.put(UpsertDocumentOutController());
   final _formKey = GlobalKey<FormState>();
 
   @override
