@@ -16,4 +16,11 @@ class AppColor {
   static Color text1  = const Color(0xFF29303C);
   static Color textHint  = const Color(0xFF788A9B);
   static Color boder = const Color(0xFFECEFF3);
+
+  // Status document
+  static Color dstatus1 = const Color(0xFF00B7C4);
+  static Color dstatus2 = const Color(0xFF3DC5AA);
+  static Color dstatus3 = const Color(0xFFFC7B5A);
+  static Color dstatus4 = const Color(0xFF2FA1D5);
+  static Color dstatus5 = const Color(0xFF4BC9F0);
 }

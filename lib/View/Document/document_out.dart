@@ -5,6 +5,7 @@ import 'package:edocflow/Component/custom_dialog.dart';
 import 'package:edocflow/Component/custom_field.dart';
 import 'package:edocflow/Controller/Document/document_out_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
+import 'package:edocflow/Global/document_status.dart';
 import 'package:edocflow/Route/app_page.dart';
 import 'package:edocflow/Utils/device_helper.dart';
 import 'package:edocflow/Utils/utils.dart';
@@ -79,7 +80,7 @@ class DocumentOut extends StatelessWidget {
                                     color: AppColor.text1, size: 20))
                             : const SizedBox(width: 0)))),
                 CustomCard.title(
-                        title: "Tổng số file mẫu: ",
+                        title: "Tổng số văn bản đi",
                         value: controller.totalCount.value.toString())
                     .marginSymmetric(horizontal: 20, vertical: 10),
                 Expanded(
@@ -96,71 +97,74 @@ class DocumentOut extends StatelessWidget {
                       itemCount: controller.collection.length,
                       itemBuilder: (context, index) {
                         return CustomCard.collectionItem(
-                            context: context,
-                            onTap: () => Get.toNamed(Routes.detailDocument,
-                                    arguments: {
-                                      "uuid": controller.collection[index].uuid
-                                    }),
-                            children: [
-                              CustomCard.infoRow(
-                                  title: "Mã văn bản:",
-                                  value:
-                                      controller.collection[index].uuid ?? "--",
-                                  isHightlight: true),
-                              CustomCard.infoRow(
-                                  title: "Trích yếu:",
-                                  value: controller.collection[index].summary ??
-                                      "--"),
-                              CustomCard.infoRow(
-                                  title: "Tới cơ quan:",
-                                  value:
-                                      controller.collection[index].issuingauthority?.name ??
-                                          "--",
-                                  isHightlight: true),
-                              CustomCard.infoRow(
-                                  title: "Người tạo:",
-                                  value:
-                                      controller.collection[index].user?.name ??
-                                          "--",
-                                  isHightlight: true),
-                              CustomCard.infoRow(
-                                  title: "Khởi tạo:",
-                                  value: Utils.formatDate(
-                                      controller.collection[index].createdAt)),
-                              CustomCard.infoRow(
-                                  title: "Chỉnh sửa lần cuối:",
-                                  value: Utils.formatDate(
-                                      controller.collection[index].updatedAt)),
-                            ],
-                            actions: [
-                              CustomCard.actionItem(
-                                icon: Icons.remove_red_eye,
-                                bgColor: AppColor.thirdMain,
-                              ),
-                              const SizedBox(width: 6),
-                              CustomCard.actionItem(
-                                icon: Icons.edit,
-                                bgColor: AppColor.primary,
-                                onTap: () => Get.toNamed(
-                                    Routes.upsertDocumentOut,
-                                    arguments: {
-                                      "uuid": controller.collection[index].uuid
-                                    }),
-                              ),
-                              const SizedBox(width: 6),
-                              CustomCard.actionItem(
-                                  icon: Icons.delete,
-                                  bgColor: AppColor.grey,
-                                  onTap: () {
-                                    CustomDialog.show(
-                                        context: context,
-                                        onPressed: () =>
-                                            controller.deleteItem(index),
-                                        title: "Xóa văn bản di",
-                                        content:
-                                            "Văn bản đi '${controller.collection[index].uuid}' sẽ bị xóa, bạn chắc chứ?");
+                          context: context,
+                          onTap: () => Get.toNamed(Routes.detailDocument,
+                              arguments: {
+                                "uuid": controller.collection[index].uuid
+                              }),
+                          status: DocumentStatus.getTextStatus(
+                            controller.collection[index].status ?? 0,
+                          ),
+                          children: [
+                            CustomCard.infoRow(
+                                title: "Mã văn bản:",
+                                value:
+                                    controller.collection[index].uuid ?? "--",
+                                isHightlight: true),
+                            CustomCard.infoRow(
+                                title: "Trích yếu:",
+                                value: controller.collection[index].summary ??
+                                    "--"),
+                            CustomCard.infoRow(
+                                title: "Tới cơ quan:",
+                                value: controller.collection[index]
+                                        .issuingauthority?.name ??
+                                    "--",
+                                isHightlight: true),
+                            CustomCard.infoRow(
+                                title: "Người tạo:",
+                                value:
+                                    controller.collection[index].user?.name ??
+                                        "--",
+                                isHightlight: true),
+                            CustomCard.infoRow(
+                                title: "Khởi tạo:",
+                                value: Utils.formatDate(
+                                    controller.collection[index].createdAt)),
+                            CustomCard.infoRow(
+                                title: "Chỉnh sửa lần cuối:",
+                                value: Utils.formatDate(
+                                    controller.collection[index].updatedAt)),
+                          ],
+                          actions: [
+                            CustomCard.actionItem(
+                              icon: Icons.remove_red_eye,
+                              bgColor: AppColor.thirdMain,
+                            ),
+                            const SizedBox(width: 6),
+                            CustomCard.actionItem(
+                              icon: Icons.edit,
+                              bgColor: AppColor.primary,
+                              onTap: () => Get.toNamed(Routes.upsertDocumentOut,
+                                  arguments: {
+                                    "uuid": controller.collection[index].uuid
                                   }),
-                            ]);
+                            ),
+                            const SizedBox(width: 6),
+                            CustomCard.actionItem(
+                                icon: Icons.delete,
+                                bgColor: AppColor.grey,
+                                onTap: () {
+                                  CustomDialog.show(
+                                      context: context,
+                                      onPressed: () =>
+                                          controller.deleteItem(index),
+                                      title: "Xóa văn bản di",
+                                      content:
+                                          "Văn bản đi '${controller.collection[index].uuid}' sẽ bị xóa, bạn chắc chứ?");
+                                }),
+                          ],
+                        );
                       },
                     ),
                   ),

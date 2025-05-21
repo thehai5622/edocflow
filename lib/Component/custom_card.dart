@@ -15,11 +15,14 @@ class CustomCard {
     );
   }
 
-  static GestureDetector collectionItem(
-      {required BuildContext context,
-      void Function()? onTap,
-      List<Widget> children = const <Widget>[],
-      List<Widget> actions = const <Widget>[]}) {
+  static GestureDetector collectionItem({
+    required BuildContext context,
+    void Function()? onTap,
+    String? status,
+    Color? stausColor,
+    List<Widget> children = const <Widget>[],
+    List<Widget> actions = const <Widget>[],
+  }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -33,7 +36,6 @@ class CustomCard {
           children: [
             Container(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-              margin: const EdgeInsets.only(bottom: 10),
               decoration: BoxDecoration(
                   border: Border(
                       bottom: BorderSide(
@@ -45,13 +47,33 @@ class CustomCard {
               ),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              margin: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: actions,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  if (status != null) Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                    decoration: BoxDecoration(
+                        color: stausColor ?? AppColor.primary,
+                        borderRadius: BorderRadius.circular(9)),
+                    child: Text(
+                      status,
+                      style: TextStyle(
+                        fontSize: DeviceHelper.getFontSize(13),
+                        color: AppColor.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: actions,
+                  ),
+                ],
               ),
-            )
+            ),
           ],
         ),
       ),
