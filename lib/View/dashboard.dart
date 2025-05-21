@@ -238,7 +238,7 @@ class Dashboard extends StatelessWidget {
                       title: 'Thêm văn bản đi',
                       onTap: () {
                         Get.back();
-                        Get.toNamed(Routes.upsertDocumentIn,
+                        Get.toNamed(Routes.upsertDocumentOut,
                             arguments: {"uuid": ""});
                       },
                     ),
