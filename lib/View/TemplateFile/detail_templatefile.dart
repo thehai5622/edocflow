@@ -19,7 +19,6 @@ class DetailTemplateFile extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         backgroundColor: AppColor.main,
-        scrolledUnderElevation: 0.0,
         shadowColor: AppColor.text1,
         title: Text(
           "Chi tiết file mẫu",
@@ -45,50 +44,38 @@ class DetailTemplateFile extends StatelessWidget {
                         horizontal: 16, vertical: 16),
                     children: [
                       CustomField.titleForm(title: "Tên file mẫu:"),
-                      Text(
-                        controller.detail.name ?? "--",
-                        style: TextStyle(
-                          fontSize: DeviceHelper.getFontSize(16),
-                          color: AppColor.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ).marginSymmetric(vertical: 8, horizontal: 16),
+                      _detailValue(
+                              value: controller.detail.name, isHightlight: true)
+                          .marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Loại file mẫu:"),
-                      Text(
-                        controller.detail.typeTemplateFile?.name ?? "--",
-                        style: TextStyle(
-                          fontSize: DeviceHelper.getFontSize(15),
-                          color: AppColor.text1,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ).marginSymmetric(vertical: 8, horizontal: 16),
+                      _detailValue(
+                              value: controller.detail.typeTemplateFile?.name)
+                          .marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Kiểu file:"),
-                      Text(
-                        controller.detail.type == 1 ? "Dùng chung" : "Cá nhân",
-                        style: TextStyle(
-                          fontSize: DeviceHelper.getFontSize(15),
-                          color: AppColor.text1,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ).marginSymmetric(vertical: 8, horizontal: 16),
+                      _detailValue(
+                              value: controller.detail.type == 1
+                                  ? "Dùng chung"
+                                  : "Cá nhân")
+                          .marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Trạng thái:"),
-                      Text(
-                        controller.detail.type == 1 ? "Hoạt động" : "Bị khóa",
-                        style: TextStyle(
-                          fontSize: DeviceHelper.getFontSize(15),
-                          color: AppColor.text1,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ).marginSymmetric(vertical: 8, horizontal: 16),
+                      _detailValue(
+                              value: controller.detail.type == 1
+                                  ? "Hoạt động"
+                                  : "Bị khóa")
+                          .marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Ghi chú:"),
-                      Text(
-                        controller.detail.note ?? "--",
-                        style: TextStyle(
-                          fontSize: DeviceHelper.getFontSize(15),
-                          color: AppColor.text1,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ).marginSymmetric(vertical: 8, horizontal: 16),
+                      _detailValue(value: controller.detail.note)
+                          .marginSymmetric(vertical: 8, horizontal: 16),
+                      CustomField.titleForm(title: "Ngày tạo:"),
+                      _detailValue(
+                              value:
+                                  Utils.formatDate(controller.detail.createdAt))
+                          .marginSymmetric(vertical: 8, horizontal: 16),
+                      CustomField.titleForm(title: "Chỉnh sửa lần cuối:"),
+                      _detailValue(
+                              value:
+                                  Utils.formatDate(controller.detail.updatedAt))
+                          .marginSymmetric(vertical: 8, horizontal: 16),
                     ],
                   ),
           )),
@@ -108,13 +95,26 @@ class DetailTemplateFile extends StatelessWidget {
             child: Obx(
               () => CustomButton.primary(
                 text: "Xem file mẫu",
-                onPressed: controller.isLoading.value ? null : () {
-                  Utils.openFile(controller.detail.file ?? "");
-                },
+                onPressed: controller.isLoading.value
+                    ? null
+                    : () {
+                        Utils.openFile(controller.detail.file ?? "");
+                      },
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Text _detailValue({String? value, bool isHightlight = false}) {
+    return Text(
+      value ?? "--",
+      style: TextStyle(
+        fontSize: DeviceHelper.getFontSize(15),
+        color: isHightlight ? AppColor.primary : AppColor.text1,
+        fontWeight: isHightlight ? FontWeight.w600 : FontWeight.w500,
       ),
     );
   }

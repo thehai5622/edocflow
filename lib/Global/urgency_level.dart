@@ -1,5 +1,5 @@
 class UrgencyLevel {
-  getUrgencyLevel(int level) {
+  static String getUrgencyLevel(int level) {
     switch (level) {
       case 1:
         return "Hỏa tốc";

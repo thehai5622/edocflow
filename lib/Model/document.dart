@@ -10,6 +10,8 @@ class Document {
   String? createdAt;
   String? updatedAt;
   User? user;
+  User? usersign;
+  User? fromIssuingauthority;
   User? issuingauthority;
   User? field;
   User? templatefile;
@@ -26,6 +28,8 @@ class Document {
       this.createdAt,
       this.updatedAt,
       this.user,
+      this.usersign,
+      this.fromIssuingauthority,
       this.issuingauthority,
       this.field,
       this.templatefile});
@@ -42,6 +46,12 @@ class Document {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     user = json['user'] != null ? User.fromJson(json['user']) : null;
+    usersign = json['usersign'] != null
+        ? User.fromJson(json['usersign'])
+        : null;
+    fromIssuingauthority = json['from_issuingauthority'] != null
+        ? User.fromJson(json['from_issuingauthority'])
+        : null;
     issuingauthority = json['issuingauthority'] != null
         ? User.fromJson(json['issuingauthority'])
         : null;
@@ -65,6 +75,12 @@ class Document {
     data['updated_at'] = updatedAt;
     if (user != null) {
       data['user'] = user!.toJson();
+    }
+    if (usersign != null) {
+      data['usersign'] = usersign!.toJson();
+    }
+    if (fromIssuingauthority != null) {
+      data['from_issuingauthority'] = fromIssuingauthority!.toJson();
     }
     if (issuingauthority != null) {
       data['issuingauthority'] = issuingauthority!.toJson();

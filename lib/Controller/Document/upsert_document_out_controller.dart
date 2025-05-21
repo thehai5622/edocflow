@@ -1,6 +1,7 @@
-import 'package:edocflow/Controller/Document/document_in_controller.dart';
+import 'package:edocflow/Controller/Document/document_out_controller.dart';
 import 'package:edocflow/Global/constant.dart';
 import 'package:edocflow/Model/Issuingauthority.dart';
+import 'package:edocflow/Model/document.dart';
 import 'package:edocflow/Model/field.dart';
 import 'package:edocflow/Model/templatefile.dart';
 import 'package:edocflow/Service/api_caller.dart';
@@ -12,6 +13,7 @@ class UpsertDocumentOutController extends GetxController {
   late String uuid;
   late String title;
   RxBool isWaitSubmit = false.obs;
+  Document detail = Document();
   TextEditingController summary = TextEditingController();
   TextEditingController year = TextEditingController();
   TextEditingController originalLocation = TextEditingController();
@@ -47,9 +49,40 @@ class UpsertDocumentOutController extends GetxController {
       title = "Thêm văn bản đi";
     } else {
       title = "Chỉnh sửa văn bản đi";
-      // getDetail();
+      getDetail();
     }
     super.onInit();
+  }
+
+  getDetail() {
+    isWaitSubmit.value = true;
+    try {
+      APICaller.getInstance().get("v1/document/$uuid").then((value) {
+        isWaitSubmit.value = false;
+        if (value != null) {
+          detail = Document.fromJson(value['data']);
+          _setValue();
+        }
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+      isWaitSubmit.value = false;
+    }
+  }
+
+  _setValue() {
+    selectedIAUUID = detail.issuingauthority?.uuid ?? "";
+    iaName.text = detail.issuingauthority?.name ?? "";
+    selectedTFUUID = detail.templatefile?.uuid ?? "";
+    tfName.text = detail.templatefile?.name ?? "";
+    selectedFUUID = detail.field?.uuid ?? "";
+    fName.text = detail.field?.name ?? "";
+    summary.text = detail.summary ?? "";
+    year.text = "${detail.year}";
+    originalLocation.text = detail.originalLocation ?? "";
+    numberReleases.text = "${detail.numberReleases}";
+    urgencyLevel.value = "${detail.urgencyLevel}";
+    confidentialityLevel.value = "${detail.confidentialityLevel}";
   }
 
   // Issuing Authority
@@ -155,8 +188,8 @@ class UpsertDocumentOutController extends GetxController {
         APICaller.getInstance().post('v1/document', body: param).then((value) {
           isWaitSubmit.value = false;
           if (value != null) {
-            if (Get.isRegistered<DocumentInController>()) {
-              // Get.find<DocumentInController>().refreshData();
+            if (Get.isRegistered<DocumentOutController>()) {
+              Get.find<DocumentOutController>().refreshData();
             }
             Get.back();
             Utils.showSnackBar(
@@ -165,6 +198,8 @@ class UpsertDocumentOutController extends GetxController {
             );
           }
         });
+      } else {
+
       }
       isWaitSubmit.value = false;
     } catch (e) {

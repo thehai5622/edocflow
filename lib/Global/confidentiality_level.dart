@@ -1,5 +1,5 @@
 class ConfidentialityLevel {
-  getConfidentialityLevel(int level) {
+  static String getConfidentialityLevel(int level) {
     switch (level) {
       case 1:
         return 'Tuyệt mật-A';
