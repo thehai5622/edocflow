@@ -105,6 +105,9 @@ class DocumentOut extends StatelessWidget {
                           status: DocumentStatus.getTextStatus(
                             controller.collection[index].status ?? 0,
                           ),
+                          stausColor: DocumentStatus.getColorStatus(
+                            controller.collection[index].status ?? 0,
+                          ),
                           children: [
                             CustomCard.infoRow(
                                 title: "Mã văn bản:",
