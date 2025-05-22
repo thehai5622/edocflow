@@ -23,7 +23,6 @@ class User extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         backgroundColor: AppColor.main,
-        scrolledUnderElevation: 0.0,
         shadowColor: AppColor.text1,
         title: Text(
           "Cán bộ",
@@ -99,10 +98,6 @@ class User extends StatelessWidget {
                           context: context,
                           image:
                               "${controller.imageBaseUrl}${controller.collection[index].avatar}",
-                          onTap: () => Get.toNamed(Routes.detailDocument,
-                              arguments: {
-                                "uuid": controller.collection[index].uuid
-                              }),
                           children: [
                             CustomCard.infoRow(
                                 title: "Mã cán bộ:",
@@ -176,6 +171,16 @@ class User extends StatelessWidget {
                 )),
               ],
             )),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColor.primary,
+        elevation: 0,
+        shape: const CircleBorder(),
+        onPressed: () => Get.toNamed(Routes.createUser),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }
