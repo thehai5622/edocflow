@@ -116,7 +116,7 @@ class Dashboard extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             SvgPicture.asset(
-                              'assets/icons/wallet.svg',
+                              'assets/icons/document.svg',
                               height: 25,
                               width: 25,
                               colorFilter: controller.currentIndex.value == 1
@@ -153,7 +153,7 @@ class Dashboard extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             SvgPicture.asset(
-                              'assets/icons/budget.svg',
+                              'assets/icons/document.svg',
                               height: 25,
                               width: 25,
                               colorFilter: controller.currentIndex.value == 2
