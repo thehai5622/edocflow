@@ -18,6 +18,7 @@ class CustomCard {
   static GestureDetector collectionItem({
     required BuildContext context,
     void Function()? onTap,
+    String? image,
     String? status,
     Color? stausColor,
     List<Widget> children = const <Widget>[],
@@ -42,8 +43,42 @@ class CustomCard {
                 width: 2,
                 color: AppColor.background,
               ))),
-              child: Column(
-                children: children,
+              child: Row(
+                children: [
+                  if (image != null)
+                    Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.network(
+                            image,
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Container(
+                              height: 50,
+                              width: 50,
+                              color: AppColor.background,
+                              child: Center(
+                                child: Icon(
+                                  Icons.account_box,
+                                  size: 45,
+                                  color: AppColor.text1,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                      ],
+                    ),
+                  Expanded(
+                    child: Column(
+                      children: children,
+                    ),
+                  ),
+                ],
               ),
             ),
             Container(
@@ -52,20 +87,22 @@ class CustomCard {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  if (status != null) Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                    decoration: BoxDecoration(
-                        color: stausColor ?? AppColor.primary,
-                        borderRadius: BorderRadius.circular(9)),
-                    child: Text(
-                      status,
-                      style: TextStyle(
-                        fontSize: DeviceHelper.getFontSize(13),
-                        color: AppColor.white,
-                        fontWeight: FontWeight.w600,
+                  if (status != null)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 5),
+                      decoration: BoxDecoration(
+                          color: stausColor ?? AppColor.primary,
+                          borderRadius: BorderRadius.circular(9)),
+                      child: Text(
+                        status,
+                        style: TextStyle(
+                          fontSize: DeviceHelper.getFontSize(13),
+                          color: AppColor.white,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
-                  ),
                   const SizedBox(),
                   Row(
                     mainAxisSize: MainAxisSize.min,

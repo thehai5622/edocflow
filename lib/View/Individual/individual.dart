@@ -34,7 +34,7 @@ class Individual extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
               child: SizedBox(
                 width: double.infinity,
                 child: Column(
@@ -86,6 +86,11 @@ class Individual extends StatelessWidget {
                     onTap: () => Get.toNamed(Routes.issuingAuthority),
                   ),
                   _itemRow(
+                    title: "Cán bộ",
+                    icon: "assets/icons/shield-security.svg",
+                    onTap: () => Get.toNamed(Routes.user),
+                  ),
+                  _itemRow(
                     title: "Lĩnh vực",
                     icon: "assets/icons/shield-security.svg",
                     onTap: () => Get.toNamed(Routes.field),
@@ -121,6 +126,7 @@ class Individual extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(height: 125),
           ],
         ),
       ),

@@ -19,6 +19,7 @@ import 'package:edocflow/View/TemplateFile/upsert_templatefile.dart';
 import 'package:edocflow/View/TypeTemplateFile/create_ttf.dart';
 import 'package:edocflow/View/TypeTemplateFile/edit_ttf.dart';
 import 'package:edocflow/View/TypeTemplateFile/type_template_file.dart';
+import 'package:edocflow/View/User/user.dart';
 import 'package:edocflow/View/dashboard.dart';
 import 'package:edocflow/View/splash.dart';
 import 'package:get/get.dart';
@@ -55,5 +56,6 @@ class AppPage {
     GetPage(name: Routes.documentOut, page: () => DocumentOut()),
     GetPage(name: Routes.upsertDocumentOut, page: () => UpsertDocumentOut()),
     GetPage(name: Routes.detailDocument, page: () => DetailDocument()),
+    GetPage(name: Routes.user, page: () => User()),
   ];
 }
