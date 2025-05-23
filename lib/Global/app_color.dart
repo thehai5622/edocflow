@@ -8,6 +8,7 @@ class AppColor {
   static Color background = const Color(0xFFF6F8FB);
   static Color thirdMain = const Color(0xFFFFC55A);
   static Color primary = const Color(0xFFFC4100);
+  static Color secondary = const Color(0xFF67AE6E);
 
   // Text theme
   static Color white = const Color(0xFFFFFFFF);

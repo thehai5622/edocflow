@@ -95,6 +95,10 @@ class User extends StatelessWidget {
                       itemCount: controller.collection.length,
                       itemBuilder: (context, index) {
                         return CustomCard.collectionItem(
+                          onTap: () => Get.toNamed(Routes.detailUser,
+                              arguments: {
+                                "uuid": controller.collection[index].uuid
+                              }),
                           context: context,
                           image:
                               "${controller.imageBaseUrl}${controller.collection[index].avatar}",
@@ -118,24 +122,31 @@ class User extends StatelessWidget {
                             CustomCard.infoRow(
                                 title: "Khởi tạo:",
                                 value: Utils.formatDate(
-                                    controller.collection[index].createdAt)),
+                                    isoString: controller
+                                        .collection[index].createdAt)),
                             CustomCard.infoRow(
                                 title: "Chỉnh sửa lần cuối:",
                                 value: Utils.formatDate(
-                                    controller.collection[index].updatedAt)),
+                                    isoString: controller
+                                        .collection[index].updatedAt)),
                           ],
                           actions: [
                             CustomCard.actionItem(
                               icon: Icons.remove_red_eye,
                               bgColor: AppColor.thirdMain,
                             ),
+                            const SizedBox(width: 6),
+                            CustomCard.actionItem(
+                                icon: Icons.edit,
+                                bgColor: AppColor.primary,
+                                onTap: () {}),
                             if (controller.collection[index].username == null)
                               Row(
                                 children: [
                                   const SizedBox(width: 6),
                                   CustomCard.actionItem(
                                     icon: Icons.account_circle,
-                                    bgColor: AppColor.primary,
+                                    bgColor: AppColor.secondary,
                                     onTap: () {
                                       {
                                         CustomDialog.show(

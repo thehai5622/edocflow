@@ -133,11 +133,13 @@ class DocumentOut extends StatelessWidget {
                             CustomCard.infoRow(
                                 title: "Khởi tạo:",
                                 value: Utils.formatDate(
-                                    controller.collection[index].createdAt)),
+                                    isoString: controller
+                                        .collection[index].createdAt)),
                             CustomCard.infoRow(
                                 title: "Chỉnh sửa lần cuối:",
                                 value: Utils.formatDate(
-                                    controller.collection[index].updatedAt)),
+                                    isoString: controller
+                                        .collection[index].updatedAt)),
                           ],
                           actions: [
                             CustomCard.actionItem(

@@ -115,12 +115,12 @@ class DetailDocument extends StatelessWidget {
                       CustomField.titleForm(title: "Ngày tạo:"),
                       _detailValue(
                           value: Utils.formatDate(
-                        controller.detail.createdAt,
+                        isoString: controller.detail.createdAt,
                       )).marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Chỉnh sửa lần cuối:"),
                       _detailValue(
                           value: Utils.formatDate(
-                        controller.detail.updatedAt,
+                        isoString: controller.detail.updatedAt,
                       )).marginSymmetric(vertical: 8, horizontal: 16),
                     ],
                   ),

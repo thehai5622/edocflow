@@ -59,17 +59,20 @@ class Utils {
     return md5.convert(utf8.encode(input)).toString();
   }
 
-  static String formatDate(String? isoString) {
+  static String formatDate({String? isoString, bool isDateOnly = false}) {
     if (isoString == null || isoString.trim().isEmpty) {
-      return "Không xác định";
+      return "--";
     }
 
     try {
-      DateTime dateTime =
-          DateTime.parse(isoString);
-      return DateFormat('HH:mm - dd/MM/yyyy').format(dateTime);
+      DateTime dateTime = DateTime.parse(isoString);
+      if (isDateOnly) {
+        return DateFormat('dd/MM/yyyy').format(dateTime);
+      } else {
+        return DateFormat('HH:mm - dd/MM/yyyy').format(dateTime);
+      }
     } catch (e) {
-      return "Không xác định";
+      return "--";
     }
   }
 
@@ -172,10 +175,9 @@ class Utils {
                 ),
                 minScale: PhotoViewComputedScale.contained,
                 maxScale: PhotoViewComputedScale.covered * 3,
-                errorBuilder:
-                    (context, error, stackTrace) => const Center(
-                      child: Icon(Icons.error, color: Colors.red, size: 50),
-                    ),
+                errorBuilder: (context, error, stackTrace) => const Center(
+                  child: Icon(Icons.error, color: Colors.red, size: 50),
+                ),
               ),
               Positioned(
                 top: 40,

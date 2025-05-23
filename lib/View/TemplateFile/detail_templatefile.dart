@@ -68,13 +68,13 @@ class DetailTemplateFile extends StatelessWidget {
                           .marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Ngày tạo:"),
                       _detailValue(
-                              value:
-                                  Utils.formatDate(controller.detail.createdAt))
+                              value: Utils.formatDate(
+                                  isoString: controller.detail.createdAt))
                           .marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Chỉnh sửa lần cuối:"),
                       _detailValue(
-                              value:
-                                  Utils.formatDate(controller.detail.updatedAt))
+                              value: Utils.formatDate(
+                                  isoString: controller.detail.updatedAt))
                           .marginSymmetric(vertical: 8, horizontal: 16),
                     ],
                   ),

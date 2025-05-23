@@ -150,11 +150,11 @@ class TypeTemplateFile extends StatelessWidget {
                   _infoRow(
                       title: "Khởi tạo:",
                       value: Utils.formatDate(
-                          controller.collection[index].createdAt)),
+                          isoString: controller.collection[index].createdAt)),
                   _infoRow(
                       title: "Chỉnh sửa lần cuối:",
                       value: Utils.formatDate(
-                          controller.collection[index].updatedAt)),
+                          isoString: controller.collection[index].updatedAt)),
                 ],
               ),
             ),

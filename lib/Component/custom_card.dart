@@ -64,7 +64,7 @@ class CustomCard {
                                 child: Icon(
                                   Icons.account_box,
                                   size: 45,
-                                  color: AppColor.text1,
+                                  color: AppColor.grey,
                                 ),
                               ),
                             ),
@@ -123,7 +123,7 @@ class CustomCard {
       bool isHightlight = false}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           title,
