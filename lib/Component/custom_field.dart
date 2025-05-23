@@ -297,7 +297,7 @@ class CustomField {
     required dynamic value,
     required dynamic groupValue,
     required void Function(dynamic)? onChanged,
-    bool? enabled,
+    bool enabled = true,
     String? label,
   }) {
     return Row(
