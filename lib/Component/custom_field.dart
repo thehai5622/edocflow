@@ -137,10 +137,12 @@ class CustomField {
       focusNode: focusNode,
       cursorColor: AppColor.primary,
       decoration: InputDecoration(
-        label: Text(
-          label ?? "",
-          style: labelStyle,
-        ),
+        label: label == null
+            ? null
+            : Text(
+                label,
+                style: labelStyle,
+              ),
         focusColor: AppColor.primary,
         border: _outlineBoder,
         enabledBorder: _outlineBoder,
@@ -332,13 +334,12 @@ class CustomField {
     );
   }
 
-  static Widget dropdownButton({
-    String? value,
-    required List<Map<String, String>> items,
-    required void Function(String?)? onChanged,
-    String? hint,
-    String? Function(String?)? validator
-  }) {
+  static Widget dropdownButton(
+      {String? value,
+      required List<Map<String, String>> items,
+      required void Function(String?)? onChanged,
+      String? hint,
+      String? Function(String?)? validator}) {
     return ButtonTheme(
       alignedDropdown: true,
       child: DropdownButtonFormField<String>(

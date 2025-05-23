@@ -1,5 +1,6 @@
 import 'package:edocflow/Component/custom_button.dart';
 import 'package:edocflow/Component/custom_field.dart';
+import 'package:edocflow/Component/custom_listview.dart';
 import 'package:edocflow/Controller/User/create_user_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Utils/device_helper.dart';
@@ -86,7 +87,7 @@ class CreateUser extends StatelessWidget {
                             }
                             return null;
                           },
-                        ).marginSymmetric(horizontal: 16, vertical: 8),
+                        ).marginSymmetric(horizontal: 20, vertical: 8),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -117,7 +118,125 @@ class CreateUser extends StatelessWidget {
                               ],
                             ),
                           ],
-                        ).marginSymmetric(horizontal: 16, vertical: 8),
+                        ).marginSymmetric(horizontal: 20, vertical: 8),
+                        CustomField.titleForm(title: "Quyền", isRequired: true)
+                            .marginSymmetric(horizontal: 20),
+                        CustomField.dropDownField(
+                          context: context,
+                          onTap: controller.initP,
+                          funcGetAndSearch: controller.getPCollection,
+                          controller: controller.pName,
+                          searchController: controller.searchP,
+                          enabled: true,
+                          hintText: "Chọn quyền của cán bộ",
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Quyền là trường bắt buộc";
+                            }
+                            return null;
+                          },
+                          child: Obx(
+                            () => controller.isLoadingP.value == true
+                                ? Center(
+                                    child: CircularProgressIndicator(
+                                    color: AppColor.primary,
+                                    strokeWidth: 2,
+                                  ))
+                                : CustomListView.show(
+                                    itemCount: controller.pCollection.length,
+                                    gap: 0,
+                                    itemBuilder: (context, index) =>
+                                        CustomListView.viewItem(
+                                      onTap: () {
+                                        if (controller.selectedPUUID !=
+                                            controller
+                                                .pCollection[index].uuid) {
+                                          Get.back();
+                                          controller.pName.text = controller
+                                                  .pCollection[index].name ??
+                                              "--";
+                                          controller.selectedPUUID = controller
+                                                  .pCollection[index].uuid ??
+                                              -1;
+                                        }
+                                      },
+                                      title: controller.pCollection[index].name,
+                                      isSelected: controller.selectedPUUID ==
+                                          controller.pCollection[index].uuid,
+                                    ),
+                                  ),
+                          ),
+                        ).marginSymmetric(horizontal: 20, vertical: 6),
+                        CustomField.titleForm(
+                                title: "Thuộc cơ quan", isRequired: true)
+                            .marginSymmetric(horizontal: 20),
+                        CustomField.dropDownField(
+                          context: context,
+                          onTap: controller.initIA,
+                          funcGetAndSearch: controller.getIACollection,
+                          controller: controller.iaName,
+                          searchController: controller.searchIA,
+                          enabled: true,
+                          hintText: "Chọn cơ quan ban hành",
+                          child: Obx(
+                            () => controller.isLoadingIA.value == true
+                                ? Center(
+                                    child: CircularProgressIndicator(
+                                    color: AppColor.primary,
+                                    strokeWidth: 2,
+                                  ))
+                                : CustomListView.show(
+                                    itemCount: controller.iaCollection.length,
+                                    gap: 0,
+                                    itemBuilder: (context, index) =>
+                                        CustomListView.viewItem(
+                                      onTap: () {
+                                        if (controller.selectedIAUUID !=
+                                            controller
+                                                .iaCollection[index].uuid) {
+                                          Get.back();
+                                          controller.iaName.text = controller
+                                                  .iaCollection[index].name ??
+                                              "--";
+                                          controller.selectedIAUUID = controller
+                                                  .iaCollection[index].uuid ??
+                                              "";
+                                        }
+                                      },
+                                      title:
+                                          controller.iaCollection[index].name,
+                                      isSelected: controller.selectedIAUUID ==
+                                          controller.iaCollection[index].uuid,
+                                    ),
+                                  ),
+                          ),
+                        ).marginSymmetric(horizontal: 20, vertical: 6),
+                        CustomField.titleForm(title: "Ngày sinh")
+                            .marginSymmetric(horizontal: 20),
+                        CustomField.dateField(
+                          enabled: true,
+                          context: context,
+                          controller: controller.birthDay,
+                        ).marginSymmetric(horizontal: 20, vertical: 8),
+                        CustomField.titleForm(
+                                title: "Điện thoại liên hệ", isRequired: true)
+                            .marginSymmetric(horizontal: 20),
+                        CustomField.textFormfield(
+                          controller: controller.phone,
+                          hintText: "0987654321",
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Vui lòng nhập số diện thoại';
+                            }
+                            return null;
+                          },
+                        ).marginSymmetric(horizontal: 20, vertical: 8),
+                        CustomField.titleForm(title: "Email")
+                            .marginSymmetric(horizontal: 20),
+                        CustomField.textFormfield(
+                          controller: controller.email,
+                          hintText: "witty@example.com",
+                        ).marginSymmetric(horizontal: 20, vertical: 8),
                       ],
                     ),
                   )
