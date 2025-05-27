@@ -90,6 +90,7 @@ class ProfileController extends GetxController {
           Utils.showSnackBar(title: "Thông báo", message: response['message']);
           return;
         });
+        return;
       }
       APICaller.getInstance().postFile(file: avatarLocal.value).then((value) {
         APICaller.getInstance().put('v1/user/me', body: {

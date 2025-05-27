@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'package:edocflow/Controller/User/user_controller.dart';
 import 'package:edocflow/Model/profile.dart';
 import 'package:edocflow/Service/api_caller.dart';
+import 'package:edocflow/Utils/time_helper.dart';
+import 'package:edocflow/Utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -44,9 +47,8 @@ class CreateUserController extends GetxController {
         isLoadingP.value = false;
         if (response != null) {
           List<dynamic> list = response['data'];
-          var listItem = list
-              .map((dynamic json) => Permission.fromJson(json))
-              .toList();
+          var listItem =
+              list.map((dynamic json) => Permission.fromJson(json)).toList();
           pCollection.addAll(listItem);
         }
       });
@@ -88,9 +90,52 @@ class CreateUserController extends GetxController {
     isWaitSubmit.value = true;
     try {
       isWaitSubmit.value = false;
+      if (avatarLocal.value.path.isEmpty) {
+        APICaller.getInstance().post('v1/user/create', body: {
+          'name': name.text.trim(),
+          'gender': gender.value == -1 ? null : gender.value,
+          'birth_day': TimeHelper.convertDateFormat(birthDay.text, true),
+          'phone': phone.text.trim(),
+          'email': email.text.trim() == '' ? null : email.text.trim(),
+          'permission': selectedPUUID == -1 ? null : selectedPUUID,
+          'issuing_authority': selectedIAUUID == '' ? null : selectedIAUUID,
+          'avatar': null,
+        }).then((response) {
+          if (Get.isRegistered<UserController>()) {
+            Get.find<UserController>().refreshData();
+          }
+          Get.back();
+          Utils.showSnackBar(title: "Thông báo", message: response['message']);
+          return;
+        });
+        return;
+      }
+      APICaller.getInstance().postFile(file: avatarLocal.value).then((value) {
+        APICaller.getInstance().post('v1/user/create', body: {
+          'name': name.text.trim(),
+          'gender': gender.value == -1 ? null : gender.value,
+          'birth_day': TimeHelper.convertDateFormat(birthDay.text, true),
+          'phone': phone.text.trim(),
+          'email': email.text.trim() == '' ? null : email.text.trim(),
+          'permission': selectedPUUID == -1 ? null : selectedPUUID,
+          'issuing_authority': selectedIAUUID == '' ? null : selectedIAUUID,
+          'avatar': value['file']
+        }).then((response) {
+          if (response == null) {
+            APICaller.getInstance().delete('v1/file/${value['file']}');
+          } else {
+            if (Get.isRegistered<UserController>()) {
+            Get.find<UserController>().refreshData();
+          }
+            Get.back();
+            Utils.showSnackBar(
+                title: "Thông báo", message: response['message']);
+          }
+        });
+      });
     } catch (e) {
-      debugPrint(e.toString());
       isWaitSubmit.value = false;
+      debugPrint(e.toString());
     }
   }
 }

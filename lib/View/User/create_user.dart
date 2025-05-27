@@ -80,6 +80,7 @@ class CreateUser extends StatelessWidget {
                             .marginSymmetric(horizontal: 20),
                         CustomField.textFormfield(
                           controller: controller.name,
+                          maxLength: 75,
                           hintText: "Nguyễn Văn A",
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -223,6 +224,7 @@ class CreateUser extends StatelessWidget {
                             .marginSymmetric(horizontal: 20),
                         CustomField.textFormfield(
                           controller: controller.phone,
+                          maxLength: 10,
                           hintText: "0987654321",
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -235,6 +237,7 @@ class CreateUser extends StatelessWidget {
                             .marginSymmetric(horizontal: 20),
                         CustomField.textFormfield(
                           controller: controller.email,
+                          maxLength: 75,
                           hintText: "witty@example.com",
                         ).marginSymmetric(horizontal: 20, vertical: 8),
                       ],
