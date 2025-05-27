@@ -128,8 +128,7 @@ class DocumentOut extends StatelessWidget {
                                 title: "Người tạo:",
                                 value:
                                     controller.collection[index].user?.name ??
-                                        "--",
-                                isHightlight: true),
+                                        "--"),
                             CustomCard.infoRow(
                                 title: "Khởi tạo:",
                                 value: Utils.formatDate(

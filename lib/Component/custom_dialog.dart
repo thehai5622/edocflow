@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomDialog {
-  static void show(
-      {required BuildContext context,
-      required String title,
-      required String content,
-      required void Function() onPressed,}) {
+  static void show({
+    required BuildContext context,
+    required String title,
+    required String content,
+    required void Function() onPressed,
+  }) {
     showDialog(
       context: context,
       builder: (context) {
@@ -94,6 +95,23 @@ class CustomDialog {
               ),
             ],
           ),
+        );
+      },
+    );
+  }
+
+  static void dialogEmpty({
+    required BuildContext context,
+    required Widget body,
+  }) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: AppColor.main,
+          contentPadding: const EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          content: body,
         );
       },
     );

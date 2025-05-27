@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:edocflow/Component/custom_button.dart';
 import 'package:edocflow/Component/custom_card.dart';
 import 'package:edocflow/Component/custom_dialog.dart';
 import 'package:edocflow/Component/custom_field.dart';
+import 'package:edocflow/Component/custom_listview.dart';
 import 'package:edocflow/Controller/User/user_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Route/app_page.dart';
@@ -15,6 +17,7 @@ class User extends StatelessWidget {
   User({super.key});
 
   final controller = Get.put(UserController());
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -137,9 +140,11 @@ class User extends StatelessWidget {
                             ),
                             const SizedBox(width: 6),
                             CustomCard.actionItem(
-                                icon: Icons.edit,
-                                bgColor: AppColor.primary,
-                                onTap: () {}),
+                              icon: Icons.edit,
+                              bgColor: AppColor.primary,
+                              onTap: () =>
+                                  _update(context: context, index: index),
+                            ),
                             if (controller.collection[index].username == null)
                               Row(
                                 children: [
@@ -149,13 +154,8 @@ class User extends StatelessWidget {
                                     bgColor: AppColor.secondary,
                                     onTap: () {
                                       {
-                                        CustomDialog.show(
-                                            context: context,
-                                            onPressed: () =>
-                                                controller.deleteItem(index),
-                                            title: "Cấp tài khoản",
-                                            content:
-                                                "Cán bộ '${controller.collection[index].name}' sẽ được cấp tài khoản để truy cập hệ thống, tiếp tục điều hướng sang 'Cấp tài khoản'?");
+                                        _provideAccount(
+                                            context: context, index: index);
                                       }
                                     },
                                   ),
@@ -190,6 +190,218 @@ class User extends StatelessWidget {
         child: const Icon(
           Icons.add,
           color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  _update({required BuildContext context, required int index}) {
+    controller.selectedPUUID =
+        controller.collection[index].permission?.uuid ?? -1;
+    controller.pName.text =
+        controller.collection[index].permission?.name ?? "--";
+    controller.selectedIAUUID =
+        controller.collection[index].issuingAuthority?.uuid ?? "";
+    controller.iaName.text =
+        controller.collection[index].issuingAuthority?.name ?? "--";
+    CustomDialog.dialogEmpty(
+      context: context,
+      body: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20),
+            Text(
+              "Cập nhật quyền / Cơ quan ban hành",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: AppColor.text1,
+                  fontWeight: FontWeight.w700,
+                  fontSize: DeviceHelper.getFontSize(20)),
+            ),
+            const SizedBox(height: 20),
+            CustomField.titleForm(title: "Quyền", isRequired: true)
+                .marginSymmetric(horizontal: 20),
+            CustomField.dropDownField(
+              context: context,
+              onTap: controller.initP,
+              funcGetAndSearch: controller.getPCollection,
+              controller: controller.pName,
+              searchController: controller.searchP,
+              enabled: true,
+              hintText: "Chọn quyền của cán bộ",
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Quyền là trường bắt buộc";
+                }
+                return null;
+              },
+              child: Obx(
+                () => controller.isLoadingP.value == true
+                    ? Center(
+                        child: CircularProgressIndicator(
+                        color: AppColor.primary,
+                        strokeWidth: 2,
+                      ))
+                    : CustomListView.show(
+                        itemCount: controller.pCollection.length,
+                        gap: 0,
+                        itemBuilder: (context, index) =>
+                            CustomListView.viewItem(
+                          onTap: () {
+                            if (controller.selectedPUUID !=
+                                controller.pCollection[index].uuid) {
+                              Get.back();
+                              controller.pName.text =
+                                  controller.pCollection[index].name ?? "--";
+                              controller.selectedPUUID =
+                                  controller.pCollection[index].uuid ?? -1;
+                            }
+                          },
+                          title: controller.pCollection[index].name,
+                          isSelected: controller.selectedPUUID ==
+                              controller.pCollection[index].uuid,
+                        ),
+                      ),
+              ),
+            ).marginSymmetric(horizontal: 20, vertical: 6),
+            CustomField.titleForm(title: "Thuộc cơ quan", isRequired: true)
+                .marginSymmetric(horizontal: 20),
+            CustomField.dropDownField(
+              context: context,
+              onTap: controller.initIA,
+              funcGetAndSearch: controller.getIACollection,
+              controller: controller.iaName,
+              searchController: controller.searchIA,
+              enabled: true,
+              hintText: "Chọn cơ quan ban hành",
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Cơ quan là trường bắt buộc";
+                }
+                return null;
+              },
+              child: Obx(
+                () => controller.isLoadingIA.value == true
+                    ? Center(
+                        child: CircularProgressIndicator(
+                        color: AppColor.primary,
+                        strokeWidth: 2,
+                      ))
+                    : CustomListView.show(
+                        itemCount: controller.iaCollection.length,
+                        gap: 0,
+                        itemBuilder: (context, index) =>
+                            CustomListView.viewItem(
+                          onTap: () {
+                            if (controller.selectedIAUUID !=
+                                controller.iaCollection[index].uuid) {
+                              Get.back();
+                              controller.iaName.text =
+                                  controller.iaCollection[index].name ?? "--";
+                              controller.selectedIAUUID =
+                                  controller.iaCollection[index].uuid ?? "";
+                            }
+                          },
+                          title: controller.iaCollection[index].name,
+                          isSelected: controller.selectedIAUUID ==
+                              controller.iaCollection[index].uuid,
+                        ),
+                      ),
+              ),
+            ).marginSymmetric(horizontal: 20, vertical: 6),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomButton.cancel(
+                    text: "Hủy bỏ",
+                    onPressed: () => Get.back(),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: CustomButton.primary(
+                    text: "Xác nhận",
+                    onPressed: () {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        controller.updateItem(index);
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ).marginSymmetric(horizontal: 20, vertical: 16),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _provideAccount({required BuildContext context, required int index}) {
+    CustomDialog.dialogEmpty(
+      context: context,
+      body: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                "Cấp tài khoản",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: AppColor.text1,
+                    fontWeight: FontWeight.w700,
+                    fontSize: DeviceHelper.getFontSize(20)),
+              ),
+            ),
+            const SizedBox(height: 20),
+            CustomField.titleForm(title: "Tài khoản", isRequired: true)
+                .marginSymmetric(horizontal: 20),
+            CustomField.textFormfield(
+                controller: controller.username,
+                hintText: "Tài khoản",
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Tài khoản là bắt buộc";
+                  }
+                  return null;
+                }).marginSymmetric(horizontal: 20, vertical: 6),
+            Text(
+              "Mật khẩu mặc định sẽ là 123456",
+              style: TextStyle(
+                color: AppColor.textHint,
+                fontSize: DeviceHelper.getFontSize(14),
+                fontWeight: FontWeight.w500,
+              ),
+            ).marginSymmetric(horizontal: 20, vertical: 6),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomButton.cancel(
+                    text: "Hủy bỏ",
+                    onPressed: () => Get.back(),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: CustomButton.primary(
+                    text: "Xác nhận",
+                    onPressed: () {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        controller.provideAccount(index);
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ).marginSymmetric(horizontal: 20, vertical: 16),
+          ],
         ),
       ),
     );
