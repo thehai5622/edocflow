@@ -145,11 +145,9 @@ class User extends StatelessWidget {
                               onTap: () =>
                                   _update(context: context, index: index),
                             ),
-                            if (controller.collection[index].username == null)
-                              Row(
-                                children: [
-                                  const SizedBox(width: 6),
-                                  CustomCard.actionItem(
+                            const SizedBox(width: 6),
+                            controller.collection[index].username == null
+                                ? CustomCard.actionItem(
                                     icon: Icons.account_circle,
                                     bgColor: AppColor.secondary,
                                     onTap: () {
@@ -158,21 +156,40 @@ class User extends StatelessWidget {
                                             context: context, index: index);
                                       }
                                     },
+                                  )
+                                : CustomCard.actionItem(
+                                    icon: Icons.abc,
+                                    bgColor: AppColor.secondary,
+                                    onTap: () {
+                                      {
+                                        CustomDialog.show(
+                                            context: context,
+                                            onPressed: () =>
+                                                controller.resetPassword(index),
+                                            title: "Cấp lại mật khẩu",
+                                            content:
+                                                "Cán bộ '${controller.collection[index].name}' sẽ được cấp lại mật khẩu mặc định là '123456', bạn chắc chứ?");
+                                      }
+                                    },
                                   ),
-                                ],
-                              ),
                             const SizedBox(width: 6),
                             CustomCard.actionItem(
-                                icon: Icons.lock,
+                                icon: controller.collection[index].status == 1
+                                    ? Icons.lock
+                                    : Icons.lock_open,
                                 bgColor: AppColor.grey,
                                 onTap: () {
                                   CustomDialog.show(
                                       context: context,
                                       onPressed: () =>
-                                          controller.deleteItem(index),
-                                      title: "Khóa cán bộ này",
+                                          controller.collection[index].status ==
+                                                  1
+                                              ? controller.lockItem(index)
+                                              : controller.unlockItem(index),
+                                      title:
+                                          "${controller.collection[index].status == 1 ? "Khóa" : "Mở khóa"} cán bộ này",
                                       content:
-                                          "Cán bộ '${controller.collection[index].name}' sẽ bị khóa, bạn chắc chứ?");
+                                          "${controller.collection[index].status == 1 ? "Khóa" : "Mở khóa"} cán bộ '${controller.collection[index].name}', bạn chắc chứ?");
                                 }),
                           ],
                         );
@@ -340,6 +357,7 @@ class User extends StatelessWidget {
   }
 
   _provideAccount({required BuildContext context, required int index}) {
+    controller.username.text = "";
     CustomDialog.dialogEmpty(
       context: context,
       body: Form(

@@ -9,6 +9,7 @@ class User {
   String? createdAt;
   String? updatedAt;
   String? avatar;
+  int? status;
   Permission? permission;
   IssuingAuthority? issuingAuthority;
 
@@ -22,6 +23,7 @@ class User {
       this.createdAt,
       this.updatedAt,
       this.avatar,
+      this.status,
       this.permission,
       this.issuingAuthority});
 
@@ -36,6 +38,7 @@ class User {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     avatar = json['avatar'];
+    status = json['status'];
     permission = json['permission'] != null
         ? Permission.fromJson(json['permission'])
         : null;
@@ -56,6 +59,7 @@ class User {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['avatar'] = avatar;
+    data['status'] = status;
     if (permission != null) {
       data['permission'] = permission!.toJson();
     }

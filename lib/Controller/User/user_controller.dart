@@ -86,14 +86,30 @@ class UserController extends GetxController {
     }
   }
 
-  deleteItem(int index) {
-    APICaller.getInstance()
-        .delete('v1/user/${collection[index].uuid}')
-        .then((response) {
-      Utils.showSnackBar(title: 'Thông báo', message: response['message']);
-      totalCount.value--;
-      collection.removeAt(index);
-    });
+  lockItem(int index) {
+    try {
+      APICaller.getInstance()
+          .put('v1/user/lock/${collection[index].uuid}', body: {})
+          .then((response) {
+        refreshData();
+        Utils.showSnackBar(title: 'Thông báo', message: response['message']);
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  unlockItem(int index) {
+    try {
+      APICaller.getInstance()
+          .put('v1/user/unlock/${collection[index].uuid}', body: {})
+          .then((response) {
+        refreshData();
+        Utils.showSnackBar(title: 'Thông báo', message: response['message']);
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   // Permission
@@ -153,7 +169,8 @@ class UserController extends GetxController {
 
   void updateItem(int index) {
     try {
-      APICaller.getInstance().put('v1/user/update-user/${collection[index].uuid}', body: {
+      APICaller.getInstance()
+          .put('v1/user/update-user/${collection[index].uuid}', body: {
         'permission': selectedPUUID,
         'issuing_authority': selectedIAUUID,
       }).then((response) {
@@ -168,12 +185,26 @@ class UserController extends GetxController {
 
   void provideAccount(int index) {
     try {
-      APICaller.getInstance().put('v1/user/provide-account/${collection[index].uuid}', body: {
+      APICaller.getInstance()
+          .put('v1/user/provide-account/${collection[index].uuid}', body: {
         'username': username.text.trim(),
         'password': Utils.generateMd5("123456"),
       }).then((response) {
         refreshData();
         Get.back();
+        Utils.showSnackBar(title: 'Thông báo', message: response['message']);
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  void resetPassword(int index) {
+    try {
+      APICaller.getInstance()
+          .put('v1/user/reset-password/${collection[index].uuid}', body: {
+        'password': Utils.generateMd5("123456"),
+      }).then((response) {
         Utils.showSnackBar(title: 'Thông báo', message: response['message']);
       });
     } catch (e) {
