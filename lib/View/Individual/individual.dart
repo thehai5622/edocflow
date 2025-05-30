@@ -17,118 +17,141 @@ class Individual extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.background,
-      appBar: PreferredSize(
-          preferredSize: Size.fromHeight(Get.width * 0.4),
-          child: SafeArea(
-            child: Container(
-              color: AppColor.primary,
-              height: double.infinity,
-              width: double.infinity,
-              child: Image.asset(
-                "assets/images/document.png",
-                fit: BoxFit.cover,
-              ),
-            ),
-          )),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-              child: SizedBox(
+      body: Column(
+        children: [
+          Stack(
+            children: [
+              SizedBox(height: Get.width * 0.44 + 45, width: double.infinity),
+              Container(
+                color: AppColor.primary,
+                height: Get.width * 0.44,
                 width: double.infinity,
-                child: Column(
-                  children: [
-                    Obx(
+                child: Image.asset(
+                  "assets/images/document.png",
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColor.background,
+                    ),
+                    child: Obx(
                       () => ClipRRect(
                         borderRadius: BorderRadius.circular(50),
                         child: Image.network(
                           controller.avatar.value,
-                          height: Get.width * 0.2,
-                          width: Get.width * 0.2,
+                          height: 88,
+                          width: 88,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) =>
                               Icon(Icons.person, size: Get.width * 0.2),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Obx(
-                      () => Text(
-                        controller.name.value,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: DeviceHelper.getFontSize(24),
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.text1),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: AppColor.white,
-                borderRadius: BorderRadius.circular(8),
-              ),
+              )
+            ],
+          ),
+          Expanded(
+            child: SingleChildScrollView(
               child: Column(
                 children: [
-                  _itemRow(
-                    title: "Hồ sơ cá nhân",
-                    icon: "assets/icons/user-edit.svg",
-                    onTap: () => Get.toNamed(Routes.profile),
-                  ),
-                  _itemRow(
-                    title: "Cơ quan ban hành",
-                    icon: "assets/icons/shield-security.svg",
-                    onTap: () => Get.toNamed(Routes.issuingAuthority),
-                  ),
-                  _itemRow(
-                    title: "Cán bộ",
-                    icon: "assets/icons/shield-security.svg",
-                    onTap: () => Get.toNamed(Routes.user),
-                  ),
-                  _itemRow(
-                    title: "Lĩnh vực",
-                    icon: "assets/icons/shield-security.svg",
-                    onTap: () => Get.toNamed(Routes.field),
-                  ),
-                  _itemRow(
-                    title: "Loại file mẫu",
-                    icon: "assets/icons/shield-security.svg",
-                    onTap: () => Get.toNamed(Routes.typeTemplateFile),
-                  ),
-                  _itemRow(
-                    title: "File mẫu",
-                    icon: "assets/icons/shield-security.svg",
-                    onTap: () => Get.toNamed(Routes.templateFile),
-                  ),
-                  _itemRow(
-                    title: "Đổi mật khẩu",
-                    icon: "assets/icons/shield-security.svg",
-                    onTap: () => Get.toNamed(Routes.changePass),
-                  ),
-                  _itemRow(
-                    title: "Đăng xuất",
-                    icon: "assets/icons/logout.svg",
-                    onTap: () => CustomDialog.show(
-                      context: context,
-                      title: "Đăng xuất",
-                      content: "Bạn có chắc muốn đăng xuất khỏi ứng dụng?",
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Auth.backLogin(true);
-                      },
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        children: [
+                          Obx(
+                            () => Text(
+                              controller.name.value,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: DeviceHelper.getFontSize(24),
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColor.text1),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: AppColor.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      children: [
+                        _itemRow(
+                          title: "Hồ sơ cá nhân",
+                          icon: "assets/icons/user-edit.svg",
+                          onTap: () => Get.toNamed(Routes.profile),
+                        ),
+                        _itemRow(
+                          title: "Cơ quan ban hành",
+                          icon: "assets/icons/shield-security.svg",
+                          onTap: () => Get.toNamed(Routes.issuingAuthority),
+                        ),
+                        _itemRow(
+                          title: "Cán bộ",
+                          icon: "assets/icons/shield-security.svg",
+                          onTap: () => Get.toNamed(Routes.user),
+                        ),
+                        _itemRow(
+                          title: "Lĩnh vực",
+                          icon: "assets/icons/shield-security.svg",
+                          onTap: () => Get.toNamed(Routes.field),
+                        ),
+                        _itemRow(
+                          title: "Loại file mẫu",
+                          icon: "assets/icons/shield-security.svg",
+                          onTap: () => Get.toNamed(Routes.typeTemplateFile),
+                        ),
+                        _itemRow(
+                          title: "File mẫu",
+                          icon: "assets/icons/shield-security.svg",
+                          onTap: () => Get.toNamed(Routes.templateFile),
+                        ),
+                        _itemRow(
+                          title: "Đổi mật khẩu",
+                          icon: "assets/icons/shield-security.svg",
+                          onTap: () => Get.toNamed(Routes.changePass),
+                        ),
+                        _itemRow(
+                          title: "Đăng xuất",
+                          icon: "assets/icons/logout.svg",
+                          onTap: () => CustomDialog.show(
+                            context: context,
+                            title: "Đăng xuất",
+                            content:
+                                "Bạn có chắc muốn đăng xuất khỏi ứng dụng?",
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Auth.backLogin(true);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 125),
                 ],
               ),
             ),
-            const SizedBox(height: 125),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
