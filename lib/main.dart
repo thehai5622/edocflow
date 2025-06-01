@@ -14,7 +14,14 @@ import 'package:get/get.dart';
 final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
-Future<void> _backgroundMessaging(RemoteMessage message) async {}
+Future<void> _backgroundMessaging(RemoteMessage message) async {
+  await Firebase.initializeApp();
+
+  String title = message.notification?.title ?? "Thông báo nền";
+  String body = message.notification?.body ?? "Không có nội dung.";
+
+  await _showNotification(title: title, body: body);
+}
 
 /// Khởi tạo thông báo local
 Future<void> _initializeNotifications() async {
