@@ -147,15 +147,6 @@ class DocumentIn extends StatelessWidget {
                             ),
                             const SizedBox(width: 6),
                             CustomCard.actionItem(
-                              icon: Icons.edit,
-                              bgColor: AppColor.primary,
-                              onTap: () => Get.toNamed(Routes.upsertDocumentOut,
-                                  arguments: {
-                                    "uuid": controller.collection[index].uuid
-                                  }),
-                            ),
-                            const SizedBox(width: 6),
-                            CustomCard.actionItem(
                                 icon: Icons.delete,
                                 bgColor: AppColor.grey,
                                 onTap: () {
