@@ -145,14 +145,18 @@ class DocumentOut extends StatelessWidget {
                               icon: Icons.remove_red_eye,
                               bgColor: AppColor.thirdMain,
                             ),
-                            const SizedBox(width: 6),
-                            CustomCard.actionItem(
-                              icon: Icons.edit,
-                              bgColor: AppColor.primary,
-                              onTap: () => Get.toNamed(Routes.upsertDocumentOut,
-                                  arguments: {
-                                    "uuid": controller.collection[index].uuid
-                                  }),
+                            if (controller.collection[index].status == 1) Row(
+                              children: [
+                                const SizedBox(width: 6),
+                                CustomCard.actionItem(
+                                  icon: Icons.edit,
+                                  bgColor: AppColor.primary,
+                                  onTap: () => Get.toNamed(Routes.upsertDocumentOut,
+                                      arguments: {
+                                        "uuid": controller.collection[index].uuid
+                                      }),
+                                ),
+                              ],
                             ),
                             const SizedBox(width: 6),
                             CustomCard.actionItem(

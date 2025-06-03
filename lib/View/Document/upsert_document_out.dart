@@ -50,7 +50,7 @@ class UpsertDocumentOut extends StatelessWidget {
                       funcGetAndSearch: controller.getIACollection,
                       controller: controller.iaName,
                       searchController: controller.searchIA,
-                      enabled: true,
+                      enabled: controller.uuid == "",
                       hintText: "Chọn cơ quan ban hành",
                       child: Obx(
                         () => controller.isLoadingIA.value == true

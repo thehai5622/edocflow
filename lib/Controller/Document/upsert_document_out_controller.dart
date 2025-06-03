@@ -199,7 +199,30 @@ class UpsertDocumentOutController extends GetxController {
           }
         });
       } else {
-
+        var param = {
+          "field": selectedFUUID,
+          "template_file": selectedTFUUID,
+          "summary": summary.text.trim(),
+          "year": int.tryParse(year.text.trim()),
+          "original_location": originalLocation.text.trim(),
+          "number_releases": int.tryParse(numberReleases.text.trim()),
+          "urgency_level": int.tryParse(urgencyLevel.value.trim()),
+          "confidentiality_level":
+              int.tryParse(confidentialityLevel.value.trim()),
+        };
+        APICaller.getInstance().put('v1/document/$uuid', body: param).then((value) {
+          isWaitSubmit.value = false;
+          if (value != null) {
+            if (Get.isRegistered<DocumentOutController>()) {
+              Get.find<DocumentOutController>().refreshData();
+            }
+            Get.back();
+            Utils.showSnackBar(
+              title: 'Thông báo!',
+              message: value['message'],
+            );
+          }
+        });
       }
       isWaitSubmit.value = false;
     } catch (e) {
