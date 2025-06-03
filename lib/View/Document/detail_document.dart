@@ -125,35 +125,68 @@ class DetailDocument extends StatelessWidget {
                     ],
                   ),
           )),
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withAlpha(40),
-                  offset: const Offset(0, -4), // shadow hướng lên trên
-                  blurRadius: 6,
-                  spreadRadius: 0,
-                ),
-              ],
-            ),
-            child: Obx(
-              () => CustomButton.primary(
-                text: "Xem chi tiết file",
-                onPressed: controller.isLoading.value
-                    ? null
-                    : () {
-                        Get.toNamed(Routes.detailTemplateFile, arguments: {
-                          "uuid": controller.detail.templatefile?.uuid
-                        });
-                      },
-              ),
-            ),
+          Obx(
+            () => controller.isLoading.value
+                ? const SizedBox(height: 0)
+                : Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withAlpha(40),
+                          offset: const Offset(0, -4), // shadow hướng lên trên
+                          blurRadius: 6,
+                          spreadRadius: 0,
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: CustomButton.cancel(
+                            text: "Xem chi tiết file",
+                            onPressed: () {
+                              Get.toNamed(Routes.detailTemplateFile,
+                                  arguments: {
+                                    "uuid": controller.detail.templatefile?.uuid
+                                  });
+                            },
+                          ),
+                        ),
+                        if (controller.isIn && !(controller.detail.status == 5)) Expanded(
+                          child: Row(
+                            children: [
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: CustomButton.primary(
+                                  text: _getTextStatus(controller.detail.status),
+                                  onPressed: () {
+                                    controller.submit();
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
           ),
         ],
       ),
     );
+  }
+
+  String _getTextStatus(int? status) {
+    switch (status) {
+      case 1:
+        return "Tiếp nhận văn bản";
+      case 2:
+        return "Ký duyệt văn bản";
+      default:
+        return "";
+    }
   }
 
   Text _detailValue(

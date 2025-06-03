@@ -98,10 +98,11 @@ class DocumentIn extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return CustomCard.collectionItem(
                           context: context,
-                          onTap: () => Get.toNamed(Routes.detailDocument,
-                              arguments: {
-                                "uuid": controller.collection[index].uuid
-                              }),
+                          onTap: () =>
+                              Get.toNamed(Routes.detailDocument, arguments: {
+                            "uuid": controller.collection[index].uuid,
+                            "document": "in",
+                          }),
                           status: DocumentStatus.getTextStatus(
                             controller.collection[index].status ?? 0,
                           ),
