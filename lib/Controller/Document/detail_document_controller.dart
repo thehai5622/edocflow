@@ -35,10 +35,32 @@ class DetailDocumentController extends GetxController {
   submit() {
     switch(detail.status) {
       case 1:
+        receptionDocument();
         break;
       case 2:
         signDocument();
         break;
+    }
+  }
+
+  receptionDocument() {
+    isLoading.value = true;
+    try {
+      APICaller.getInstance()
+          .post("v1/document/reception-document/$uuid", body: {}).then((value) {
+        if (value != null) {
+          if (Get.isRegistered<DocumentInController>()) {
+            Get.find<DocumentInController>().refreshData();
+          }
+          getDetail();
+          Utils.showSnackBar(
+            title: 'Thông báo!',
+            message: value['message'],
+          );
+        }
+      });
+    } catch (e) {
+      isLoading.value = false;
     }
   }
 
