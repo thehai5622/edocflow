@@ -157,7 +157,10 @@ class DetailDocument extends StatelessWidget {
                             },
                           ),
                         ),
-                        if (controller.isIn && !(controller.detail.status == 5))
+                        if (controller.isIn &&
+                            !(controller.detail.status == 5 ||
+                                controller.detail.status == 4 ||
+                                controller.detail.status == 3))
                           Expanded(
                             child: Row(
                               children: [
