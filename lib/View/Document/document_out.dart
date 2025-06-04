@@ -158,19 +158,23 @@ class DocumentOut extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            const SizedBox(width: 6),
-                            CustomCard.actionItem(
-                                icon: Icons.delete,
-                                bgColor: AppColor.grey,
-                                onTap: () {
-                                  CustomDialog.show(
-                                      context: context,
-                                      onPressed: () =>
-                                          controller.deleteItem(index),
-                                      title: "Xóa văn bản di",
-                                      content:
-                                          "Văn bản đi '${controller.collection[index].uuid}' sẽ bị xóa, bạn chắc chứ?");
-                                }),
+                            if (controller.collection[index].status == 1) Row(
+                              children: [
+                                const SizedBox(width: 6),
+                                CustomCard.actionItem(
+                                    icon: Icons.delete,
+                                    bgColor: AppColor.grey,
+                                    onTap: () {
+                                      CustomDialog.show(
+                                          context: context,
+                                          onPressed: () =>
+                                              controller.deleteItem(index),
+                                          title: "Thu hồi văn bản đi",
+                                          content:
+                                              "Văn bản đi '${controller.collection[index].uuid}' sẽ bị thu hồi, bạn chắc chứ?");
+                                    }),
+                              ],
+                            ),
                           ],
                         );
                       },

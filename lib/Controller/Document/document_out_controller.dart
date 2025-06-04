@@ -71,10 +71,14 @@ class DocumentOutController extends GetxController {
   }
 
   deleteItem(int index) {
-    APICaller.getInstance().delete('v1/document/${collection[index].uuid}').then((response) {
-      Utils.showSnackBar(title: 'Thông báo', message: response['message']);
-      totalCount.value--;
-      collection.removeAt(index);
+    APICaller.getInstance()
+        .delete('v1/document/${collection[index].uuid}')
+        .then((response) {
+      if (response['code'] == 200) {
+        Utils.showSnackBar(title: 'Thông báo', message: response['message']);
+        totalCount.value--;
+        collection.removeAt(index);
+      }
     });
   }
 }

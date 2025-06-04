@@ -146,19 +146,23 @@ class DocumentIn extends StatelessWidget {
                               icon: Icons.remove_red_eye,
                               bgColor: AppColor.thirdMain,
                             ),
-                            const SizedBox(width: 6),
-                            CustomCard.actionItem(
-                                icon: Icons.delete,
-                                bgColor: AppColor.grey,
-                                onTap: () {
-                                  CustomDialog.show(
-                                      context: context,
-                                      onPressed: () =>
-                                          controller.deleteItem(index),
-                                      title: "Xóa văn bản đến",
-                                      content:
-                                          "Văn bản đi '${controller.collection[index].uuid}' sẽ bị xóa, bạn chắc chứ?");
-                                }),
+                            if (controller.collection[index].status == 1) Row(
+                              children: [
+                                const SizedBox(width: 6),
+                                CustomCard.actionItem(
+                                    icon: Icons.delete,
+                                    bgColor: AppColor.grey,
+                                    onTap: () {
+                                      CustomDialog.show(
+                                          context: context,
+                                          onPressed: () =>
+                                              controller.deleteItem(index),
+                                          title: "Hủy văn bản đến",
+                                          content:
+                                              "Văn bản đến '${controller.collection[index].uuid}' sẽ bị hủy, bạn chắc chứ?");
+                                    }),
+                              ],
+                            ),
                           ],
                         );
                       },
