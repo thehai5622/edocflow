@@ -13,6 +13,7 @@ import 'package:edocflow/View/IssuingAuthority/edit_ia.dart';
 import 'package:edocflow/View/IssuingAuthority/issuingauthority.dart';
 import 'package:edocflow/View/Login/login.dart';
 import 'package:edocflow/View/Individual/Profile/profile.dart';
+import 'package:edocflow/View/Notification/notification.dart';
 import 'package:edocflow/View/TemplateFile/detail_templatefile.dart';
 import 'package:edocflow/View/TemplateFile/templatefile.dart';
 import 'package:edocflow/View/TemplateFile/upsert_templatefile.dart';
@@ -61,5 +62,6 @@ class AppPage {
     GetPage(name: Routes.user, page: () => User()),
     GetPage(name: Routes.createUser, page: () => CreateUser()),
     GetPage(name: Routes.detailUser, page: () => DetailUser()),
+    GetPage(name: Routes.notification, page: () => Notification()),
   ];
 }

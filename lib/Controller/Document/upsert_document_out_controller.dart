@@ -5,6 +5,7 @@ import 'package:edocflow/Model/document.dart';
 import 'package:edocflow/Model/field.dart';
 import 'package:edocflow/Model/templatefile.dart';
 import 'package:edocflow/Service/api_caller.dart';
+import 'package:edocflow/Utils/time_helper.dart';
 import 'package:edocflow/Utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,11 +16,11 @@ class UpsertDocumentOutController extends GetxController {
   RxBool isWaitSubmit = false.obs;
   Document detail = Document();
   TextEditingController summary = TextEditingController();
-  TextEditingController year = TextEditingController();
   TextEditingController originalLocation = TextEditingController();
   TextEditingController numberReleases = TextEditingController();
   RxString urgencyLevel = "0".obs;
   RxString confidentialityLevel = "0".obs;
+  TextEditingController release = TextEditingController();
   // Issuing Authority
   bool isIAFirstFetch = true;
   String selectedIAUUID = "";
@@ -78,7 +79,7 @@ class UpsertDocumentOutController extends GetxController {
     selectedFUUID = detail.field?.uuid ?? "";
     fName.text = detail.field?.name ?? "";
     summary.text = detail.summary ?? "";
-    year.text = "${detail.year}";
+    release.text = TimeHelper.convertDateFormat(detail.release, false);
     originalLocation.text = detail.originalLocation ?? "";
     numberReleases.text = "${detail.numberReleases}";
     urgencyLevel.value = "${detail.urgencyLevel}";
@@ -178,7 +179,7 @@ class UpsertDocumentOutController extends GetxController {
           "field": selectedFUUID,
           "template_file": selectedTFUUID,
           "summary": summary.text.trim(),
-          "year": int.tryParse(year.text.trim()),
+          "release": TimeHelper.convertDateFormat(release.text, true),
           "original_location": originalLocation.text.trim(),
           "number_releases": int.tryParse(numberReleases.text.trim()),
           "urgency_level": int.tryParse(urgencyLevel.value.trim()),
@@ -203,7 +204,7 @@ class UpsertDocumentOutController extends GetxController {
           "field": selectedFUUID,
           "template_file": selectedTFUUID,
           "summary": summary.text.trim(),
-          "year": int.tryParse(year.text.trim()),
+          "release": TimeHelper.convertDateFormat(release.text, true),
           "original_location": originalLocation.text.trim(),
           "number_releases": int.tryParse(numberReleases.text.trim()),
           "urgency_level": int.tryParse(urgencyLevel.value.trim()),

@@ -7,6 +7,7 @@ import 'package:edocflow/Global/document_status.dart';
 import 'package:edocflow/Global/urgency_level.dart';
 import 'package:edocflow/Route/app_page.dart';
 import 'package:edocflow/Utils/device_helper.dart';
+import 'package:edocflow/Utils/time_helper.dart';
 import 'package:edocflow/Utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -87,8 +88,10 @@ class DetailDocument extends StatelessWidget {
                       CustomField.titleForm(title: "Trích yếu:"),
                       _detailValue(value: controller.detail.summary)
                           .marginSymmetric(vertical: 8, horizontal: 16),
-                      CustomField.titleForm(title: "Năm phát hành:"),
-                      _detailValue(value: "${controller.detail.year}")
+                      CustomField.titleForm(title: "Ngày phát hành:"),
+                      _detailValue(
+                              value: TimeHelper.convertDateFormat(
+                                  controller.detail.release, false))
                           .marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Số bản phát hành:"),
                       _detailValue(value: "${controller.detail.numberReleases}")
@@ -154,21 +157,23 @@ class DetailDocument extends StatelessWidget {
                             },
                           ),
                         ),
-                        if (controller.isIn && !(controller.detail.status == 5)) Expanded(
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: CustomButton.primary(
-                                  text: _getTextStatus(controller.detail.status),
-                                  onPressed: () {
-                                    controller.submit();
-                                  },
+                        if (controller.isIn && !(controller.detail.status == 5))
+                          Expanded(
+                            child: Row(
+                              children: [
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: CustomButton.primary(
+                                    text: _getTextStatus(
+                                        controller.detail.status),
+                                    onPressed: () {
+                                      controller.submit();
+                                    },
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),

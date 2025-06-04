@@ -1,14 +1,13 @@
-import 'package:edocflow/Controller/Home/home_controller.dart';
+import 'package:edocflow/Controller/Notification/notification_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
-import 'package:edocflow/Route/app_page.dart';
 import 'package:edocflow/Utils/device_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Home extends StatelessWidget {
-  Home({super.key});
+class Notification extends StatelessWidget {
+  Notification({super.key});
 
-  final controller = Get.put(HomeController());
+  final controller = Get.put(NotificationController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,24 +19,13 @@ class Home extends StatelessWidget {
         scrolledUnderElevation: 0.0,
         shadowColor: AppColor.text1,
         title: Text(
-          "Trang chủ",
+          "Thông báo",
           style: TextStyle(
             fontSize: DeviceHelper.getFontSize(21),
             color: AppColor.text1,
             fontWeight: FontWeight.w700,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () => Get.toNamed(Routes.notification),
-            icon: Icon(
-              Icons.notifications,
-              size: 20,
-              color: AppColor.text1,
-            )
-          ),
-          const SizedBox(width: 12),
-        ],
       ),
     );
   }

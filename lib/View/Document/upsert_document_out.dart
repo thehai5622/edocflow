@@ -192,19 +192,18 @@ class UpsertDocumentOut extends StatelessWidget {
                       ),
                     ).marginSymmetric(horizontal: 20, vertical: 6),
                     CustomField.titleForm(
-                            title: "Năm phát hành", isRequired: true)
+                            title: "Ngày phát hành", isRequired: true)
                         .marginSymmetric(horizontal: 20),
-                    CustomField.textFormfield(
-                      controller: controller.year,
-                      keyboardType: TextInputType.number,
-                      hintText: "2025",
-                      maxLength: 4,
+                    CustomField.dateField(
+                      context: context,
+                      controller: controller.release,
+                      enabled: true,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Vui lòng nhập năm phát hành';
+                          return 'Ngày phát hành là bắt buộc';
                         }
                         return null;
-                      },
+                      }
                     ).marginSymmetric(horizontal: 16, vertical: 8),
                     CustomField.titleForm(
                             title: "Nơi lưu bản chính", isRequired: true)

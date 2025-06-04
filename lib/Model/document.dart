@@ -1,7 +1,7 @@
 class Document {
   String? uuid;
   String? summary;
-  int? year;
+  String? release;
   String? originalLocation;
   int? numberReleases;
   int? status;
@@ -19,7 +19,7 @@ class Document {
   Document(
       {this.uuid,
       this.summary,
-      this.year,
+      this.release,
       this.originalLocation,
       this.numberReleases,
       this.status,
@@ -37,7 +37,7 @@ class Document {
   Document.fromJson(Map<String, dynamic> json) {
     uuid = json['uuid'];
     summary = json['summary'];
-    year = json['year'];
+    release = json['release'];
     originalLocation = json['original_location'];
     numberReleases = json['number_releases'];
     status = json['status'];
@@ -65,7 +65,7 @@ class Document {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['uuid'] = uuid;
     data['summary'] = summary;
-    data['year'] = year;
+    data['release'] = release;
     data['original_location'] = originalLocation;
     data['number_releases'] = numberReleases;
     data['status'] = status;

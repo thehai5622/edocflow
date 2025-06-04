@@ -28,6 +28,7 @@ abstract class Routes {
   static const user = _Paths.user;
   static const createUser = _Paths.createUser;
   static const detailUser = _Paths.detailUser;
+  static const notification = _Paths.notification;
 }
 
 abstract class _Paths {
@@ -58,4 +59,5 @@ abstract class _Paths {
   static const String user = '/user';
   static const String createUser = '/create-user';
   static const String detailUser = '/detail-user';
+  static const String notification = '/notification';
 }

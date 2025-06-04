@@ -37,7 +37,7 @@ class TimeHelper {
   }
 
   static String convertDateFormat(String? inputDate, bool isHttpRquest) {
-    if (inputDate == null) return "";
+    if (inputDate == null) return "--";
     if(inputDate.contains("T")) inputDate = inputDate.split("T")[0];
     if (isHttpRquest) {
       final parts = inputDate.split('/');
