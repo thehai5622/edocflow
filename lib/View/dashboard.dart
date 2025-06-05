@@ -59,164 +59,199 @@ class Dashboard extends StatelessWidget {
               return Container();
           }
         }),
-        bottomNavigationBar: BottomAppBar(
-          elevation: 10,
-          shadowColor: AppColor.text1,
-          color: AppColor.main,
-          shape: const CircularNotchedRectangle(),
-          child: Obx(
-            () => Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Trang Tổng quan
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => controller.changePage(0),
-                      child: Container(
-                        color: Colors.transparent,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/icons/home_hashtag.svg',
-                              height: 25,
-                              width: 25,
-                              colorFilter: controller.currentIndex.value == 0
-                                  ? ColorFilter.mode(
-                                      AppColor.primary, BlendMode.srcIn)
-                                  : null,
+        bottomNavigationBar: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            // Bóng đổ phía trên
+            Positioned(
+              top: -1,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: kBottomNavigationBarHeight,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColor.text1.withAlpha(30),
+                      offset: const Offset(0, -1),
+                      blurRadius: 8,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            BottomAppBar(
+              elevation: 0,
+              shadowColor: AppColor.text1,
+              color: AppColor.main,
+              shape: const CircularNotchedRectangle(),
+              child: Obx(
+                () => Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // Trang Tổng quan
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () => controller.changePage(0),
+                          child: Container(
+                            color: Colors.transparent,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/icons/home_hashtag.svg',
+                                  height: 25,
+                                  width: 25,
+                                  colorFilter:
+                                      controller.currentIndex.value == 0
+                                          ? ColorFilter.mode(
+                                              AppColor.primary, BlendMode.srcIn)
+                                          : null,
+                                ),
+                                Text(
+                                  'Tổng quan',
+                                  textAlign: TextAlign.center,
+                                  style: controller.currentIndex.value == 0
+                                      ? TextStyle(
+                                          fontSize:
+                                              DeviceHelper.getFontSize(15),
+                                          color: AppColor.primary,
+                                          fontWeight: FontWeight.w700)
+                                      : TextStyle(
+                                          fontSize:
+                                              DeviceHelper.getFontSize(15),
+                                          color: AppColor.grey,
+                                        ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              'Tổng quan',
-                              textAlign: TextAlign.center,
-                              style: controller.currentIndex.value == 0
-                                  ? TextStyle(
-                                      fontSize: DeviceHelper.getFontSize(15),
-                                      color: AppColor.primary,
-                                      fontWeight: FontWeight.w700)
-                                  : TextStyle(
-                                      fontSize: DeviceHelper.getFontSize(15),
-                                      color: AppColor.grey,
-                                    ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  // Văn bản đến
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => controller.changePage(1),
-                      child: Container(
-                        color: Colors.transparent,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/icons/document-filled.svg',
-                              height: 25,
-                              width: 25,
-                              colorFilter: controller.currentIndex.value == 1
-                                  ? ColorFilter.mode(
-                                      AppColor.primary, BlendMode.srcIn)
-                                  : null,
+                      // Văn bản đến
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () => controller.changePage(1),
+                          child: Container(
+                            color: Colors.transparent,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/icons/document-filled.svg',
+                                  height: 25,
+                                  width: 25,
+                                  colorFilter:
+                                      controller.currentIndex.value == 1
+                                          ? ColorFilter.mode(
+                                              AppColor.primary, BlendMode.srcIn)
+                                          : null,
+                                ),
+                                Text(
+                                  'Văn bản đến',
+                                  textAlign: TextAlign.center,
+                                  style: controller.currentIndex.value == 1
+                                      ? TextStyle(
+                                          fontSize:
+                                              DeviceHelper.getFontSize(15),
+                                          color: AppColor.primary,
+                                          fontWeight: FontWeight.w700)
+                                      : TextStyle(
+                                          fontSize:
+                                              DeviceHelper.getFontSize(15),
+                                          color: AppColor.grey,
+                                        ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              'Văn bản đến',
-                              textAlign: TextAlign.center,
-                              style: controller.currentIndex.value == 1
-                                  ? TextStyle(
-                                      fontSize: DeviceHelper.getFontSize(15),
-                                      color: AppColor.primary,
-                                      fontWeight: FontWeight.w700)
-                                  : TextStyle(
-                                      fontSize: DeviceHelper.getFontSize(15),
-                                      color: AppColor.grey,
-                                    ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  // Văn bản đi
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => controller.changePage(2),
-                      child: Container(
-                        color: Colors.transparent,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/icons/document-filled.svg',
-                              height: 25,
-                              width: 25,
-                              colorFilter: controller.currentIndex.value == 2
-                                  ? ColorFilter.mode(
-                                      AppColor.primary, BlendMode.srcIn)
-                                  : null,
+                      const SizedBox(width: 20),
+                      // Văn bản đi
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () => controller.changePage(2),
+                          child: Container(
+                            color: Colors.transparent,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/icons/document-filled.svg',
+                                  height: 25,
+                                  width: 25,
+                                  colorFilter:
+                                      controller.currentIndex.value == 2
+                                          ? ColorFilter.mode(
+                                              AppColor.primary, BlendMode.srcIn)
+                                          : null,
+                                ),
+                                Text(
+                                  'Văn bản đi',
+                                  textAlign: TextAlign.center,
+                                  style: controller.currentIndex.value == 2
+                                      ? TextStyle(
+                                          fontSize:
+                                              DeviceHelper.getFontSize(15),
+                                          color: AppColor.primary,
+                                          fontWeight: FontWeight.w700)
+                                      : TextStyle(
+                                          fontSize:
+                                              DeviceHelper.getFontSize(15),
+                                          color: AppColor.grey,
+                                        ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              'Văn bản đi',
-                              textAlign: TextAlign.center,
-                              style: controller.currentIndex.value == 2
-                                  ? TextStyle(
-                                      fontSize: DeviceHelper.getFontSize(15),
-                                      color: AppColor.primary,
-                                      fontWeight: FontWeight.w700)
-                                  : TextStyle(
-                                      fontSize: DeviceHelper.getFontSize(15),
-                                      color: AppColor.grey,
-                                    ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  // Trang Cá nhân
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => controller.changePage(3),
-                      child: Container(
-                        color: Colors.transparent,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/icons/user_octagon.svg',
-                              height: 25,
-                              width: 25,
-                              colorFilter: controller.currentIndex.value == 3
-                                  ? ColorFilter.mode(
-                                      AppColor.primary, BlendMode.srcIn)
-                                  : null,
+                      // Trang Cá nhân
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () => controller.changePage(3),
+                          child: Container(
+                            color: Colors.transparent,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/icons/user_octagon.svg',
+                                  height: 25,
+                                  width: 25,
+                                  colorFilter:
+                                      controller.currentIndex.value == 3
+                                          ? ColorFilter.mode(
+                                              AppColor.primary, BlendMode.srcIn)
+                                          : null,
+                                ),
+                                Text(
+                                  'Cá nhân',
+                                  textAlign: TextAlign.center,
+                                  style: controller.currentIndex.value == 3
+                                      ? TextStyle(
+                                          fontSize:
+                                              DeviceHelper.getFontSize(15),
+                                          color: AppColor.primary,
+                                          fontWeight: FontWeight.w700)
+                                      : TextStyle(
+                                          fontSize:
+                                              DeviceHelper.getFontSize(15),
+                                          color: AppColor.grey,
+                                        ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              'Cá nhân',
-                              textAlign: TextAlign.center,
-                              style: controller.currentIndex.value == 3
-                                  ? TextStyle(
-                                      fontSize: DeviceHelper.getFontSize(15),
-                                      color: AppColor.primary,
-                                      fontWeight: FontWeight.w700)
-                                  : TextStyle(
-                                      fontSize: DeviceHelper.getFontSize(15),
-                                      color: AppColor.grey,
-                                    ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ]),
-          ),
+                    ]),
+              ),
+            ),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
             backgroundColor: AppColor.primary,
