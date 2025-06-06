@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:edocflow/Controller/Home/home_controller.dart';
 import 'package:edocflow/Controller/Individual/individual_controller.dart';
 import 'package:edocflow/Global/constant.dart';
 import 'package:edocflow/Model/profile.dart';
@@ -27,7 +28,7 @@ class ProfileController extends GetxController {
   final FocusNode phoneFocus = FocusNode();
   TextEditingController email = TextEditingController();
   TextEditingController createdAt = TextEditingController();
-  TextEditingController updatedAt= TextEditingController();
+  TextEditingController updatedAt = TextEditingController();
 
   @override
   void onInit() {
@@ -85,6 +86,9 @@ class ProfileController extends GetxController {
           if (Get.isRegistered<IndividualController>()) {
             Get.find<IndividualController>().updateName(name.text.trim());
           }
+          if (Get.isRegistered<HomeController>()) {
+            Get.find<HomeController>().updateName(name.text.trim());
+          }
           Utils.saveStringWithKey(Constant.NAME, name.text.trim());
           Get.back();
           Utils.showSnackBar(title: "Thông báo", message: response['message']);
@@ -107,6 +111,10 @@ class ProfileController extends GetxController {
             if (Get.isRegistered<IndividualController>()) {
               Get.find<IndividualController>().updateAvatar(value['file']);
               Get.find<IndividualController>().updateName(name.text.trim());
+            }
+            if (Get.isRegistered<HomeController>()) {
+              Get.find<HomeController>().updateAvatar(value['file']);
+              Get.find<HomeController>().updateName(name.text.trim());
             }
             Utils.saveStringWithKey(Constant.NAME, name.text.trim());
             Utils.saveStringWithKey(Constant.AVATAR, value['file']);

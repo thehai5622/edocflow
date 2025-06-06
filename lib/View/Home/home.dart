@@ -19,26 +19,60 @@ class Home extends StatelessWidget {
         backgroundColor: AppColor.main,
         scrolledUnderElevation: 0.0,
         shadowColor: AppColor.text1,
-        title: Text(
-          "Trang chủ",
-          style: TextStyle(
-            fontSize: DeviceHelper.getFontSize(21),
-            color: AppColor.text1,
-            fontWeight: FontWeight.w700,
-          ),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Obx(
+              () => ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: Image.network(
+                  controller.avatar.value,
+                  height: 40,
+                  width: 40,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) =>
+                      Icon(Icons.person, size: Get.width * 0.2),
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Chào mừng",
+                  style: TextStyle(
+                    color: AppColor.textHint,
+                    fontSize: DeviceHelper.getFontSize(14),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Obx(
+                  () => Text(
+                    controller.name.value,
+                    style: TextStyle(
+                        fontSize: DeviceHelper.getFontSize(17),
+                        fontWeight: FontWeight.w700,
+                        color: AppColor.text1),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
         actions: [
           IconButton(
-            onPressed: () => Get.toNamed(Routes.notification),
-            icon: Icon(
-              Icons.notifications,
-              size: 20,
-              color: AppColor.text1,
-            )
-          ),
+              onPressed: () => Get.toNamed(Routes.notification),
+              icon: Icon(
+                Icons.notifications,
+                size: 20,
+                color: AppColor.text1,
+              )),
           const SizedBox(width: 12),
         ],
       ),
+      body: Container(),
     );
   }
 }
