@@ -31,9 +31,9 @@ class TemplateFile {
     note = json['note'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
     typeTemplateFile = json['type_template_file'] != null
-        ? new User.fromJson(json['type_template_file'])
+        ? User.fromJson(json['type_template_file'])
         : null;
   }
 

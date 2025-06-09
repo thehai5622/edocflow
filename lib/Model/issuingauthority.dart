@@ -23,7 +23,7 @@ class IssuingAuthority {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['uuid'] = uuid;
     data['name'] = name;
     data['created_at'] = createdAt;

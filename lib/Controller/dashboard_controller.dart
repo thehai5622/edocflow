@@ -1,4 +1,3 @@
-import 'package:edocflow/Service/api_caller.dart';
 import 'package:get/get.dart';
 
 class DashboardController extends GetxController {
@@ -14,15 +13,5 @@ class DashboardController extends GetxController {
 
   changePage(int index) {
     currentIndex.value = index;
-  }
-
-  void getInfoTest() {
-    APICaller.getInstance().get('v1/user/me').then((value) {
-      if (value != null) {
-        print(value);
-        nameTest.value = value['data']['name'];
-        return value;
-      }
-    });
   }
 }

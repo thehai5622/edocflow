@@ -1,5 +1,7 @@
+import 'package:edocflow/Component/document_single_chart.dart';
 import 'package:edocflow/Controller/Home/home_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
+import 'package:edocflow/Model/dashboard.dart';
 import 'package:edocflow/Route/app_page.dart';
 import 'package:edocflow/Utils/device_helper.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +15,10 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.background,
+      backgroundColor: AppColor.white,
       appBar: AppBar(
         automaticallyImplyLeading: true,
         backgroundColor: AppColor.main,
-        scrolledUnderElevation: 0.0,
         shadowColor: AppColor.text1,
         title: Row(
           mainAxisSize: MainAxisSize.min,
@@ -32,7 +33,7 @@ class Home extends StatelessWidget {
                   width: 40,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) =>
-                      Icon(Icons.person, size: Get.width * 0.2),
+                      const Icon(Icons.person, size: 40),
                 ),
               ),
             ),
@@ -72,7 +73,30 @@ class Home extends StatelessWidget {
           const SizedBox(width: 12),
         ],
       ),
-      body: Container(),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Obx(
+          () => controller.isLoading.value
+              ? Center(
+                  child: CircularProgressIndicator(
+                      color: AppColor.primary, strokeWidth: 2),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      DocumentSingleChart(
+                        statusData: controller.detail.documentIn!.toStatusMap(),
+                      ),
+                      DocumentSingleChart(
+                        statusData:
+                            controller.detail.documentOut!.toStatusMap(),
+                      ),
+                      const SizedBox(height: 125)
+                    ],
+                  ),
+                ),
+        ),
+      ),
     );
   }
 }
