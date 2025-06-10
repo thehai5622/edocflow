@@ -73,29 +73,27 @@ class Home extends StatelessWidget {
           const SizedBox(width: 12),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Obx(
-          () => controller.isLoading.value
-              ? Center(
-                  child: CircularProgressIndicator(
-                      color: AppColor.primary, strokeWidth: 2),
-                )
-              : SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      DocumentSingleChart(
-                        statusData: controller.detail.documentIn!.toStatusMap(),
-                      ),
-                      DocumentSingleChart(
-                        statusData:
-                            controller.detail.documentOut!.toStatusMap(),
-                      ),
-                      const SizedBox(height: 125)
-                    ],
-                  ),
+      body: Obx(
+        () => controller.isLoading.value
+            ? Center(
+                child: CircularProgressIndicator(
+                    color: AppColor.primary, strokeWidth: 2),
+              )
+            : RefreshIndicator(
+                onRefresh: () => controller.refreshData(),
+                child: ListView(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  children: [
+                    DocumentSingleChart(
+                      statusData: controller.detail.documentIn!.toStatusMap(),
+                    ),
+                    DocumentSingleChart(
+                      statusData: controller.detail.documentOut!.toStatusMap(),
+                    ),
+                    const SizedBox(height: 125),
+                  ],
                 ),
-        ),
+              ),
       ),
     );
   }

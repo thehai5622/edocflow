@@ -33,6 +33,10 @@ class HomeController extends GetxController {
     this.avatar.value = baseUrl + avatar;
   }
 
+  refreshData() async {
+    await getData();
+  }
+
   Future getData() async {
     isLoading.value = true;
     try {

@@ -1,0 +1,2 @@
+D:/Programing/KLTN/Mobile/edocflow/android/app/.cxx/Debug/4s2p2k55/x86_64/CMakeFiles/edit_cache.dir
+D:/Programing/KLTN/Mobile/edocflow/android/app/.cxx/Debug/4s2p2k55/x86_64/CMakeFiles/rebuild_cache.dir

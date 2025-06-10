@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:edocflow/Controller/Document/document_in_controller.dart';
+import 'package:edocflow/Controller/Document/document_out_controller.dart';
+import 'package:edocflow/Controller/Home/home_controller.dart';
 import 'package:edocflow/Global/app_color.dart';
 import 'package:edocflow/Route/app_page.dart';
 import 'package:edocflow/firebase_options.dart';
@@ -16,11 +21,7 @@ final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
 
 Future<void> _backgroundMessaging(RemoteMessage message) async {
   await Firebase.initializeApp();
-
-  String title = message.notification?.title ?? "Thông báo nền";
-  String body = message.notification?.body ?? "Không có nội dung.";
-
-  await _showNotification(title: title, body: body);
+  handleShowNotification(message);
 }
 
 /// Khởi tạo thông báo local
@@ -41,13 +42,13 @@ Future<void> _showNotification({
 }) async {
   const AndroidNotificationDetails androidPlatformChannelSpecifics =
       AndroidNotificationDetails(
-        'high_importance_channel', // ID kênh
-        'Thông báo quan trọng', // Tên kênh
-        channelDescription: 'Kênh dành cho các thông báo quan trọng',
-        importance: Importance.max,
-        priority: Priority.high,
-        ticker: 'ticker',
-      );
+    'high_importance_channel', // ID kênh
+    'Thông báo quan trọng', // Tên kênh
+    channelDescription: 'Kênh dành cho các thông báo quan trọng',
+    importance: Importance.max,
+    priority: Priority.high,
+    ticker: 'ticker',
+  );
 
   const NotificationDetails platformChannelSpecifics = NotificationDetails(
     android: androidPlatformChannelSpecifics,
@@ -61,6 +62,31 @@ Future<void> _showNotification({
   );
 }
 
+void handleShowNotification(RemoteMessage message) {
+  String title = message.notification?.title ?? "Thông báo";
+  String body = message.notification?.body ?? "Không có nội dung!";
+  Map<String, dynamic> data = message.data;
+
+  _showNotification(title: title, body: body);
+  if (data['data'] != null) {
+    var mdata = jsonDecode(data['data'] ?? "");
+    if (mdata['type'] == "document") {
+      if (Get.isRegistered<HomeController>()) {
+        Get.find<HomeController>().refreshData();
+      }
+      if (mdata['more'] != "out") {
+        if (Get.isRegistered<DocumentOutController>()) {
+          Get.find<DocumentOutController>().refreshData();
+        }
+      }
+      if (mdata['more'] != "in") {
+        if (Get.isRegistered<DocumentInController>()) {
+          Get.find<DocumentInController>().refreshData();
+        }
+      }
+    }
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,10 +95,7 @@ void main() async {
   await _initializeNotifications();
   FirebaseMessaging.onBackgroundMessage(_backgroundMessaging);
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    String title = message.notification?.title ?? "Thông báo";
-    String body = message.notification?.body ?? "Không có nội dung!";
-
-    _showNotification(title: title, body: body);
+    handleShowNotification(message);
   });
   runApp(const MyApp());
 }
