@@ -311,7 +311,7 @@ class CustomField {
           fillColor:
               WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
             if (states.contains(WidgetState.disabled)) {
-              return AppColor.primary.withOpacity(.32);
+              return AppColor.primary.withAlpha(82);
             }
             return AppColor.primary;
           }),

@@ -12,7 +12,7 @@ import 'package:path_provider/path_provider.dart';
 
 class APICaller {
   static APICaller? _apiCaller = APICaller();
-  final String BASE_URL = dotenv.env['API_URL'] ?? '';
+  final String _baseUrl = dotenv.env['API_URL'] ?? '';
   static Map<String, String> requestHeaders = {
     'Content-type': 'application/json',
     'Accept': 'application/json'
@@ -41,7 +41,7 @@ class APICaller {
   }
 
   Future<dynamic> get(String endpoint, {dynamic body}) async {
-    Uri uri = Uri.parse(BASE_URL + endpoint);
+    Uri uri = Uri.parse(_baseUrl + endpoint);
     String token = GlobalValue.getInstance().getToken();
     var frequestHeaders = {
       ...requestHeaders,
@@ -58,7 +58,7 @@ class APICaller {
     if (response.statusCode == 401) {
       var refreshToken =
           await Utils.getStringValueWithKey(Constant.REFRESH_TOKEN);
-      Uri uriRF = Uri.parse('${BASE_URL}v1/user/refresh-token');
+      Uri uriRF = Uri.parse('${_baseUrl}v1/user/refresh-token');
 
       final data = await http
           .post(uriRF,
@@ -94,7 +94,7 @@ class APICaller {
   }
 
   Future<dynamic> post(String endpoint, {dynamic body}) async {
-    Uri uri = Uri.parse(BASE_URL + endpoint);
+    Uri uri = Uri.parse(_baseUrl + endpoint);
     String token = GlobalValue.getInstance().getToken();
     var frequestHeaders = {
       ...requestHeaders,
@@ -111,7 +111,7 @@ class APICaller {
     if (response.statusCode == 401) {
       var refreshToken =
           await Utils.getStringValueWithKey(Constant.REFRESH_TOKEN);
-      Uri uriRF = Uri.parse('${BASE_URL}v1/user/refresh-token');
+      Uri uriRF = Uri.parse('${_baseUrl}v1/user/refresh-token');
 
       final data = await http
           .post(uriRF,
@@ -147,7 +147,7 @@ class APICaller {
   }
 
   Future<dynamic> put(String endpoint, {dynamic body}) async {
-    Uri uri = Uri.parse(BASE_URL + endpoint);
+    Uri uri = Uri.parse(_baseUrl + endpoint);
     String token = GlobalValue.getInstance().getToken();
     var frequestHeaders = {
       ...requestHeaders,
@@ -164,7 +164,7 @@ class APICaller {
     if (response.statusCode == 401) {
       var refreshToken =
           await Utils.getStringValueWithKey(Constant.REFRESH_TOKEN);
-      Uri uriRF = Uri.parse('${BASE_URL}v1/user/refresh-token');
+      Uri uriRF = Uri.parse('${_baseUrl}v1/user/refresh-token');
 
       final data = await http
           .post(uriRF,
@@ -200,7 +200,7 @@ class APICaller {
   }
 
   Future<dynamic> delete(String endpoint) async {
-    Uri uri = Uri.parse(BASE_URL + endpoint);
+    Uri uri = Uri.parse(_baseUrl + endpoint);
     String token = GlobalValue.getInstance().getToken();
     var frequestHeaders = {
       ...requestHeaders,
@@ -217,7 +217,7 @@ class APICaller {
     if (response.statusCode == 401) {
       var refreshToken =
           await Utils.getStringValueWithKey(Constant.REFRESH_TOKEN);
-      Uri uriRF = Uri.parse('${BASE_URL}v1/user/refresh-token');
+      Uri uriRF = Uri.parse('${_baseUrl}v1/user/refresh-token');
 
       final data = await http
           .post(uriRF,
@@ -253,7 +253,7 @@ class APICaller {
   }
 
   Future<dynamic> postFile({required File file}) async {
-    Uri uri = Uri.parse("${BASE_URL}v1/file/single-upload");
+    Uri uri = Uri.parse("${_baseUrl}v1/file/single-upload");
     String token = GlobalValue.getInstance().getToken();
     var frequestHeaders = {
       ...requestHeaders,
@@ -280,7 +280,7 @@ class APICaller {
     if (response.statusCode == 401) {
       var refreshToken =
           await Utils.getStringValueWithKey(Constant.REFRESH_TOKEN);
-      Uri uriRF = Uri.parse('${BASE_URL}v1/user/refresh-token');
+      Uri uriRF = Uri.parse('${_baseUrl}v1/user/refresh-token');
 
       final data = await http
           .post(uriRF,
@@ -320,7 +320,7 @@ class APICaller {
   }
 
   Future<dynamic> postFiles(String endpoint, List<File> filePath) async {
-    final uri = Uri.parse(BASE_URL + endpoint);
+    final uri = Uri.parse(_baseUrl + endpoint);
 
     final request = http.MultipartRequest('POST', uri);
     List<http.MultipartFile> files = [];
@@ -360,7 +360,7 @@ class APICaller {
   }
 
   Future<File?> downloadAndGetFile(String endpoint) async {
-    Uri uri = Uri.parse(BASE_URL + endpoint);
+    Uri uri = Uri.parse(_baseUrl + endpoint);
     String token = GlobalValue.getInstance().getToken();
     var frequestHeaders = {
       ...requestHeaders,
@@ -375,7 +375,7 @@ class APICaller {
     if (response.statusCode == 401) {
       var refreshToken =
           await Utils.getStringValueWithKey(Constant.REFRESH_TOKEN);
-      Uri uriRF = Uri.parse('${BASE_URL}v1/user/refresh-token');
+      Uri uriRF = Uri.parse('${_baseUrl}v1/user/refresh-token');
 
       final data = await http
           .post(uriRF,
@@ -442,7 +442,7 @@ class APICaller {
 
   Future<dynamic> putFile(
       {required String endpoint, required File filePath}) async {
-    final uri = Uri.parse(BASE_URL + endpoint);
+    final uri = Uri.parse(_baseUrl + endpoint);
 
     final request = http.MultipartRequest('PUT', uri);
     request.files

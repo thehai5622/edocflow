@@ -121,7 +121,7 @@ class Utils {
       Duration duration = const Duration(seconds: 2),
       Duration animationDuration = const Duration(milliseconds: 300),
       Color backgroundColor = Colors.black,
-      double opacityBackground = 0.8,
+      int opacityBackground = 204,
       SnackPosition? direction = SnackPosition.TOP,
       Curve? animation}) {
     Get.snackbar(
@@ -131,7 +131,7 @@ class Utils {
       duration: duration,
       animationDuration: animationDuration,
       icon: icon,
-      backgroundColor: backgroundColor.withOpacity(opacityBackground),
+      backgroundColor: backgroundColor.withAlpha(opacityBackground),
       snackPosition: direction,
       forwardAnimationCurve: animation,
       isDismissible: isDismissible,

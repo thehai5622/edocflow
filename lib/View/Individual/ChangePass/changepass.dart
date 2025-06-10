@@ -164,7 +164,7 @@ class ChangePass extends StatelessWidget {
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withAlpha(26),
                     offset: const Offset(0, -4),
                     blurRadius: 6,
                     spreadRadius: 0,
