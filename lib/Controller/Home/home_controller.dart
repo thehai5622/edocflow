@@ -12,6 +12,12 @@ class HomeController extends GetxController {
   RxString avatar = ''.obs;
   final String baseUrl = dotenv.env['API_URL'] ?? '';
   Dashboard detail = Dashboard();
+  List<Filter> listTimeFilter = [
+    Filter(title: "Tháng nay", value: "this_month"),
+    Filter(title: "Tháng trước", value: "last_month"),
+    Filter(title: "Năm nay", value: "this_year"),
+    Filter(title: "Năm trước", value: "last_year"),
+  ];
 
   @override
   void onInit() {
@@ -53,4 +59,11 @@ class HomeController extends GetxController {
       isLoading.value = false;
     }
   }
+}
+
+class Filter {
+  String? title;
+  String? value;
+
+  Filter({this.title, this.value});
 }

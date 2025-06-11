@@ -82,13 +82,16 @@ class DocumentIn extends StatelessWidget {
                           : const SizedBox(width: 0),
                     ),
                     suffixIcon: GestureDetector(
+                      onTap: () {
+                        
+                      },
                       child: SvgPicture.asset(
                         "assets/icons/filter.svg",
                         height: 20,
                         width: 20,
                         fit: BoxFit.scaleDown,
                         colorFilter:
-                            ColorFilter.mode(AppColor.text1, BlendMode.srcIn),
+                            ColorFilter.mode(AppColor.textHint, BlendMode.srcIn),
                       ),
                     ),
                   ),

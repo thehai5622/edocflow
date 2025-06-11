@@ -99,7 +99,36 @@ class Home extends StatelessWidget {
                         ),
                         child: Column(
                           children: [
-                            _fillter(label: "Thời gian", value: "Tất cả"),
+                            _fillter(
+                                label: "Thời gian",
+                                value: "Tất cả",
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize
+                                              .min,
+                                          children: controller.listTimeFilter
+                                              .map((filter) {
+                                            return GestureDetector(
+                                              onTap: () => Get.back(),
+                                              child: Container(
+                                                width: double.maxFinite,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 12),
+                                                child:
+                                                    Text(filter.title ?? "--"),
+                                              ),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }),
                             _fillter(
                                 label: "khoảng thời gian", value: "Tất cả"),
                             _fillter(
