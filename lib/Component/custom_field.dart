@@ -56,6 +56,7 @@ class CustomField {
       Widget? prefixIcon,
       bool obscureText = false,
       Widget? suffixIcon,
+      Widget? suffix,
       int? minLines,
       int? maxLines = 1,
       int? maxLength,
@@ -97,6 +98,7 @@ class CustomField {
         ),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
+        suffix: suffix,
       ),
       validator: validator,
     );

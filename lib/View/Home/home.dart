@@ -15,7 +15,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
+      backgroundColor: AppColor.background,
       appBar: AppBar(
         automaticallyImplyLeading: true,
         backgroundColor: AppColor.main,
@@ -82,18 +82,138 @@ class Home extends StatelessWidget {
             : RefreshIndicator(
                 onRefresh: () => controller.refreshData(),
                 child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   children: [
-                    DocumentSingleChart(
-                      statusData: controller.detail.documentIn!.toStatusMap(),
+                    const SizedBox(height: 20),
+                    Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
+                        decoration: BoxDecoration(
+                          color: AppColor.white,
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColor.boder,
+                              blurRadius: 4,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            _fillter(label: "Thời gian", value: "Tất cả"),
+                            _fillter(
+                                label: "khoảng thời gian", value: "Tất cả"),
+                            _fillter(
+                              label: "Cơ quan ban hành",
+                              value: "Tất cả",
+                              isHaveBottomBoder: false,
+                            ),
+                          ],
+                        )),
+                    const SizedBox(height: 20),
+                    Container(
+                      color: AppColor.white,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      child: Column(
+                        children: [
+                          Text(
+                            "Thống kê văn bản đến",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AppColor.text1,
+                              fontSize: DeviceHelper.getFontSize(17),
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          DocumentSingleChart(
+                            statusData:
+                                controller.detail.documentIn!.toStatusMap(),
+                          ),
+                        ],
+                      ),
                     ),
-                    DocumentSingleChart(
-                      statusData: controller.detail.documentOut!.toStatusMap(),
+                    const SizedBox(height: 20),
+                    Container(
+                      color: AppColor.white,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      child: Column(
+                        children: [
+                          Text(
+                            "Thống kê văn bản đi",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AppColor.text1,
+                              fontSize: DeviceHelper.getFontSize(17),
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          DocumentSingleChart(
+                            statusData:
+                                controller.detail.documentOut!.toStatusMap(),
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 125),
+                    const SizedBox(height: 50),
                   ],
                 ),
               ),
+      ),
+    );
+  }
+
+  GestureDetector _fillter({
+    required String label,
+    required String value,
+    bool isHaveBottomBoder = true,
+    void Function()? onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          border: isHaveBottomBoder
+              ? Border(
+                  bottom: BorderSide(
+                    width: 1,
+                    color: AppColor.boder,
+                  ),
+                )
+              : null,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                color: AppColor.text1,
+                fontSize: DeviceHelper.getFontSize(14),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  value,
+                  style: TextStyle(
+                    color: AppColor.text1,
+                    fontSize: DeviceHelper.getFontSize(15),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(width: 2),
+                Icon(
+                  Icons.arrow_drop_down,
+                  size: 20,
+                  color: AppColor.text1,
+                ),
+              ],
+            ),
+          ],
+        ).marginSymmetric(vertical: 12),
       ),
     );
   }

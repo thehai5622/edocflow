@@ -30,7 +30,7 @@ class DocumentSingleChart extends StatelessWidget {
   };
 
   final List<Color> statusColors = [
-    AppColor.boder, // canceled
+    AppColor.grey, // canceled
     AppColor.dstatus1, // unprocessed
     AppColor.dstatus2, // pending_approval
     AppColor.dstatus3, // pending_release

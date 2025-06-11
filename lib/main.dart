@@ -79,7 +79,7 @@ void handleShowNotification(RemoteMessage message) {
           Get.find<DocumentOutController>().refreshData();
         }
       }
-      if (mdata['more'] != "in") {
+      if (mdata['more'] != "in" || mdata['more'] == "") {
         if (Get.isRegistered<DocumentInController>()) {
           Get.find<DocumentInController>().refreshData();
         }

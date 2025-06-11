@@ -10,6 +10,7 @@ import 'package:edocflow/Route/app_page.dart';
 import 'package:edocflow/Utils/device_helper.dart';
 import 'package:edocflow/Utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class DocumentIn extends StatelessWidget {
@@ -45,40 +46,53 @@ class DocumentIn extends StatelessWidget {
           : Column(
               children: [
                 Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 20),
-                    color: AppColor.main,
-                    child: CustomField.textFormfield(
-                        controller: controller.searchController.value,
-                        hintText: "Nhập từ khóa tìm kiếm",
-                        prefixIcon:
-                            Icon(Icons.search, color: AppColor.text1, size: 20),
-                        onChanged: (value) => {
-                              controller.isShowClearText.value =
-                                  value.isNotEmpty,
-                              if (controller.debounceTimer != null)
-                                {controller.debounceTimer!.cancel()},
-                              controller.debounceTimer =
-                                  Timer(const Duration(milliseconds: 500), () {
-                                controller.getData();
-                              })
-                            },
-                        suffixIcon: Obx(() => controller.isShowClearText.value
-                            ? GestureDetector(
-                                onTap: () {
-                                  controller.isShowClearText.value = false;
-                                  controller.searchController.value.clear();
-                                  if (controller.debounceTimer != null) {
-                                    controller.debounceTimer!.cancel();
-                                  }
-                                  controller.debounceTimer = Timer(
-                                      const Duration(milliseconds: 500), () {
-                                    controller.getData();
-                                  });
-                                },
-                                child: Icon(Icons.close,
-                                    color: AppColor.text1, size: 20))
-                            : const SizedBox(width: 0)))),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  color: AppColor.main,
+                  child: CustomField.textFormfield(
+                    controller: controller.searchController.value,
+                    hintText: "Nhập từ khóa tìm kiếm",
+                    prefixIcon:
+                        Icon(Icons.search, color: AppColor.text1, size: 20),
+                    onChanged: (value) => {
+                      controller.isShowClearText.value = value.isNotEmpty,
+                      if (controller.debounceTimer != null)
+                        {controller.debounceTimer!.cancel()},
+                      controller.debounceTimer =
+                          Timer(const Duration(milliseconds: 500), () {
+                        controller.getData();
+                      })
+                    },
+                    suffix: Obx(
+                      () => controller.isShowClearText.value
+                          ? GestureDetector(
+                              onTap: () {
+                                controller.isShowClearText.value = false;
+                                controller.searchController.value.clear();
+                                if (controller.debounceTimer != null) {
+                                  controller.debounceTimer!.cancel();
+                                }
+                                controller.debounceTimer = Timer(
+                                    const Duration(milliseconds: 500), () {
+                                  controller.getData();
+                                });
+                              },
+                              child: Icon(Icons.close,
+                                  color: AppColor.text1, size: 20))
+                          : const SizedBox(width: 0),
+                    ),
+                    suffixIcon: GestureDetector(
+                      child: SvgPicture.asset(
+                        "assets/icons/filter.svg",
+                        height: 20,
+                        width: 20,
+                        fit: BoxFit.scaleDown,
+                        colorFilter:
+                            ColorFilter.mode(AppColor.text1, BlendMode.srcIn),
+                      ),
+                    ),
+                  ),
+                ),
                 CustomCard.title(
                         title: "Tổng số văn bản đến",
                         value: controller.totalCount.value.toString())
@@ -146,23 +160,24 @@ class DocumentIn extends StatelessWidget {
                               icon: Icons.remove_red_eye,
                               bgColor: AppColor.thirdMain,
                             ),
-                            if (controller.collection[index].status == 1) Row(
-                              children: [
-                                const SizedBox(width: 6),
-                                CustomCard.actionItem(
-                                    icon: Icons.delete,
-                                    bgColor: AppColor.grey,
-                                    onTap: () {
-                                      CustomDialog.show(
-                                          context: context,
-                                          onPressed: () =>
-                                              controller.deleteItem(index),
-                                          title: "Hủy văn bản đến",
-                                          content:
-                                              "Văn bản đến '${controller.collection[index].uuid}' sẽ bị hủy, bạn chắc chứ?");
-                                    }),
-                              ],
-                            ),
+                            if (controller.collection[index].status == 1)
+                              Row(
+                                children: [
+                                  const SizedBox(width: 6),
+                                  CustomCard.actionItem(
+                                      icon: Icons.delete,
+                                      bgColor: AppColor.grey,
+                                      onTap: () {
+                                        CustomDialog.show(
+                                            context: context,
+                                            onPressed: () =>
+                                                controller.deleteItem(index),
+                                            title: "Hủy văn bản đến",
+                                            content:
+                                                "Văn bản đến '${controller.collection[index].uuid}' sẽ bị hủy, bạn chắc chứ?");
+                                      }),
+                                ],
+                              ),
                           ],
                         );
                       },
