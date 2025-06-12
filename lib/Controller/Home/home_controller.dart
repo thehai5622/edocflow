@@ -1,5 +1,6 @@
 import 'package:edocflow/Global/constant.dart';
 import 'package:edocflow/Model/dashboard.dart';
+import 'package:edocflow/Model/issuingauthority.dart';
 import 'package:edocflow/Service/api_caller.dart';
 import 'package:edocflow/Utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -11,17 +12,24 @@ class HomeController extends GetxController {
   RxString name = ''.obs;
   RxString avatar = ''.obs;
   final String baseUrl = dotenv.env['API_URL'] ?? '';
-  Dashboard detail = Dashboard();
+  Rx<Dashboard> detail = Dashboard().obs;
   // Time filter
   List<Filter> listTimeFilter = [
     Filter(title: "Tất cả", value: "all"),
-    Filter(title: "Tháng nay", value: "this_month"),
+    Filter(title: "Tháng này", value: "this_month"),
     Filter(title: "Tháng trước", value: "last_month"),
     Filter(title: "Năm nay", value: "this_year"),
     Filter(title: "Năm trước", value: "last_year"),
   ];
   RxString timeFilter = 'Tất cả'.obs;
   String timeFilterValue = 'all';
+  // Issuing Authority
+  bool isIAFirstFetch = true;
+  String selectedIAUUID = "";
+  RxList<IssuingAuthority> iaCollection = <IssuingAuthority>[].obs;
+  RxBool isLoadingIA = false.obs;
+  TextEditingController iaName = TextEditingController();
+  TextEditingController searchIA = TextEditingController();
 
   @override
   void onInit() {
@@ -47,13 +55,13 @@ class HomeController extends GetxController {
     await getData();
   }
 
-  Future getData() async {
-    isLoading.value = true;
+  Future getData({bool isRefresh = true}) async {
+    if(isRefresh) isLoading.value = true;
     try {
       var response = await APICaller.getInstance()
-          .get('v1/dashboard?filterType=$timeFilterValue');
+          .get('v1/dashboard?filterType=$timeFilterValue&issuingAuthority=$selectedIAUUID');
       if (response['data'] != null && response['message'] == null) {
-        detail = Dashboard.fromJson(response['data']);
+        detail.value = Dashboard.fromJson(response['data']);
       } else {
         Utils.showSnackBar(title: 'Thông báo', message: response['message']);
       }
@@ -61,7 +69,7 @@ class HomeController extends GetxController {
       debugPrint(e.toString());
       return null;
     } finally {
-      isLoading.value = false;
+      if(isRefresh) isLoading.value = false;
     }
   }
 
@@ -70,7 +78,7 @@ class HomeController extends GetxController {
     Get.back();
     timeFilter.value = filter.title;
     timeFilterValue = filter.value;
-    getData();
+    getData(isRefresh: false);
   }
 }
 

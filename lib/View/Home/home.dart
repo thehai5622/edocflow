@@ -103,6 +103,7 @@ class Home extends StatelessWidget {
                               () => _fillter(
                                   label: "Thời gian",
                                   value: controller.timeFilter.value,
+                                  isHaveBottomBoder: false,
                                   onTap: () {
                                     showDialog(
                                       context: context,
@@ -167,13 +168,6 @@ class Home extends StatelessWidget {
                                     );
                                   }),
                             ),
-                            _fillter(
-                                label: "khoảng thời gian", value: "Tất cả"),
-                            _fillter(
-                              label: "Cơ quan ban hành",
-                              value: "Tất cả",
-                              isHaveBottomBoder: false,
-                            ),
                           ],
                         )),
                     const SizedBox(height: 20),
@@ -191,9 +185,11 @@ class Home extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          DocumentSingleChart(
-                            statusData:
-                                controller.detail.documentIn!.toStatusMap(),
+                          Obx(
+                            () => DocumentSingleChart(
+                              statusData:
+                                  controller.detail.value.documentIn!.toStatusMap(),
+                            ),
                           ),
                         ],
                       ),
@@ -213,9 +209,11 @@ class Home extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          DocumentSingleChart(
-                            statusData:
-                                controller.detail.documentOut!.toStatusMap(),
+                          Obx(
+                            () => DocumentSingleChart(
+                              statusData:
+                                  controller.detail.value.documentOut!.toStatusMap(),
+                            ),
                           ),
                         ],
                       ),
