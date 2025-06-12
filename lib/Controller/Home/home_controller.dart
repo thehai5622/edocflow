@@ -12,12 +12,16 @@ class HomeController extends GetxController {
   RxString avatar = ''.obs;
   final String baseUrl = dotenv.env['API_URL'] ?? '';
   Dashboard detail = Dashboard();
+  // Time filter
   List<Filter> listTimeFilter = [
+    Filter(title: "Tất cả", value: "all"),
     Filter(title: "Tháng nay", value: "this_month"),
     Filter(title: "Tháng trước", value: "last_month"),
     Filter(title: "Năm nay", value: "this_year"),
     Filter(title: "Năm trước", value: "last_year"),
   ];
+  RxString timeFilter = 'Tất cả'.obs;
+  String timeFilterValue = 'all';
 
   @override
   void onInit() {
@@ -46,7 +50,8 @@ class HomeController extends GetxController {
   Future getData() async {
     isLoading.value = true;
     try {
-      var response = await APICaller.getInstance().get('v1/dashboard');
+      var response = await APICaller.getInstance()
+          .get('v1/dashboard?filterType=$timeFilterValue');
       if (response['data'] != null && response['message'] == null) {
         detail = Dashboard.fromJson(response['data']);
       } else {
@@ -59,11 +64,19 @@ class HomeController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  onTapTimeFilter(Filter filter) {
+    if (filter.value == timeFilterValue) return;
+    Get.back();
+    timeFilter.value = filter.title;
+    timeFilterValue = filter.value;
+    getData();
+  }
 }
 
 class Filter {
-  String? title;
-  String? value;
+  String title;
+  String value;
 
-  Filter({this.title, this.value});
+  Filter({required this.title, required this.value});
 }

@@ -99,36 +99,74 @@ class Home extends StatelessWidget {
                         ),
                         child: Column(
                           children: [
-                            _fillter(
-                                label: "Thời gian",
-                                value: "Tất cả",
-                                onTap: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        content: Column(
-                                          mainAxisSize: MainAxisSize
-                                              .min,
-                                          children: controller.listTimeFilter
-                                              .map((filter) {
-                                            return GestureDetector(
-                                              onTap: () => Get.back(),
-                                              child: Container(
-                                                width: double.maxFinite,
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 12),
-                                                child:
-                                                    Text(filter.title ?? "--"),
-                                              ),
-                                            );
-                                          }).toList(),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                }),
+                            Obx(
+                              () => _fillter(
+                                  label: "Thời gian",
+                                  value: controller.timeFilter.value,
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          backgroundColor: AppColor.white,
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: controller.listTimeFilter
+                                                .map((filter) {
+                                              bool isSelected = filter.value ==
+                                                  controller.timeFilterValue;
+                                              return GestureDetector(
+                                                onTap: () => controller.onTapTimeFilter(filter),
+                                                child: Container(
+                                                  width: double.maxFinite,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 12),
+                                                  decoration: BoxDecoration(
+                                                    border: Border(
+                                                        bottom: BorderSide(
+                                                      width: 1,
+                                                      color: AppColor.boder,
+                                                    )),
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        filter.title,
+                                                        style: TextStyle(
+                                                          color: isSelected
+                                                              ? AppColor.primary
+                                                              : AppColor.text1,
+                                                          fontSize: DeviceHelper
+                                                              .getFontSize(14),
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                      isSelected
+                                                          ? Icon(
+                                                              Icons.check,
+                                                              color: AppColor
+                                                                  .primary,
+                                                              size: 20,
+                                                            )
+                                                          : const SizedBox(
+                                                              width: 20,
+                                                              height: 20,
+                                                            ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }),
+                            ),
                             _fillter(
                                 label: "khoảng thời gian", value: "Tất cả"),
                             _fillter(
