@@ -26,7 +26,7 @@ class TemplateFile extends StatelessWidget {
         scrolledUnderElevation: 0.0,
         shadowColor: AppColor.text1,
         title: Text(
-          "File mẫu",
+          "File",
           style: TextStyle(
             fontSize: DeviceHelper.getFontSize(21),
             color: AppColor.text1,
@@ -79,7 +79,7 @@ class TemplateFile extends StatelessWidget {
                                     color: AppColor.text1, size: 20))
                             : const SizedBox(width: 0)))),
                 CustomCard.title(
-                        title: "Tổng số file mẫu: ",
+                        title: "Tổng số file: ",
                         value: controller.totalCount.value.toString())
                     .marginSymmetric(horizontal: 20, vertical: 10),
                 Expanded(
@@ -103,12 +103,12 @@ class TemplateFile extends StatelessWidget {
                                     }),
                             children: [
                               CustomCard.infoRow(
-                                  title: "Tên file mẫu:",
+                                  title: "Tên file:",
                                   value:
                                       controller.collection[index].name ?? "--",
                                   isHightlight: true),
                               CustomCard.infoRow(
-                                  title: "Loại file mẫu:",
+                                  title: "Loại file:",
                                   value: controller.collection[index]
                                           .typeTemplateFile?.name ??
                                       "--"),

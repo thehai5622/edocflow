@@ -262,7 +262,7 @@ class Dashboard extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomBottomsheet.item(
-                      title: 'Thêm file mẫu',
+                      title: 'Thêm file',
                       onTap: () {
                         Get.back();
                         Get.toNamed(Routes.upsertTemplateFile,

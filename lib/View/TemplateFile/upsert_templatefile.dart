@@ -47,19 +47,19 @@ class UpsertTemplateFile extends StatelessWidget {
                   child: Column(
                     children: [
                       CustomField.titleForm(
-                              title: "Tên field mẫu", isRequired: true)
+                              title: "Tên file", isRequired: true)
                           .marginSymmetric(horizontal: 20),
                       CustomField.textFormfield(
                         controller: controller.name,
                         hintText: "Văn bản điều hành, tờ trình, ...",
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Vui lòng nhập tên file mẫu';
+                            return 'Vui lòng nhập tên file';
                           }
                           return null;
                         },
                       ).marginSymmetric(horizontal: 16, vertical: 8),
-                      CustomField.titleForm(title: "File mẫu", isRequired: true)
+                      CustomField.titleForm(title: "File", isRequired: true)
                           .marginSymmetric(horizontal: 20),
                       GestureDetector(
                         onTap: () {
@@ -154,7 +154,7 @@ class UpsertTemplateFile extends StatelessWidget {
                         ),
                       ),
                       CustomField.titleForm(
-                              title: "Loại file mẫu", isRequired: true)
+                              title: "Loại file", isRequired: true)
                           .marginSymmetric(horizontal: 20),
                       CustomField.dropDownField(
                         context: context,
@@ -163,10 +163,10 @@ class UpsertTemplateFile extends StatelessWidget {
                         controller: controller.ttfName,
                         searchController: controller.searchTTF,
                         enabled: true,
-                        hintText: "Chọn loại file mẫu",
+                        hintText: "Chọn loại file",
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Vui lòng chọn loại file mẫu";
+                            return "Vui lòng chọn loại file";
                           }
                           return null;
                         },
@@ -294,7 +294,7 @@ class UpsertTemplateFile extends StatelessWidget {
                             if (controller.file.value.path.isEmpty) {
                               Utils.showSnackBar(
                                   title: "Lỗi!",
-                                  message: "File mẫu là bắt buộc!");
+                                  message: "File là bắt buộc!");
                               return;
                             }
                             controller.submit();

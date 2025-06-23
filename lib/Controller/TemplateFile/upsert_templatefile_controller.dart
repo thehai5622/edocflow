@@ -32,9 +32,9 @@ class UpsertTFController extends GetxController {
   void onInit() {
     uuid = Get.arguments?["uuid"] ?? "";
     if (uuid == "") {
-      title = "Thêm file mẫu";
+      title = "Thêm file";
     } else {
-      title = "Chỉnh sửa file mẫu";
+      title = "Chỉnh sửa file";
       getDetail();
     }
     super.onInit();
