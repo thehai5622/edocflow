@@ -131,11 +131,16 @@ class DocumentOut extends StatelessWidget {
                                 value: controller.collection[index].summary ??
                                     "--"),
                             CustomCard.infoRow(
+                                title: "Số hiệu:",
+                                value: controller
+                                        .collection[index].referenceNumber ??
+                                    "--",
+                                isHightlight: true),
+                            CustomCard.infoRow(
                                 title: "Tới cơ quan:",
                                 value: controller.collection[index]
                                         .issuingauthority?.name ??
-                                    "--",
-                                isHightlight: true),
+                                    "--"),
                             CustomCard.infoRow(
                                 title: "Người tạo:",
                                 value:

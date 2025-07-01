@@ -99,31 +99,31 @@ class Individual extends StatelessWidget {
                           icon: "assets/icons/user-edit.svg",
                           onTap: () => Get.toNamed(Routes.profile),
                         ),
-                        _itemRow(
-                          title: "Cơ quan ban hành",
-                          icon: "assets/icons/shield-security.svg",
-                          onTap: () => Get.toNamed(Routes.issuingAuthority),
-                        ),
-                        _itemRow(
-                          title: "Cán bộ",
-                          icon: "assets/icons/shield-security.svg",
-                          onTap: () => Get.toNamed(Routes.user),
-                        ),
-                        _itemRow(
-                          title: "Lĩnh vực",
-                          icon: "assets/icons/shield-security.svg",
-                          onTap: () => Get.toNamed(Routes.field),
-                        ),
-                        _itemRow(
-                          title: "Loại file mẫu",
-                          icon: "assets/icons/shield-security.svg",
-                          onTap: () => Get.toNamed(Routes.typeTemplateFile),
-                        ),
-                        _itemRow(
-                          title: "File mẫu",
-                          icon: "assets/icons/shield-security.svg",
-                          onTap: () => Get.toNamed(Routes.templateFile),
-                        ),
+                        // _itemRow(
+                        //   title: "Cơ quan ban hành",
+                        //   icon: "assets/icons/shield-security.svg",
+                        //   onTap: () => Get.toNamed(Routes.issuingAuthority),
+                        // ),
+                        // _itemRow(
+                        //   title: "Cán bộ",
+                        //   icon: "assets/icons/shield-security.svg",
+                        //   onTap: () => Get.toNamed(Routes.user),
+                        // ),
+                        // _itemRow(
+                        //   title: "Lĩnh vực",
+                        //   icon: "assets/icons/shield-security.svg",
+                        //   onTap: () => Get.toNamed(Routes.field),
+                        // ),
+                        // _itemRow(
+                        //   title: "Loại file mẫu",
+                        //   icon: "assets/icons/shield-security.svg",
+                        //   onTap: () => Get.toNamed(Routes.typeTemplateFile),
+                        // ),
+                        // _itemRow(
+                        //   title: "File mẫu",
+                        //   icon: "assets/icons/shield-security.svg",
+                        //   onTap: () => Get.toNamed(Routes.templateFile),
+                        // ),
                         _itemRow(
                           title: "Đổi mật khẩu",
                           icon: "assets/icons/shield-security.svg",

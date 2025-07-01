@@ -15,6 +15,7 @@ class UpsertDocumentOutController extends GetxController {
   late String title;
   RxBool isWaitSubmit = false.obs;
   Document detail = Document();
+  TextEditingController referenceNumber = TextEditingController();
   TextEditingController summary = TextEditingController();
   TextEditingController originalLocation = TextEditingController();
   TextEditingController numberReleases = TextEditingController();
@@ -79,6 +80,7 @@ class UpsertDocumentOutController extends GetxController {
     selectedFUUID = detail.field?.uuid ?? "";
     fName.text = detail.field?.name ?? "";
     summary.text = detail.summary ?? "";
+    referenceNumber.text = detail.referenceNumber ?? "";
     release.text = TimeHelper.convertDateFormat(detail.release, false);
     originalLocation.text = detail.originalLocation ?? "";
     numberReleases.text = "${detail.numberReleases}";
@@ -179,6 +181,7 @@ class UpsertDocumentOutController extends GetxController {
           "field": selectedFUUID,
           "template_file": selectedTFUUID,
           "summary": summary.text.trim(),
+          "reference_number": referenceNumber.text.trim(),
           "release": TimeHelper.convertDateFormat(release.text, true),
           "original_location": originalLocation.text.trim(),
           "number_releases": int.tryParse(numberReleases.text.trim()),
@@ -204,6 +207,7 @@ class UpsertDocumentOutController extends GetxController {
           "field": selectedFUUID,
           "template_file": selectedTFUUID,
           "summary": summary.text.trim(),
+          "reference_number": referenceNumber.text.trim(),
           "release": TimeHelper.convertDateFormat(release.text, true),
           "original_location": originalLocation.text.trim(),
           "number_releases": int.tryParse(numberReleases.text.trim()),

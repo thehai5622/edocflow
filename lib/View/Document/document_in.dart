@@ -90,8 +90,8 @@ class DocumentIn extends StatelessWidget {
                           height: 20,
                           width: 20,
                           fit: BoxFit.scaleDown,
-                          colorFilter: ColorFilter.mode(
-                              AppColor.text1, BlendMode.srcIn),
+                          colorFilter:
+                              ColorFilter.mode(AppColor.text1, BlendMode.srcIn),
                         ),
                       ),
                     ),
@@ -138,11 +138,16 @@ class DocumentIn extends StatelessWidget {
                                 value: controller.collection[index].summary ??
                                     "--"),
                             CustomCard.infoRow(
+                                title: "Số hiệu:",
+                                value: controller
+                                        .collection[index].referenceNumber ??
+                                    "--",
+                                isHightlight: true),
+                            CustomCard.infoRow(
                                 title: "Từ cơ quan:",
                                 value: controller.collection[index]
                                         .fromIssuingauthority?.name ??
-                                    "--",
-                                isHightlight: true),
+                                    "--"),
                             CustomCard.infoRow(
                                 title: "Người tạo:",
                                 value:

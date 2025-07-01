@@ -42,6 +42,19 @@ class UpsertDocumentOut extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Column(
                   children: [
+                    CustomField.titleForm(title: "Số hiệu", isRequired: true)
+                        .marginSymmetric(horizontal: 20),
+                    CustomField.textFormfield(
+                      controller: controller.referenceNumber,
+                      hintText: "X/2024/NĐ-CP",
+                      maxLength: 20,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Số hiệu văn bản là bắt buộc';
+                        }
+                        return null;
+                      },
+                    ).marginSymmetric(horizontal: 16, vertical: 8),
                     CustomField.titleForm(title: "Tới cơ quan ban hành")
                         .marginSymmetric(horizontal: 20),
                     CustomField.dropDownField(
@@ -195,16 +208,15 @@ class UpsertDocumentOut extends StatelessWidget {
                             title: "Ngày phát hành", isRequired: true)
                         .marginSymmetric(horizontal: 20),
                     CustomField.dateField(
-                      context: context,
-                      controller: controller.release,
-                      enabled: true,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Ngày phát hành là bắt buộc';
-                        }
-                        return null;
-                      }
-                    ).marginSymmetric(horizontal: 16, vertical: 8),
+                        context: context,
+                        controller: controller.release,
+                        enabled: true,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Ngày phát hành là bắt buộc';
+                          }
+                          return null;
+                        }).marginSymmetric(horizontal: 16, vertical: 8),
                     CustomField.titleForm(
                             title: "Nơi lưu bản chính", isRequired: true)
                         .marginSymmetric(horizontal: 20),
