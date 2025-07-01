@@ -8,8 +8,10 @@ class Profile {
   String? email;
   String? createdAt;
   String? updatedAt;
+  int? status;
   IssuingAuthority? issuingAuthority;
   Permission? permission;
+  IssuingAuthority? department;
 
   Profile(
       {this.uuid,
@@ -21,8 +23,10 @@ class Profile {
       this.email,
       this.createdAt,
       this.updatedAt,
+      this.status,
       this.issuingAuthority,
-      this.permission});
+      this.permission,
+      this.department});
 
   Profile.fromJson(Map<String, dynamic> json) {
     uuid = json['uuid'];
@@ -34,11 +38,15 @@ class Profile {
     email = json['email'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    status = json['status'];
     issuingAuthority = json['issuing_authority'] != null
         ? IssuingAuthority.fromJson(json['issuing_authority'])
         : null;
     permission = json['permission'] != null
         ? Permission.fromJson(json['permission'])
+        : null;
+    department = json['department'] != null
+        ? IssuingAuthority.fromJson(json['department'])
         : null;
   }
 
@@ -53,11 +61,15 @@ class Profile {
     data['email'] = email;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
+    data['status'] = status;
     if (issuingAuthority != null) {
       data['issuing_authority'] = issuingAuthority!.toJson();
     }
     if (permission != null) {
       data['permission'] = permission!.toJson();
+    }
+    if (department != null) {
+      data['department'] = department!.toJson();
     }
     return data;
   }

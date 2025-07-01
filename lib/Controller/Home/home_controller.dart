@@ -59,7 +59,7 @@ class HomeController extends GetxController {
     if(isRefresh) isLoading.value = true;
     try {
       var response = await APICaller.getInstance()
-          .get('v1/dashboard?filterType=$timeFilterValue&issuingAuthority=$selectedIAUUID');
+          .get('v1/dashboard?filterType=$timeFilterValue');
       if (response['data'] != null && response['message'] == null) {
         detail.value = Dashboard.fromJson(response['data']);
       } else {

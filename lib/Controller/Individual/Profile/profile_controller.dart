@@ -23,6 +23,7 @@ class ProfileController extends GetxController {
   RxInt gender = (-1).obs;
   TextEditingController permission = TextEditingController();
   TextEditingController issuingAuthority = TextEditingController();
+  TextEditingController department = TextEditingController();
   TextEditingController birthDay = TextEditingController();
   TextEditingController phone = TextEditingController();
   final FocusNode phoneFocus = FocusNode();
@@ -62,6 +63,7 @@ class ProfileController extends GetxController {
     gender.value = detail.gender ?? -1;
     permission.text = detail.permission?.name ?? '';
     issuingAuthority.text = detail.issuingAuthority?.name ?? '';
+    department.text = detail.department?.name ?? '';
     birthDay.text = TimeHelper.convertDateFormat(detail.birthDay, false);
     phone.text = detail.phone ?? '';
     email.text = detail.email ?? '';

@@ -157,6 +157,12 @@ class Profile extends StatelessWidget {
                     label: "Cơ quan",
                     hintText: "Cơ quan",
                   ).marginSymmetric(horizontal: 16, vertical: 8),
+                  CustomField.textFormfield(
+                    controller: controller.department,
+                    enabled: false,
+                    label: "Thuộc phòng ban",
+                    hintText: "Phòng ban",
+                  ).marginSymmetric(horizontal: 16, vertical: 8),
                   Obx(
                     () => CustomField.dateField(
                       context: context,

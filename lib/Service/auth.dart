@@ -50,6 +50,8 @@ class Auth {
         Utils.saveStringWithKey(Constant.ISSUING_AUTHORITY,
             response['data']['issuing_authority'] ?? '');
         Utils.saveStringWithKey(
+            Constant.DEPARTMENT, response['data']['department'] ?? '');
+        Utils.saveStringWithKey(
             Constant.USERNAME, userName ?? userNamePreferences);
         Utils.saveStringWithKey(Constant.PASSWORD, param['password']!);
         Get.offAllNamed(Routes.dashboard);

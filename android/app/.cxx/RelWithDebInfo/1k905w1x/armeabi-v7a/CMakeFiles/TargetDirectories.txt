@@ -1,0 +1,2 @@
+D:/Programing/KLTN/Mobile/edocflow/android/app/.cxx/RelWithDebInfo/1k905w1x/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/Programing/KLTN/Mobile/edocflow/android/app/.cxx/RelWithDebInfo/1k905w1x/armeabi-v7a/CMakeFiles/rebuild_cache.dir
