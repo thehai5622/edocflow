@@ -107,7 +107,7 @@ class DocumentIn extends StatelessWidget {
                   child: Obx(
                     () => ListView.separated(
                       controller: controller.scrollController,
-                      padding: const EdgeInsets.only(bottom: 100),
+                      padding: const EdgeInsets.only(bottom: 120),
                       physics: const AlwaysScrollableScrollPhysics(),
                       separatorBuilder: (context, index) => const SizedBox(
                         height: 10,

@@ -157,9 +157,9 @@ class TemplateFile extends StatelessWidget {
                                         context: context,
                                         onPressed: () =>
                                             controller.deleteItem(index),
-                                        title: "Xóa file mẫu",
+                                        title: "Xóa File",
                                         content:
-                                            "File mẫu '${controller.collection[index].name}' sẽ bị xóa, bạn chắc chứ?");
+                                            "File '${controller.collection[index].name}' sẽ bị xóa, bạn chắc chứ?");
                                   }),
                             ]);
                       },

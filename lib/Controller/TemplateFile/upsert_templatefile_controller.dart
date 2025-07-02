@@ -84,7 +84,7 @@ class UpsertTFController extends GetxController {
     if (isClearData) ttfCollection.clear();
     try {
       APICaller.getInstance()
-          .get('v1/typetemplatefile/dropdown?keyword=${searchTTF.text.trim()}')
+          .get('v1/typefile/dropdown?keyword=${searchTTF.text.trim()}')
           .then((response) {
         isLoadingTTF.value = false;
         if (response != null) {

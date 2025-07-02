@@ -105,12 +105,12 @@ class UpsertDocumentOut extends StatelessWidget {
                       maxLength: 75,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Vui lòng nhập tên file mẫu';
+                          return 'Vui lòng nhập tên File';
                         }
                         return null;
                       },
                     ).marginSymmetric(horizontal: 16, vertical: 8),
-                    CustomField.titleForm(title: "File mẫu", isRequired: true)
+                    CustomField.titleForm(title: "File", isRequired: true)
                         .marginSymmetric(horizontal: 20),
                     CustomField.dropDownField(
                       context: context,
@@ -119,10 +119,10 @@ class UpsertDocumentOut extends StatelessWidget {
                       controller: controller.tfName,
                       searchController: controller.searchTF,
                       enabled: true,
-                      hintText: "Chọn file mẫu",
+                      hintText: "Chọn File",
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Vui lòng chọn file mẫu";
+                          return "Vui lòng chọn File";
                         }
                         return null;
                       },

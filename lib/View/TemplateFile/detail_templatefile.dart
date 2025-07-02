@@ -21,7 +21,7 @@ class DetailTemplateFile extends StatelessWidget {
         backgroundColor: AppColor.main,
         shadowColor: AppColor.text1,
         title: Text(
-          "Chi tiết file mẫu",
+          "Chi tiết File",
           style: TextStyle(
             fontSize: DeviceHelper.getFontSize(21),
             color: AppColor.text1,
@@ -43,11 +43,11 @@ class DetailTemplateFile extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 16),
                     children: [
-                      CustomField.titleForm(title: "Tên file mẫu:"),
+                      CustomField.titleForm(title: "Tên File:"),
                       _detailValue(
                               value: controller.detail.name, isHightlight: true)
                           .marginSymmetric(vertical: 8, horizontal: 16),
-                      CustomField.titleForm(title: "Loại file mẫu:"),
+                      CustomField.titleForm(title: "Loại File:"),
                       _detailValue(
                               value: controller.detail.typeTemplateFile?.name)
                           .marginSymmetric(vertical: 8, horizontal: 16),
@@ -94,7 +94,7 @@ class DetailTemplateFile extends StatelessWidget {
             ),
             child: Obx(
               () => CustomButton.primary(
-                text: "Xem file mẫu",
+                text: "Xem File",
                 onPressed: controller.isLoading.value
                     ? null
                     : () {

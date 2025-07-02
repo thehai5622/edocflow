@@ -25,7 +25,7 @@ class TypeTemplateFile extends StatelessWidget {
         scrolledUnderElevation: 0.0,
         shadowColor: AppColor.text1,
         title: Text(
-          "Loại file mẫu",
+          "Loại File",
           style: TextStyle(
             fontSize: DeviceHelper.getFontSize(21),
             color: AppColor.text1,
@@ -78,7 +78,7 @@ class TypeTemplateFile extends StatelessWidget {
                                     color: AppColor.text1, size: 20))
                             : const SizedBox(width: 0)))),
                 Text(
-                  "-----------   Tổng số loại file mẫu: ${controller.totalCount.value}   -----------",
+                  "-----------   Tổng số loại File: ${controller.totalCount.value}   -----------",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: DeviceHelper.getFontSize(17),
@@ -144,7 +144,7 @@ class TypeTemplateFile extends StatelessWidget {
               child: Column(
                 children: [
                   _infoRow(
-                      title: "Tên loại file mẫu:",
+                      title: "Tên loại File:",
                       value: controller.collection[index].name ?? "",
                       isHightlight: true),
                   _infoRow(
@@ -175,9 +175,9 @@ class TypeTemplateFile extends StatelessWidget {
                       CustomDialog.show(
                           context: context,
                           onPressed: () => controller.deleteItem(index),
-                          title: "Xóa loại file mẫu",
+                          title: "Xóa loại File",
                           content:
-                              "Loại file mẫu '${controller.collection[index].name}' sẽ bị xóa, bạn chắc chứ?");
+                              "Loại File '${controller.collection[index].name}' sẽ bị xóa, bạn chắc chứ?");
                     }),
               ],
             ).marginOnly(right: 12, bottom: 10)

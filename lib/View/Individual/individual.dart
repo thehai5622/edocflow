@@ -115,15 +115,15 @@ class Individual extends StatelessWidget {
                         //   onTap: () => Get.toNamed(Routes.field),
                         // ),
                         // _itemRow(
-                        //   title: "Loại file mẫu",
+                        //   title: "Loại File",
                         //   icon: "assets/icons/shield-security.svg",
                         //   onTap: () => Get.toNamed(Routes.typeTemplateFile),
                         // ),
-                        // _itemRow(
-                        //   title: "File mẫu",
-                        //   icon: "assets/icons/shield-security.svg",
-                        //   onTap: () => Get.toNamed(Routes.templateFile),
-                        // ),
+                        _itemRow(
+                          title: "File",
+                          icon: "assets/icons/shield-security.svg",
+                          onTap: () => Get.toNamed(Routes.templateFile),
+                        ),
                         _itemRow(
                           title: "Đổi mật khẩu",
                           icon: "assets/icons/shield-security.svg",

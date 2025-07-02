@@ -47,7 +47,7 @@ class EditTypeTemplateFile extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Column(
                       children: [
-                        _titleForm(title: "Tên loại file mẫu", isRequired: true)
+                        _titleForm(title: "Tên loại File", isRequired: true)
                             .marginSymmetric(horizontal: 20),
                         TextFormField(
                           controller: controller.name,
@@ -76,13 +76,13 @@ class EditTypeTemplateFile extends StatelessWidget {
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w500,
                             ),
-                            hintText: 'Nhập tên loại file mẫu',
+                            hintText: 'Nhập tên loại File',
                             contentPadding:
                                 const EdgeInsets.only(left: 16, right: 16),
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return "Vui lòng nhập tên loại file mẫu";
+                              return "Vui lòng nhập tên loại File";
                             }
                             return null;
                           },
