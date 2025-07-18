@@ -49,6 +49,7 @@ class CustomField {
       String? Function(String?)? validator,
       String? hintText,
       bool enabled = true,
+      bool readOnly = false,
       String? label,
       FocusNode? focusNode,
       List<TextInputFormatter>? inputFormatters,
@@ -60,9 +61,12 @@ class CustomField {
       int? minLines,
       int? maxLines = 1,
       int? maxLength,
+      void Function()? onTap,
       void Function(String)? onChanged}) {
     return TextFormField(
       style: _textStyle,
+      readOnly: readOnly,
+      onTap: onTap,
       controller: controller,
       enabled: enabled,
       focusNode: focusNode,
