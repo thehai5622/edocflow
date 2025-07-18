@@ -11,7 +11,7 @@ class DetailDocumentController extends GetxController {
   late String uuid;
   bool isIn = false;
   RxBool isLoading = false.obs;
-  Document detail = Document();
+  Rx<Document> detail = Document().obs;
 
   // department
   RxBool isLoadingD = false.obs;
@@ -28,16 +28,17 @@ class DetailDocumentController extends GetxController {
     super.onInit();
   }
 
-  getDetail() {
+  Future getDetail() async {
     isLoading.value = true;
     try {
-      APICaller.getInstance().get("v1/document/$uuid").then((value) {
+      await APICaller.getInstance().get("v1/document/$uuid").then((value) {
         if (value != null) {
-          detail = Document.fromJson(value['data']);
-          isLoading.value = false;
+          detail.value = Document.fromJson(value['data']);
         }
       });
     } catch (e) {
+      debugPrint(e.toString());
+    } finally {
       isLoading.value = false;
     }
   }
@@ -66,7 +67,7 @@ class DetailDocumentController extends GetxController {
   }
 
   submit() {
-    switch (detail.status) {
+    switch (detail.value.status) {
       case 1:
         receptionDocument();
         break;

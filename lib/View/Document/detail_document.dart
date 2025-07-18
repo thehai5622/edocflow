@@ -59,14 +59,14 @@ class DetailDocument extends StatelessWidget {
                                 horizontal: 12, vertical: 6),
                             decoration: BoxDecoration(
                               color: DocumentStatus.getColorStatus(
-                                controller.detail.status ?? 0,
+                                controller.detail.value.status ?? 0,
                               ),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: _detailValue(
                               isStatus: true,
                               value: DocumentStatus.getTextStatus(
-                                controller.detail.status ?? 0,
+                                controller.detail.value.status ?? 0,
                               ),
                             ),
                           ),
@@ -74,58 +74,63 @@ class DetailDocument extends StatelessWidget {
                       ),
                       CustomField.titleForm(title: "Mã văn bản:"),
                       _detailValue(
-                        value: controller.detail.uuid,
+                        value: controller.detail.value.uuid,
                         isHightlight: true,
                       ).marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Mức độ khẩn:"),
                       _detailValue(
                           value: UrgencyLevel.getUrgencyLevel(
-                        controller.detail.urgencyLevel ?? 0,
+                        controller.detail.value.urgencyLevel ?? 0,
                       )).marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Mức độ bảo mật:"),
                       _detailValue(
                           value: ConfidentialityLevel.getConfidentialityLevel(
-                        controller.detail.confidentialityLevel ?? 0,
+                        controller.detail.value.confidentialityLevel ?? 0,
                       )).marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Trích yếu:"),
-                      _detailValue(value: controller.detail.summary)
+                      _detailValue(value: controller.detail.value.summary)
                           .marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Ngày phát hành:"),
                       _detailValue(
                               value: TimeHelper.convertDateFormat(
-                                  controller.detail.release, false))
+                                  controller.detail.value.release, false))
                           .marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Số bản phát hành:"),
-                      _detailValue(value: "${controller.detail.numberReleases}")
+                      _detailValue(
+                              value:
+                                  "${controller.detail.value.numberReleases}")
                           .marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Nơi lưu trữ bản chính:"),
-                      _detailValue(value: controller.detail.originalLocation)
+                      _detailValue(
+                              value: controller.detail.value.originalLocation)
                           .marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Người tạo:"),
-                      _detailValue(value: controller.detail.user?.name)
+                      _detailValue(value: controller.detail.value.user?.name)
                           .marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Từ cơ quan:"),
                       _detailValue(
-                        value: controller.detail.fromIssuingauthority?.name,
+                        value:
+                            controller.detail.value.fromIssuingauthority?.name,
                         isHightlight: true,
                       ).marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Người ký/Người duyệt:"),
-                      _detailValue(value: controller.detail.usersign?.name)
+                      _detailValue(
+                              value: controller.detail.value.usersign?.name)
                           .marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Tới cơ quan:"),
                       _detailValue(
-                        value: controller.detail.issuingauthority?.name,
+                        value: controller.detail.value.issuingauthority?.name,
                         isHightlight: true,
                       ).marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Ngày tạo:"),
                       _detailValue(
                           value: Utils.formatDate(
-                        isoString: controller.detail.createdAt,
+                        isoString: controller.detail.value.createdAt,
                       )).marginSymmetric(vertical: 8, horizontal: 16),
                       CustomField.titleForm(title: "Chỉnh sửa lần cuối:"),
                       _detailValue(
                           value: Utils.formatDate(
-                        isoString: controller.detail.updatedAt,
+                        isoString: controller.detail.value.updatedAt,
                       )).marginSymmetric(vertical: 8, horizontal: 16),
                     ],
                   ),
@@ -154,29 +159,34 @@ class DetailDocument extends StatelessWidget {
                             onPressed: () {
                               Get.toNamed(Routes.detailTemplateFile,
                                   arguments: {
-                                    "uuid": controller.detail.templatefile?.uuid
+                                    "uuid": controller
+                                        .detail.value.templatefile?.uuid
                                   });
                             },
                           ),
                         ),
                         if (controller.isIn &&
-                            !(controller.detail.status == 5 ||
-                                controller.detail.status == 4 ||
-                                controller.detail.status == 3))
+                            !(controller.detail.value.status == 5 ||
+                                controller.detail.value.status == 4 ||
+                                controller.detail.value.status == 3))
                           Expanded(
                             child: Row(
                               children: [
                                 const SizedBox(width: 16),
                                 Expanded(
-                                  child: CustomButton.primary(
-                                    text: _getTextStatus(
-                                        controller.detail.status),
-                                    onPressed: () {
-                                      if (controller.detail.status != 1) {
-                                        controller.submit();
-                                      }
-                                      _reception(context);
-                                    },
+                                  child: Obx(
+                                    () => CustomButton.primary(
+                                      text: _getTextStatus(
+                                          controller.detail.value.status),
+                                      onPressed: () {
+                                        if (controller.detail.value.status !=
+                                            1) {
+                                          controller.submit();
+                                          return;
+                                        }
+                                        _reception(context);
+                                      },
+                                    ),
                                   ),
                                 ),
                               ],
